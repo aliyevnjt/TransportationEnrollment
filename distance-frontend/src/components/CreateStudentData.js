@@ -19,7 +19,7 @@ class CreateStudentData extends Component {
       this.state = {
          fname:'',
          lname:'',
-         mname:'',
+         mName:'',
          grade:'',
          school:'',
          address:'',
@@ -27,9 +27,9 @@ class CreateStudentData extends Component {
          city:'',
          state:'MA',
          zip:'',
-         pname:'',
-         pemail:'',
-         p_phone:'',
+         parentName:'',
+         parentEmailAddress:'',
+         parentPhoneNumber:'',
       };
     };
 
@@ -53,7 +53,7 @@ class CreateStudentData extends Component {
     }
     
     render() {
-        const {fname, mname, lname, grade, school, address,unit, city, state, zip, pname, pemail, p_phone, homeless} = this.state
+        const {fname, mName, lname, grade, school, address,unit, city, state, zip, parentName, parentEmailAddress, parentPhoneNumber, homeless} = this.state
         
         
         return (
@@ -75,8 +75,8 @@ class CreateStudentData extends Component {
                             <label for="fname">* First Name</label>
                         </div>
                         <div class="input-field col s6">
-                            <input class="validate" id="mname" type="text" value={mname} onChange={this.changeHandler}/>
-                            <label for="mname">Middle Name</label>
+                            <input class="validate" id="mName" type="text" value={mName} onChange={this.changeHandler}/>
+                            <label for="mName">Middle Name</label>
                         </div>
                         <div class="input-field col s6">
                             <input class="validate" id="lname" type="text" required value={lname} onChange={this.changeHandler}/>
@@ -134,16 +134,16 @@ class CreateStudentData extends Component {
                     </div>
                     <div class="row">
                         <div class="input-field col s4">
-                            <input class="validate" id="pname" type="text" required value={pname} onChange={this.changeHandler}/>
-                            <label for="pname">* Parent Name</label>  
+                            <input class="validate" id="parentName" type="text" required value={parentName} onChange={this.changeHandler}/>
+                            <label for="parentName">* Parent Name</label>  
                         </div>
                         <div class="input-field col s4">
-                            <input class="validate" id="pemail" type="email" required value={pemail} onChange={this.changeHandler}/>
-                            <label for="pemail">* Parent Email</label>  
+                            <input class="validate" id="pemparentEmailAddressail" type="email" required value={parentEmailAddress} onChange={this.changeHandler}/>
+                            <label for="parentEmailAddress">* Parent Email</label>  
                         </div>
                         <div class="input-field col s4">
-                            <input class="validate" id="p_phone" type="tel" required value={p_phone} onChange={this.changeHandler}/>
-                            <label for="p_phone">* Parent Phone</label>  
+                            <input class="validate" id="parentPhoneNumber" type="tel" required value={parentPhoneNumber} onChange={this.changeHandler}/>
+                            <label for="parentPhoneNumber">* Parent Phone</label>  
                         </div>
                     </div>
                     <button type="submit"  class="btn btn-primary">Submit</button>
