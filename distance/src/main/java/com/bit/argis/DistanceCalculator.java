@@ -13,6 +13,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,17 +23,6 @@ public class DistanceCalculator {
     private RestTemplate restTemplate;
 
     public DistanceCalculator() {
-    }
-
-    public static void main(String[] args) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String,Object> map = mapper.readValue(stops, Map.class);
-        System.out.println(((List)map.get("features")).get(0));
-        ((Map)(((Map)((List)map.get("features")).get(0)).get("geometry"))).put("x", 80);
-        ((Map)(((Map)((List)map.get("features")).get(0)).get("geometry"))).put("y", 90);
-        ((Map)(((Map)((List)map.get("features")).get(1)).get("geometry"))).put("x", 80);
-        ((Map)(((Map)((List)map.get("features")).get(1)).get("geometry"))).put("y", 90);
-        System.out.println(map.toString());
     }
 
     private static String stops = "{\n" +
@@ -87,15 +77,16 @@ public class DistanceCalculator {
 
     }
 
-    public Summary getDistance(String start){
+    public Summary getDistance(String start, String schoolName){
         Map <String, Double> locations = getCoordinates(start);
+        Map<String , String> schoolCoord= new HashMap<>();
+        schoolCoord = schoolXandY(schoolName);
         ObjectMapper mapper = new ObjectMapper();
         Map<String,Object> map = null;
         try {
             map = mapper.readValue(stops, Map.class);
-            System.out.println(((List)map.get("features")).get(0));
-            ((Map)(((Map)((List)map.get("features")).get(0)).get("geometry"))).put("x", -71.480633239951274);
-            ((Map)(((Map)((List)map.get("features")).get(0)).get("geometry"))).put("y", 42.542210343546344);
+            ((Map)(((Map)((List)map.get("features")).get(0)).get("geometry"))).put("x", schoolCoord.get("x"));
+            ((Map)(((Map)((List)map.get("features")).get(0)).get("geometry"))).put("y", schoolCoord.get("y"));
             ((Map)(((Map)((List)map.get("features")).get(1)).get("geometry"))).put("x", locations.get("x").toString());
             ((Map)(((Map)((List)map.get("features")).get(1)).get("geometry"))).put("y", locations.get("y").toString());
         }catch (Exception e){
@@ -114,4 +105,29 @@ public class DistanceCalculator {
                 Total.class);
         return responseEntity.getBody().getDirections().get(0).getSummary();
     }
+
+    private Map<String , String> schoolXandY(String schooleName){
+        Map<String , String> xAndy= new HashMap<>();
+        switch (schooleName.toLowerCase()){
+            case "lhs":
+            xAndy.put("x","-71.507431357869621");
+            xAndy.put("y","42.541200449942238");
+            break;
+            case "lms":
+            xAndy.put("x","-71.48534864722069");
+            xAndy.put("y","42.542769416488142");
+            break;
+            case "rss":
+            xAndy.put("x","-71.484169648720027");
+            xAndy.put("y","42.545477609404116");
+            break;
+            case "sls":
+            xAndy.put("x","-71.457937309266043");
+            xAndy.put("y","42.530918956050158");
+            break;
+        }
+        return xAndy;
+    }
+
+
 }
