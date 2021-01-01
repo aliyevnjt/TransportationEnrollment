@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 @Entity
@@ -15,7 +16,7 @@ public class StudentInfo {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private UUID id;
     @NotNull(message = "First Name is mandatory")
     @Size(min=1, max=30)
     private String fname;
@@ -53,8 +54,16 @@ public class StudentInfo {
     private String unit;
     private boolean homeless;
     private String mName;
-
+    private String enrollmentStatus = "free";
     private LocalDateTime formSubmitTime = LocalDateTime.now();
+
+    public String getEnrollmentStatus() {
+        return enrollmentStatus;
+    }
+
+    public void setEnrollmentStatus(String enrollmentStatus) {
+        this.enrollmentStatus = enrollmentStatus;
+    }
 
     public LocalDateTime getFormSubmitTime() {
         return formSubmitTime;
@@ -128,6 +137,7 @@ public class StudentInfo {
         this.mName = mName;
     }
 
+
     public StudentInfo() {
     }
     public String getZip() {
@@ -186,24 +196,13 @@ public class StudentInfo {
         this.lname = lname;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "StudentInfo{" +
-                "id=" + id +
-                ", fname='" + fname + '\'' +
-                ", lname='" + lname + '\'' +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", distanceFromSchool=" + distanceFromSchool +
-                '}';
-    }
+
 }
