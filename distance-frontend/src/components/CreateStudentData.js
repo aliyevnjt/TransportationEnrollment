@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css/dist/js/materialize.min.js'
+import {grades, schools} from './Data'
 
 class CreateStudentData extends Component {
     componentDidMount(){
@@ -53,22 +54,8 @@ class CreateStudentData extends Component {
     
     render() {
         const {fname, mname, lname, grade, school, address,unit, city, state, zip, pname, pemail, p_phone, homeless} = this.state
-        var grades = [
-            {label:'Choose Grade',value:''},
-            {label:'K',value:'K'},
-            {label:'1',value:'1'},
-            {label:'2',value:'2'},
-            {label:'3',value:'3'},
-            {label:'4',value:'4'},
-            {label:'5',value:'5'},
-            {label:'6',value:'6'},
-            {label:'7',value:'7'},
-            {label:'8',value:'8'},
-            {label:'9',value:'9'},
-            {label:'10',value:'10'},
-            {label:'11',value:'11'},
-            {label:'12',value:'12'}
-        ]
+        
+        
         return (
             <div>
             <div class="container">
@@ -98,38 +85,22 @@ class CreateStudentData extends Component {
                     </div>
                     <div class="row">
                         <div class="input-field col s4">
-                            {/* <select id="grade" required value={grade} onChange={this.changeHandler}>
-                                {grade.map((gr)=> (
+                            <select id="grade" required value={grade} onChange={this.changeHandler}>
+                                {grades.map((gr)=> (
                                     <option value={gr.value}>
                                         {gr.label}
                                     </option>
                                 ))}
-                            </select> */}
-                            <select id="grade" required value={grade} onChange={this.changeHandler}>
-                                <option value="" disabled selected>Choose Grade</option>
-                                <option value="K">K</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                            </select>    
+                            </select>
                             <label for="grade">Grade</label>
                         </div>
                         <div class="input-field col s8">
                             <select id="school" required value={school} onChange={this.changeHandler}>
-                                <option value="" disabled selected>Choose School</option>
-                                <option value="LHS"> LITTLETON HIGH SCHOOL </option>
-                                <option value="LMS"> LITTLETON MIDDLE SCHOOL </option>
-                                <option value="RSS"> RUSSELL STREET SCHOOL </option>
-                                <option value="SLS"> SHAKER LANE SCHOOL </option>
+                                {schools.map((sch)=> (
+                                    <option value={sch.value}>
+                                        {sch.label}
+                                    </option>
+                                ))}
                             </select>    
                             <label for="school">School</label>
                         </div>
