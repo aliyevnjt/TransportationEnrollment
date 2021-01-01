@@ -138,7 +138,7 @@ class CreateStudentData extends Component {
                             <label for="parentName">* Parent Name</label>  
                         </div>
                         <div class="input-field col s4">
-                            <input class="validate" id="pemparentEmailAddressail" type="email" required value={parentEmailAddress} onChange={this.changeHandler}/>
+                            <input class="validate" id="parentEmailAddress" type="email" required value={parentEmailAddress} onChange={this.changeHandler}/>
                             <label for="parentEmailAddress">* Parent Email</label>  
                         </div>
                         <div class="input-field col s4">

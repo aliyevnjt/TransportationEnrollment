@@ -2,7 +2,6 @@ package com.bit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -18,7 +17,7 @@ public class StudentInfo {
     @Column(name = "id", nullable = false)
     private Long id;
     @NotNull(message = "First Name is mandatory")
-    @Size(min=2, max=30)
+    @Size(min=1, max=30)
     private String fname;
     @NotNull(message = "Last Name is mandatory")
     @Size(min = 1, max = 30)
@@ -33,9 +32,9 @@ public class StudentInfo {
     @Size(min = 1, max = 30)
     private String state;
     private double distanceFromSchool;
-    @Size(min = 5, max = 10)
+    @Size(min = 5, max = 11)
     @NotNull(message = "Zip code is mandatory")
-    private String zipCode;
+    private String zip;
     @Size(min = 1, max = 2)
     @NotNull(message = "Grade is mandatory")
     private String grade;
@@ -131,12 +130,12 @@ public class StudentInfo {
 
     public StudentInfo() {
     }
-    public String getZipCode() {
-        return zipCode;
+    public String getZip() {
+        return zip;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 
     public double getDistanceFromSchool() {

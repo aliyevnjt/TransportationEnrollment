@@ -109,19 +109,19 @@ public class DistanceCalculator {
     private Map<String , String> schoolXandY(String schooleName){
         Map<String , String> xAndy= new HashMap<>();
         switch (schooleName.toLowerCase()){
-            case "littleton high school":
+            case "lhs":
             xAndy.put("x","-71.507431357869621");
             xAndy.put("y","42.541200449942238");
             break;
-            case "littleton middle school":
+            case "lms":
             xAndy.put("x","-71.48534864722069");
             xAndy.put("y","42.542769416488142");
             break;
-            case "russell street school":
+            case "rss":
             xAndy.put("x","-71.484169648720027");
             xAndy.put("y","42.545477609404116");
             break;
-            case "shaker lane school":
+            case "sll":
             xAndy.put("x","-71.457937309266043");
             xAndy.put("y","42.530918956050158");
             break;

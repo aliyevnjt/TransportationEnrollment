@@ -22,18 +22,18 @@ public class StudentInfoRestController {
     @PostMapping("/student")
     public StudentInfo calculateDistance(@Valid @RequestBody StudentInfo studentInfo){
         String fullAddress = studentInfo.getAddress() + " " + studentInfo.getCity()
-                + " " + studentInfo.getState() + " " + studentInfo.getZipCode();
+                + " " + studentInfo.getState() + " " + studentInfo.getZip();
         double dist = distanceCalculator.getDistance(fullAddress, studentInfo.getSchool()).getTotalLength();
         studentInfo.setDistanceFromSchool(dist);
         studentRepository.save(studentInfo);
         return studentInfo;
     }
 
-    @GetMapping("/student/{id}")
-    public StudentInfo getById(@PathVariable Long id){
-        StudentInfo studentInfo = studentRepository.getOne(id);
-        return studentInfo;
-    }
+//    @GetMapping("/student/{id}")
+//    public StudentInfo getById(@PathVariable Long id){
+//        StudentInfo studentInfo = studentRepository.getOne(id);
+//        return studentInfo;
+//    }
 
 
 
