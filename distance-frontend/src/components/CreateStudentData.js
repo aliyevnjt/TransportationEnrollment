@@ -18,6 +18,7 @@ class CreateStudentData extends Component {
       this.state = {
          fname:'',
          lname:'',
+         mname:'',
          grade:'',
          school:'',
          address:'',
@@ -51,7 +52,23 @@ class CreateStudentData extends Component {
     }
     
     render() {
-        const {fname, lname, grade, school, address,unit, city, state, zip, pname, pemail, p_phone, homeless} = this.state
+        const {fname, mname, lname, grade, school, address,unit, city, state, zip, pname, pemail, p_phone, homeless} = this.state
+        var grades = [
+            {label:'Choose Grade',value:''},
+            {label:'K',value:'K'},
+            {label:'1',value:'1'},
+            {label:'2',value:'2'},
+            {label:'3',value:'3'},
+            {label:'4',value:'4'},
+            {label:'5',value:'5'},
+            {label:'6',value:'6'},
+            {label:'7',value:'7'},
+            {label:'8',value:'8'},
+            {label:'9',value:'9'},
+            {label:'10',value:'10'},
+            {label:'11',value:'11'},
+            {label:'12',value:'12'}
+        ]
         return (
             <div>
             <div class="container">
@@ -71,12 +88,23 @@ class CreateStudentData extends Component {
                             <label for="fname">* First Name</label>
                         </div>
                         <div class="input-field col s6">
+                            <input class="validate" id="mname" type="text" value={mname} onChange={this.changeHandler}/>
+                            <label for="mname">Middle Name</label>
+                        </div>
+                        <div class="input-field col s6">
                             <input class="validate" id="lname" type="text" required value={lname} onChange={this.changeHandler}/>
                             <label for="lname">* Last Name</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s4">
+                            {/* <select id="grade" required value={grade} onChange={this.changeHandler}>
+                                {grade.map((gr)=> (
+                                    <option value={gr.value}>
+                                        {gr.label}
+                                    </option>
+                                ))}
+                            </select> */}
                             <select id="grade" required value={grade} onChange={this.changeHandler}>
                                 <option value="" disabled selected>Choose Grade</option>
                                 <option value="K">K</option>
@@ -103,7 +131,7 @@ class CreateStudentData extends Component {
                                 <option value="RSS"> RUSSELL STREET SCHOOL </option>
                                 <option value="SLS"> SHAKER LANE SCHOOL </option>
                             </select>    
-                            <label for="grade">Grade</label>
+                            <label for="school">School</label>
                         </div>
                     </div>
                     <div class="row">
@@ -122,10 +150,14 @@ class CreateStudentData extends Component {
                             <label for="city">* City</label>  
                         </div>
                         <div class="input-field col s4">
-                            <input class="validate" disabled id="state" type="text" value="MA"/>
+                            <select id="state" required value={state} onChange={this.changeHandler}>
+                                <option value="" disabled selected>Choose State</option>
+                                <option value="MA"> MA </option>
+                            </select>    
+                            <label for="state">* State</label>
                         </div>
                         <div class="input-field col s4">
-                            <input class="validate" id="zip" type="number" data-length="5" value={zip} onChange={this.changeHandler}/>
+                            <input class="validate" id="zip" type="text" data-length="10" value={zip} onChange={this.changeHandler}/>
                             <label for="zip">* Zip Code</label>  
                         </div>
                     </div>
@@ -139,7 +171,6 @@ class CreateStudentData extends Component {
                             <label for="pemail">* Parent Email</label>  
                         </div>
                         <div class="input-field col s4">
-                            <i class="material-icons prefix">phone</i>
                             <input class="validate" id="p_phone" type="tel" required value={p_phone} onChange={this.changeHandler}/>
                             <label for="p_phone">* Parent Phone</label>  
                         </div>
