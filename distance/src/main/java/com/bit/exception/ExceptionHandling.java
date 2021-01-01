@@ -1,18 +1,22 @@
 package com.bit.exception;
 
+import com.bit.model.StudentInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-@CrossOrigin(origins = "http://localhost:3000")
+@ControllerAdvice
 public class ExceptionHandling {
+
+
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -21,6 +25,7 @@ public class ExceptionHandling {
             String errorMessage = error.getDefaultMessage() ;
             errors.put(fieldName, errorMessage);
         });
+
         return errors;
     }
 }
