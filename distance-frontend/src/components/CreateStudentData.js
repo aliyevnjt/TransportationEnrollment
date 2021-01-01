@@ -1,14 +1,33 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import 'materialize-css/dist/css/materialize.min.css'
+import M from 'materialize-css/dist/js/materialize.min.js'
+
 class CreateStudentData extends Component {
+    componentDidMount(){
+        console.log(M);
+        M.AutoInit();
+        // document.addEventListener('DOMContentLoaded', function(){
+        //     var textNeedCount = document.querySelectorAll('#zip');
+        //     M.CharacterCounter.init(textNeedCount);
+        // })
+    }
     constructor(props) {
       super(props)
     
       this.state = {
          fname:'',
          lname:'',
-         address:''
-
+         grade:'',
+         school:'',
+         address:'',
+         unit:'',
+         city:'',
+         state:'MA',
+         zip:'',
+         pname:'',
+         pemail:'',
+         p_phone:'',
       };
     };
 
@@ -32,50 +51,102 @@ class CreateStudentData extends Component {
     }
     
     render() {
-        const {fname, lname, address} = this.state
+        const {fname, lname, grade, school, address,unit, city, state, zip, pname, pemail, p_phone, homeless} = this.state
         return (
             <div>
-                <div class="container">
-                    <img width="650" src="https://www.littletonps.org/files/Images/LPS%20Logo%20-%20large%20text.jpg" class="img-fluid" alt="Responsive Image" /> 
-                </div>
-                <div class="container">
-                    <h1 class="yellow-text text-darken-2 center-align csshook">Transportation Form</h1>
-                </div>
-                <form onSubmit={this.submitHandler}>
-                    <div class="container">
-                        <div class="mb-3 row">
-                            <label class="col-form-label col-sm-2" for="fname">First Name</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" placeholder="John" id="fname" type="text" value={fname} onChange={this.changeHandler}/>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label class="col-form-label col-sm-2" for="lname">Last Name</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" placeholder="Smith" id="lname" type="text" value={lname} onChange={this.changeHandler}/>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label class="col-form-label col-sm-2" for="address">Address</label>  
-                            <div class="col-sm-10">
-                                <input class="form-control" placeholder="123 Main Street Boston MA" id="address" type="text" value={address} onChange={this.changeHandler}/>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-sm-12">
-                                <select class="form-select form-select-lg" aria-label=".form-select-lg" id="schoolName">
-                                    <option value="" disabled selected>Choose school</option>
-                                    <option value="LHS"> LITTLETON HIGH SCHOOL </option>
-                                    <option value="LMS"> LITTLETON MIDDLE SCHOOL </option>
-                                    <option value="RSS"> RUSSELL STREET SCHOOL </option>
-                                    <option value="SLS"> SHAKER LANE SCHOOL </option>
-                                </select>
-                            </div>
-                        </div>
-                       
+            <div class="container">
+                <div class="row center-align">
+                    <div class="col s12">
+                        <img width="450" src="https://www.littletonps.org/files/Images/LPS%20Logo%20-%20large%20text.jpg" /> 
+                        <h1 class="indigo-text darken-4 center-align">Transportation Form</h1>
                     </div>
-                        <button type="submit"  class="btn btn-primary">Submit</button>
+                </div>    
+
+ 
+                    
+                <form class="col s12" onSubmit={this.submitHandler}>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input class="validate" id="fname" type="text" required value={fname} onChange={this.changeHandler}/>
+                            <label for="fname">* First Name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input class="validate" id="lname" type="text" required value={lname} onChange={this.changeHandler}/>
+                            <label for="lname">* Last Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <select id="grade" required value={grade} onChange={this.changeHandler}>
+                                <option value="" disabled selected>Choose Grade</option>
+                                <option value="K">K</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>    
+                            <label for="grade">Grade</label>
+                        </div>
+                        <div class="input-field col s8">
+                            <select id="school" required value={school} onChange={this.changeHandler}>
+                                <option value="" disabled selected>Choose School</option>
+                                <option value="LHS"> LITTLETON HIGH SCHOOL </option>
+                                <option value="LMS"> LITTLETON MIDDLE SCHOOL </option>
+                                <option value="RSS"> RUSSELL STREET SCHOOL </option>
+                                <option value="SLS"> SHAKER LANE SCHOOL </option>
+                            </select>    
+                            <label for="grade">Grade</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s10">
+                            <input class="validate" id="address" type="text" required value={address} onChange={this.changeHandler}/>
+                            <label for="address">* Address</label>  
+                        </div>
+                        <div class="input-field col s2">
+                            <input class="validate" id="unit" type="text" value={unit} onChange={this.changeHandler}/>
+                            <label for="unit">Unit/Apt</label>  
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input class="validate" id="city" type="text" required value={city} onChange={this.changeHandler}/>
+                            <label for="city">* City</label>  
+                        </div>
+                        <div class="input-field col s4">
+                            <input class="validate" disabled id="state" type="text" value="MA"/>
+                        </div>
+                        <div class="input-field col s4">
+                            <input class="validate" id="zip" type="number" data-length="5" value={zip} onChange={this.changeHandler}/>
+                            <label for="zip">* Zip Code</label>  
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input class="validate" id="pname" type="text" required value={pname} onChange={this.changeHandler}/>
+                            <label for="pname">* Parent Name</label>  
+                        </div>
+                        <div class="input-field col s4">
+                            <input class="validate" id="pemail" type="email" required value={pemail} onChange={this.changeHandler}/>
+                            <label for="pemail">* Parent Email</label>  
+                        </div>
+                        <div class="input-field col s4">
+                            <i class="material-icons prefix">phone</i>
+                            <input class="validate" id="p_phone" type="tel" required value={p_phone} onChange={this.changeHandler}/>
+                            <label for="p_phone">* Parent Phone</label>  
+                        </div>
+                    </div>
+                    <button type="submit"  class="btn btn-primary">Submit</button>
                 </form>
+            </div>
             </div>
         );
     }
