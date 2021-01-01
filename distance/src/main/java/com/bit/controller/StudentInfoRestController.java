@@ -23,7 +23,7 @@ public class StudentInfoRestController {
     public StudentInfo calculateDistance(@Valid @RequestBody StudentInfo studentInfo){
         String fullAddress = studentInfo.getAddress() + " " + studentInfo.getCity()
                 + " " + studentInfo.getState() + " " + studentInfo.getZipCode();
-        double dist = distanceCalculator.getDistance(fullAddress).getTotalLength();
+        double dist = distanceCalculator.getDistance(fullAddress, studentInfo.getSchool()).getTotalLength();
         studentInfo.setDistanceFromSchool(dist);
         studentRepository.save(studentInfo);
         return studentInfo;
