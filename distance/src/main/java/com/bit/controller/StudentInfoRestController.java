@@ -27,7 +27,12 @@ public class StudentInfoRestController {
         String fullAddress = studentInfo.getAddress() + " " + studentInfo.getCity()
                 + " " + studentInfo.getState() + " " + studentInfo.getZip();
         double dist = distanceCalculator.getDistance(fullAddress, studentInfo.getSchool()).getTotalLength();
-        studentInfo.setDistanceFromSchool(dist);
+        studentInfo.setDistanceFromSchool(round(dist,2));
+        if(studentInfo.getDistanceFromSchool() > 2){
+            studentInfo.setEnrollmentStatus("free");
+        }else {
+            studentInfo.setEnrollmentStatus("paid");
+        }
         studentRepository.save(studentInfo);
         return new ResponseEntity(studentInfo, HttpStatus.CREATED);
     }
@@ -37,6 +42,16 @@ public class StudentInfoRestController {
         StudentInfo studentInfo = studentRepository.getOne(id);
         return studentInfo;
     }
+
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
+
 
 
 

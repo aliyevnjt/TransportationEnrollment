@@ -54,7 +54,7 @@ public class StudentInfo {
     private String unit;
     private boolean homeless;
     private String mName;
-    private String enrollmentStatus = "free";
+    private String enrollmentStatus;
     private LocalDateTime formSubmitTime = LocalDateTime.now();
 
     public String getEnrollmentStatus() {
