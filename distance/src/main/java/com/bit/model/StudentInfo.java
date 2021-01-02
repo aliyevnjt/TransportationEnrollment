@@ -51,6 +51,7 @@ public class StudentInfo {
     @Size(min = 1, max = 15)
     @NotNull(message = "Parent Name is mandatory")
     private String parentPhoneNumber;
+    @Size(min = 0, max = 10)
     private String unit;
     private boolean homeless;
     private String mName;
