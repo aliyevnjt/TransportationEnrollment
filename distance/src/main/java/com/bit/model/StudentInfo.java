@@ -54,10 +54,13 @@ public class StudentInfo {
     @Size(min = 0, max = 10)
     private String unit;
     private boolean homeless;
+    @Size(min = 0, max = 15)
     private String mName;
     private String enrollmentStatus;
     private LocalDateTime formSubmitTime = LocalDateTime.now();
 
+    public StudentInfo() {
+    }
     public String getEnrollmentStatus() {
         return enrollmentStatus;
     }
@@ -70,83 +73,40 @@ public class StudentInfo {
         return formSubmitTime;
     }
 
-    public void setFormSubmitTime(LocalDateTime formSubmitTime) {
-        this.formSubmitTime = formSubmitTime;
-    }
-
     public String getGrade() {
         return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
     }
 
     public String getSchool() {
         return school;
     }
 
-    public void setSchool(String school) {
-        this.school = school;
-    }
-
     public String getParentName() {
         return parentName;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
     }
 
     public String getParentEmailAddress() {
         return parentEmailAddress;
     }
 
-    public void setParentEmailAddress(String parentEmailAddress) {
-        this.parentEmailAddress = parentEmailAddress;
-    }
-
     public String getParentPhoneNumber() {
         return parentPhoneNumber;
-    }
-
-    public void setParentPhoneNumber(String parentPhoneNumber) {
-        this.parentPhoneNumber = parentPhoneNumber;
     }
 
     public String getUnit() {
         return unit;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
     public boolean isHomeless() {
         return homeless;
-    }
-
-    public void setHomeless(boolean homeless) {
-        this.homeless = homeless;
     }
 
     public String getmName() {
         return mName;
     }
 
-    public void setmName(String mName) {
-        this.mName = mName;
-    }
-
-
-    public StudentInfo() {
-    }
     public String getZip() {
         return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
     }
 
     public double getDistanceFromSchool() {
@@ -161,48 +121,24 @@ public class StudentInfo {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getCity() {
         return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public String getState() {
         return state;
     }
 
-    public void setState(String state) {
-        this.state = state;
-    }
-
     public String getFname() {
         return fname;
-    }
-
-    public void setFname(String fname) {
-        this.fname = fname;
     }
 
     public String getLname() {
         return lname;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
-    }
-
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
 
