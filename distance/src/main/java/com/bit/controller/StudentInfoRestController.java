@@ -28,10 +28,17 @@ public class StudentInfoRestController {
                 + " " + studentInfo.getState() + " " + studentInfo.getZip();
         double dist = distanceCalculator.getDistance(fullAddress, studentInfo.getSchool()).getTotalLength();
         studentInfo.setDistanceFromSchool(round(dist,2));
-        if(studentInfo.getDistanceFromSchool() > 2){
-            studentInfo.setEnrollmentStatus("free");
-        }else {
+        String grade = studentInfo.getGrade();
+        if(grade.equals("7") || grade.equals("8") || grade.equals("8")
+                || grade.equals("9") || grade.equals("10") || grade.equals("11") || grade.equals("12")){
             studentInfo.setEnrollmentStatus("paid");
+        }
+        else {
+            if(studentInfo.getDistanceFromSchool() > 2){
+                studentInfo.setEnrollmentStatus("free");
+            }else {
+                studentInfo.setEnrollmentStatus("paid");
+            }
         }
         studentRepository.save(studentInfo);
         return new ResponseEntity(studentInfo, HttpStatus.CREATED);
