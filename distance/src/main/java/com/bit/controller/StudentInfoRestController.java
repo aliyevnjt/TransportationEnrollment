@@ -29,8 +29,8 @@ public class StudentInfoRestController {
         double dist = distanceCalculator.getDistance(fullAddress, studentInfo.getSchool()).getTotalLength();
         studentInfo.setDistanceFromSchool(round(dist,2));
         String grade = studentInfo.getGrade();
-        if(grade.equals("7") || grade.equals("8") || grade.equals("8")
-                || grade.equals("9") || grade.equals("10") || grade.equals("11") || grade.equals("12")){
+        if(grade.equals("7") || grade.equals("8") || grade.equals("9")
+                || grade.equals("10") || grade.equals("11") || grade.equals("12")){
             studentInfo.setEnrollmentStatus("paid");
         }
         else {
