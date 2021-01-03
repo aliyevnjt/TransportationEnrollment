@@ -1,8 +1,19 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import "materialize-css/dist/css/materialize.min.css";
-import M from "materialize-css/dist/js/materialize.min.js";
+import StripeCheckout from "react-stripe-checkout";
+
+async function handleToken(token, addresses) {
+  console.log({ token, addresses });
+}
 
 class PaymentPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fee: 650,
+      name: "Transportation Fee",
+    };
+  }
   render() {
     return (
       <div class="container">
@@ -13,6 +24,14 @@ class PaymentPage extends Component {
             </h2>
           </div>
         </div>
+        <StripeCheckout
+          stripeKey="pk_test_51I5QOxJuvhMix0vIzNnxK95fD4KadqVex6UylU7RG0jUUYQW3hpWF2rOjUonbpceQwtM7RGZ4xSrDvL5BY07a1R300DBtO4EeD"
+          token={handleToken}
+          billingAddress
+          shippingAddress
+          amount={this.state.fee * 100}
+          name={this.state.name}
+        />
       </div>
     );
   }
