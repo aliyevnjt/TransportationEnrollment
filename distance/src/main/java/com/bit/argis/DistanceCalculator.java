@@ -121,13 +121,15 @@ public class DistanceCalculator {
             xAndy.put("x","-71.484169648720027");
             xAndy.put("y","42.545477609404116");
             break;
-            case "sls":
+            case "sll":
             xAndy.put("x","-71.457937309266043");
             xAndy.put("y","42.530918956050158");
             break;
         }
         return xAndy;
     }
+
+
 
 
 }

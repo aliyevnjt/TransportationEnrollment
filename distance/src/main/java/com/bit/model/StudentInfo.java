@@ -2,10 +2,10 @@ package com.bit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 @Entity
@@ -16,9 +16,9 @@ public class StudentInfo {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private UUID id;
     @NotNull(message = "First Name is mandatory")
-    @Size(min=2, max=30)
+    @Size(min=1, max=30)
     private String fname;
     @NotNull(message = "Last Name is mandatory")
     @Size(min = 1, max = 30)
@@ -33,9 +33,9 @@ public class StudentInfo {
     @Size(min = 1, max = 30)
     private String state;
     private double distanceFromSchool;
-    @Size(min = 5, max = 10)
+    @Size(min = 5, max = 11)
     @NotNull(message = "Zip code is mandatory")
-    private String zipCode;
+    private String zip;
     @Size(min = 1, max = 2)
     @NotNull(message = "Grade is mandatory")
     private String grade;
@@ -51,92 +51,62 @@ public class StudentInfo {
     @Size(min = 1, max = 15)
     @NotNull(message = "Parent Name is mandatory")
     private String parentPhoneNumber;
+    @Size(min = 0, max = 10)
     private String unit;
     private boolean homeless;
+    @Size(min = 0, max = 15)
     private String mName;
-
+    private String enrollmentStatus;
     private LocalDateTime formSubmitTime = LocalDateTime.now();
+
+    public StudentInfo() {
+    }
+    public String getEnrollmentStatus() {
+        return enrollmentStatus;
+    }
+
+    public void setEnrollmentStatus(String enrollmentStatus) {
+        this.enrollmentStatus = enrollmentStatus;
+    }
 
     public LocalDateTime getFormSubmitTime() {
         return formSubmitTime;
-    }
-
-    public void setFormSubmitTime(LocalDateTime formSubmitTime) {
-        this.formSubmitTime = formSubmitTime;
     }
 
     public String getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
     public String getSchool() {
         return school;
-    }
-
-    public void setSchool(String school) {
-        this.school = school;
     }
 
     public String getParentName() {
         return parentName;
     }
 
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
-    }
-
     public String getParentEmailAddress() {
         return parentEmailAddress;
-    }
-
-    public void setParentEmailAddress(String parentEmailAddress) {
-        this.parentEmailAddress = parentEmailAddress;
     }
 
     public String getParentPhoneNumber() {
         return parentPhoneNumber;
     }
 
-    public void setParentPhoneNumber(String parentPhoneNumber) {
-        this.parentPhoneNumber = parentPhoneNumber;
-    }
-
     public String getUnit() {
         return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
     }
 
     public boolean isHomeless() {
         return homeless;
     }
 
-    public void setHomeless(boolean homeless) {
-        this.homeless = homeless;
-    }
-
     public String getmName() {
         return mName;
     }
 
-    public void setmName(String mName) {
-        this.mName = mName;
-    }
-
-    public StudentInfo() {
-    }
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public String getZip() {
+        return zip;
     }
 
     public double getDistanceFromSchool() {
@@ -151,60 +121,25 @@ public class StudentInfo {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getCity() {
         return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public String getState() {
         return state;
     }
 
-    public void setState(String state) {
-        this.state = state;
-    }
-
     public String getFname() {
         return fname;
-    }
-
-    public void setFname(String fname) {
-        this.fname = fname;
     }
 
     public String getLname() {
         return lname;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
-    }
-
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    @Override
-    public String toString() {
-        return "StudentInfo{" +
-                "id=" + id +
-                ", fname='" + fname + '\'' +
-                ", lname='" + lname + '\'' +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", distanceFromSchool=" + distanceFromSchool +
-                '}';
-    }
 }
