@@ -22,6 +22,8 @@ public class StudentInfoRestController {
     @Autowired
     private StudentRepository studentRepository;
 
+    private StudentInfo studentInfo;
+
     @PostMapping("/student")
     public ResponseEntity calculateDistance(@Valid @RequestBody StudentInfo studentInfo){
         String fullAddress = studentInfo.getAddress() + " " + studentInfo.getCity()
@@ -40,8 +42,14 @@ public class StudentInfoRestController {
                 studentInfo.setEnrollmentStatus("paid");
             }
         }
-        studentRepository.save(studentInfo);
+        //studentRepository.save(studentInfo);
+        this.studentInfo = studentInfo;
         return new ResponseEntity(studentInfo, HttpStatus.CREATED);
+    }
+    @PostMapping("/submit")
+    public StudentInfo submitForm(){
+        studentRepository.save(studentInfo);
+        return studentInfo;
     }
 
     @GetMapping("/student/{id}")
@@ -49,6 +57,7 @@ public class StudentInfoRestController {
         StudentInfo studentInfo = studentRepository.getOne(id);
         return studentInfo;
     }
+
 
     private static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();

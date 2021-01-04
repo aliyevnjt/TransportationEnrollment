@@ -4,6 +4,8 @@ import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
 import { grades, schools } from "./Data";
 import { Redirect } from "react-router-dom";
+import { withRouter } from 'react-router-dom'
+
 
 const api = axios.create({
   baseURL: "http://localhost:8080/student",
@@ -52,8 +54,10 @@ class CreateStudentData extends Component {
     this.setState({ resp: res });
     if (this.state.resp.data.enrollmentStatus === "free") {
       console.log(this.state.resp.data.enrollmentStatus);
-      this.props.history.push("/freeReg");
-    } else this.props.history.push("/payment");
+      this.props.history.push("/submit");
+    } else {
+      this.props.history.push("/payment");
+    }
   };
 
   render() {
@@ -250,4 +254,4 @@ function errorMessage(statusCode) {
   this.props.history.push("/errmsg");
 }
 
-export default CreateStudentData;
+export default withRouter(CreateStudentData);
