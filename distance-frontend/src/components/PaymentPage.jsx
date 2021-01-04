@@ -28,9 +28,9 @@ class PaymentPage extends Component {
             </h2>
           </div>
         </div>
-        <Elements stripe={stripePromise}>
+        {/* <Elements stripe={stripePromise}>
           <MyCheckoutForm />
-        </Elements>
+        </Elements> */}
         {/* <StripeCheckout
           stripeKey="pk_test_51I5QOxJuvhMix0vIzNnxK95fD4KadqVex6UylU7RG0jUUYQW3hpWF2rOjUonbpceQwtM7RGZ4xSrDvL5BY07a1R300DBtO4EeD"
           token={handleToken}
