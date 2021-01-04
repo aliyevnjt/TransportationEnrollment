@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
@@ -8,6 +8,10 @@ import { Redirect } from "react-router-dom";
 const api = axios.create({
   baseURL: "http://localhost:8080/student",
 });
+
+function errorMessage(statusCode) {
+  this.props.history.push("/errmsg");
+}
 
 class CreateStudentData extends Component {
   componentDidMount() {
@@ -244,10 +248,6 @@ class CreateStudentData extends Component {
       </div>
     );
   }
-}
-
-function errorMessage(statusCode) {
-  this.props.history.push("/errmsg");
 }
 
 export default CreateStudentData;
