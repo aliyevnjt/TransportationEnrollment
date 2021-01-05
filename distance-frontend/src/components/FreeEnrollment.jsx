@@ -4,7 +4,19 @@ import M from "materialize-css/dist/js/materialize.min.js";
 
 import axios from "axios";
 
+const api = axios.create({
+  baseURL: "http://localhost:8080/submit",
+});
+
 class FreeEnrollment extends Component {
+  submitHandler = (e) => {
+    e.preventDefault();
+    try {
+      api.post("/", this.state);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   render() {
     return (
       <div class="container">
@@ -16,16 +28,16 @@ class FreeEnrollment extends Component {
           Please note that your enrollment is not submitted until you submit
           this form.
         </p>
-        <button type="submit" class="btn-lg btn-primary" onClick={enroll}>
+        <button
+          type="submit"
+          class="btn-lg btn-primary"
+          onClick={this.submitHandler}
+        >
           Complete Enrollment
         </button>
       </div>
     );
   }
-}
-
-function enroll() {
-  console.log({ status: "enroll" });
 }
 
 export default FreeEnrollment;
