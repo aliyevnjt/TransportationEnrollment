@@ -9,15 +9,14 @@ const api = axios.create({
 });
 
 class FreeEnrollment extends Component {
-  submitHandler = async (e) => {
+  submitHandler = (e) => {
     e.preventDefault();
-    console.log(this.state);
-    let res = await api
-      .post("/", this.state)
-
-    this.setState({ resp: res });
+    try {
+      api.post("/", this.state);
+    } catch (error) {
+      console.log(error);
+    }
   };
-  
   render() {
     return (
       <div class="container" >
@@ -29,16 +28,16 @@ class FreeEnrollment extends Component {
           Please note that your enrollment is not submitted until you submit
           this form.
         </p>
-        <button type="submit" class="btn-lg btn-primary" onClick={this.submitHandler}>
+        <button
+          type="submit"
+          class="btn-lg btn-primary"
+          onClick={this.submitHandler}
+        >
           Complete Enrollment
         </button>
       </div>
     );
   }
-}
-
-function enroll() {
-  console.log({ status: "enroll" });
 }
 
 export default FreeEnrollment;

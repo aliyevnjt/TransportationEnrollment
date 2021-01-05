@@ -1,30 +1,27 @@
-import React, { Component } from "react"
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 import CreateStudentData from "./components/CreateStudentData";
-import {BrowserRouter as Router} from 'react-router-dom';
-import Route from 'react-router-dom/Route';
-import FreeEnrollment from './components/FreeEnrollment'
-import ErrorMessage from './components/ErrorMessage'
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Header from "./components/Header";
+import ErrorMessage from "./components/ErrorMessage";
+import FreeEnrollment from "./components/FreeEnrollment";
+import PaymentPage from "./components/PaymentPage";
+import Test from "./components/test";
 
 class App extends Component {
   render() {
     return (
       <Router>
-      <div className="App">  
-        {/* <CreateStudentData /> */}
-        <Route path="/" exact render = {
-          () => {return (<CreateStudentData />);}
-        } />
-        <Route path="/student" exact render = {
-          () => {return (<CreateStudentData />);}
-        } />
-        <Route path="/submit" exact render = {
-          () => {return (<FreeEnrollment />);}
-        } />
-        <Route path="/error" exact render = {
-          () => {return (<ErrorMessage />);}
-        } />
-      </div>
+        <div className="App">
+          <Header />
+          <Switch>
+            <Route path="/" exact component={CreateStudentData} />
+            <Route path="/errmsg" component={ErrorMessage} />
+            <Route path="/freeReg" component={FreeEnrollment} />
+            <Route path="/payment" component={PaymentPage} />
+            <Route path="/test" component={Test} />
+          </Switch>
+        </div>
       </Router>
     );
   }

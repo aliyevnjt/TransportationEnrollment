@@ -1,6 +1,7 @@
 import React, { Component, useState } from "react";
 import "materialize-css/dist/css/materialize.min.css";
-import StripeCheckout from "react-stripe-checkout";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 async function handleToken(token, addresses) {
   console.log({ token, addresses });
@@ -15,6 +16,9 @@ class PaymentPage extends Component {
     };
   }
   render() {
+    const stripePromise = loadStripe(
+      "pk_test_JJ1eMdKN0Hp4UFJ6kWXWO4ix00jtXzq5XG"
+    );
     return (
       <div class="container">
         <div class="row center-align">
@@ -24,14 +28,17 @@ class PaymentPage extends Component {
             </h2>
           </div>
         </div>
-        <StripeCheckout
+        {/* <Elements stripe={stripePromise}>
+          <MyCheckoutForm />
+        </Elements> */}
+        {/* <StripeCheckout
           stripeKey="pk_test_51I5QOxJuvhMix0vIzNnxK95fD4KadqVex6UylU7RG0jUUYQW3hpWF2rOjUonbpceQwtM7RGZ4xSrDvL5BY07a1R300DBtO4EeD"
           token={handleToken}
           billingAddress
           shippingAddress
           amount={this.state.fee * 100}
           name={this.state.name}
-        />
+        /> */}
       </div>
     );
   }
