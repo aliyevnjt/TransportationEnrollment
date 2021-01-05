@@ -11,7 +11,6 @@ import Test from "./components/test";
 class App extends Component {
   render() {
     return (
-      // <div>Hello</div>
       <Router>
         <div className="App">
           <Header />

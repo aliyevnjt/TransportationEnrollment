@@ -19,7 +19,7 @@ class FreeEnrollment extends Component {
   };
   render() {
     return (
-      <div class="container">
+      <div class="container" >
         <p class="flow-text">
           Thank you for for your interest in our transportation program. Please
           click the enroll button to finish your enrollment
