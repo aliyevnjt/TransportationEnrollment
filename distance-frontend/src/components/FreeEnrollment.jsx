@@ -12,14 +12,14 @@ class FreeEnrollment extends Component {
   submitHandler = (e) => {
     e.preventDefault();
     try {
-      api.post("/", this.state);
+      console.log(api.post("/", this.state));
     } catch (error) {
       console.log(error);
     }
   };
   render() {
     return (
-      <div class="container" >
+      <div class="container">
         <p class="flow-text">
           Thank you for for your interest in our transportation program. Please
           click the enroll button to finish your enrollment
