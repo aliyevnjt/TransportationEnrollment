@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import ErrorMessage from "./components/ErrorMessage";
 import FreeEnrollment from "./components/FreeEnrollment";
 import PaymentPage from "./components/PaymentPage";
+import Test from "./components/test";
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
             <Route path="/errmsg" component={ErrorMessage} />
             <Route path="/freeReg" component={FreeEnrollment} />
             <Route path="/payment" component={PaymentPage} />
+            <Route path="/test" component={Test} />
           </Switch>
         </div>
       </Router>

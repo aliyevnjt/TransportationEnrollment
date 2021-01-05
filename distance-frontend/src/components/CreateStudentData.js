@@ -126,12 +126,15 @@ class CreateStudentData extends Component {
                   required
                   value={grade}
                   onChange={this.changeHandler}
+                  required
                 >
+                  <option value="">Choose Grade</option>
+
                   {grades.map((gr) => (
                     <option value={gr.value}>{gr.label}</option>
                   ))}
                 </select>
-                <label for="grade">Grade</label>
+                <label for="grade">* Grade</label>
               </div>
               <div class="input-field col s8">
                 <select
@@ -139,7 +142,10 @@ class CreateStudentData extends Component {
                   required
                   value={school}
                   onChange={this.changeHandler}
+                  required
                 >
+                  <option value="">Choose School</option>
+
                   {schools.map((sch) => (
                     <option value={sch.value}>{sch.label}</option>
                   ))}
@@ -204,6 +210,7 @@ class CreateStudentData extends Component {
                   data-length="10"
                   value={zip}
                   onChange={this.changeHandler}
+                  required
                 />
                 <label for="zip">* Zip Code</label>
               </div>
