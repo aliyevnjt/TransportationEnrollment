@@ -1,15 +1,18 @@
 package com.bit.controller;
 
 
-import com.bit.argis.DistanceCalculator;
+import com.bit.model.StudentInfoRetrieve;
+import com.bit.services.DistanceCalculatorService;
 import com.bit.model.StudentInfo;
 import com.bit.repo.StudentRepository;
+import com.bit.services.StudentInfoRetrieveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
+
 
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -17,18 +20,21 @@ import javax.validation.Valid;
 public class StudentInfoRestController {
 
     @Autowired
-    private DistanceCalculator distanceCalculator;
+    private DistanceCalculatorService distanceCalculatorService;
 
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private StudentInfoRetrieveService studentInfoRetrieveService;
+
     private StudentInfo studentInfo;
 
     @PostMapping("/student")
-    public ResponseEntity calculateDistance(@Valid @RequestBody StudentInfo studentInfo){
+    public ResponseEntity getDistance(@Valid @RequestBody StudentInfo studentInfo){
         String fullAddress = studentInfo.getAddress() + " " + studentInfo.getCity()
                 + " " + studentInfo.getState() + " " + studentInfo.getZip();
-        double dist = distanceCalculator.getDistance(fullAddress, studentInfo.getSchool()).getTotalLength();
+        double dist = distanceCalculatorService.getDistance(fullAddress, studentInfo.getSchool()).getTotalLength();
         studentInfo.setDistanceFromSchool(round(dist,2));
         String grade = studentInfo.getGrade();
         if(grade.equals("7") || grade.equals("8") || grade.equals("9")
@@ -58,15 +64,23 @@ public class StudentInfoRestController {
         return studentInfo;
     }
 
+    @PostMapping("/student/request")
+    public List<StudentInfo> getStudentInfo(@Valid @RequestBody StudentInfoRetrieve studentInfoRetrieve){
+        return studentInfoRetrieveService.retrieveMatchingStudents(studentInfoRetrieve);
+    }
+
 
     private static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
-
         long factor = (long) Math.pow(10, places);
         value = value * factor;
         long tmp = Math.round(value);
         return (double) tmp / factor;
     }
+
+
+
+
 
 
 

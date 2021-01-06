@@ -1,6 +1,6 @@
 package com;
 
-import com.bit.argis.DistanceCalculator;
+import com.bit.services.DistanceCalculatorService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,11 +12,6 @@ public class DistanceApplication {
 	@Bean
 	public RestTemplate getRestTemplate(){
 		return new RestTemplate();
-	}
-
-	@Bean
-	public DistanceCalculator getDistanceCalculator(){
-		return new DistanceCalculator();
 	}
 
 

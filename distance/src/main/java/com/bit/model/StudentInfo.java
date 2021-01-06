@@ -141,5 +141,27 @@ public class StudentInfo {
         return id;
     }
 
-
+    @Override
+    public String toString() {
+        return "StudentInfo{" +
+                "id=" + id +
+                ", fname='" + fname + '\'' +
+                ", lname='" + lname + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", distanceFromSchool=" + distanceFromSchool +
+                ", zip='" + zip + '\'' +
+                ", grade='" + grade + '\'' +
+                ", school='" + school + '\'' +
+                ", parentName='" + parentName + '\'' +
+                ", parentEmailAddress='" + parentEmailAddress + '\'' +
+                ", parentPhoneNumber='" + parentPhoneNumber + '\'' +
+                ", unit='" + unit + '\'' +
+                ", homeless=" + homeless +
+                ", mName='" + mName + '\'' +
+                ", enrollmentStatus='" + enrollmentStatus + '\'' +
+                ", formSubmitTime=" + formSubmitTime +
+                '}';
+    }
 }
