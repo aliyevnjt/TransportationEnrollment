@@ -24,8 +24,6 @@ const schools = [
 const keys = {
   publishableKey:
     "pk_test_51I5QOxJuvhMix0vIzNnxK95fD4KadqVex6UylU7RG0jUUYQW3hpWF2rOjUonbpceQwtM7RGZ4xSrDvL5BY07a1R300DBtO4EeD",
-  secretKey:
-    "sk_test_51I5QOxJuvhMix0vIOQyOOupcFxWcybrKZmJ1ndjkKlJg0gy7ZinyIlK7zPl1HAYhv9mbGSXdUS48ZkvldCuDR7po00nSxeHBwq",
 };
 
 const appUrl = { baseline: "http://localhost:8080" };
