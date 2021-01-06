@@ -32,9 +32,9 @@ class AdminSearch extends Component {
 
   submitHandler = async (e) => {
     e.preventDefault();
-    console.log("buttonworks");
+    console.log(this.state);
     try {
-      const data = await api.get(this.state);
+      const data = await api.post("/", this.state);
       console.log(data);
     } catch (err) {
       console.log(err);
@@ -71,7 +71,11 @@ class AdminSearch extends Component {
               <label for="lname">Last Name</label>
             </div>
             <div class="col input-field s4">
-              <select id="grade" value={grade} onChange={this.changeHandler}>
+              <select
+                id="enrollmentStatus"
+                value={enrollmentStatus}
+                onChange={this.changeHandler}
+              >
                 <option value="">Free/Paid</option>
                 <option value="free">Free</option>
                 <option value="paid">Paid</option>
@@ -88,7 +92,7 @@ class AdminSearch extends Component {
                 ))}
               </select>
             </div>
-            <div class="col input-field s4">
+            <div class="col input-field s6">
               <select id="school" value={school} onChange={this.changeHandler}>
                 <option value="">Choose School</option>
 

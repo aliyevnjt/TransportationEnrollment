@@ -5,17 +5,19 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: appUrl + "/submit",
+  baseURL: appUrl.baseline + "/submit",
 });
 
 class FreeEnrollment extends Component {
   componentDidMount = () => {
-    //console.log(this.props.history.location.state);
+    console.log(this.props.history.location.state);
   };
   submitHandler = (e) => {
     e.preventDefault();
+    const { student } = this.props.location;
+    console.log(student);
     try {
-      console.log(api.post("/", this.state));
+      console.log(api.post("/", student));
     } catch (error) {
       console.log(error);
     }
