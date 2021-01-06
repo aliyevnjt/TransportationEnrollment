@@ -12,6 +12,7 @@ import SuccessPage from "./components/SuccessPage";
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css";
+import AdminSearch from "./components/AdminSearch";
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
             <Route path="/success" component={SuccessPage} />
             <Route path="/test" component={Test} />
             <Route path="/test2" component={Test2} />
+            <Route path="/admin" component={AdminSearch} />
           </Switch>
         </div>
       </Router>

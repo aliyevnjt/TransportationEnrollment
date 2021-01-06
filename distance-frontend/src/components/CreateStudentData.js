@@ -93,7 +93,7 @@ class CreateStudentData extends Component {
         <div class="container">
           <form class="col s12" onSubmit={this.submitHandler}>
             <div class="row">
-              <div class="input-field col s6">
+              <div class="input-field col s4">
                 <input
                   class="validate"
                   id="fname"
@@ -104,7 +104,7 @@ class CreateStudentData extends Component {
                 />
                 <label for="fname">* First Name</label>
               </div>
-              <div class="input-field col s6">
+              <div class="input-field col s4">
                 <input
                   class="validate"
                   id="mName"
@@ -114,7 +114,7 @@ class CreateStudentData extends Component {
                 />
                 <label for="mName">Middle Name</label>
               </div>
-              <div class="input-field col s6">
+              <div class="input-field col s4">
                 <input
                   class="validate"
                   id="lname"
@@ -161,7 +161,7 @@ class CreateStudentData extends Component {
               </div>
             </div>
             <div class="row">
-              <div class="input-field col s10">
+              <div class="input-field col s8">
                 <input
                   class="validate"
                   id="address"
@@ -172,7 +172,7 @@ class CreateStudentData extends Component {
                 />
                 <label for="address">* Address</label>
               </div>
-              <div class="input-field col s2">
+              <div class="input-field col s4">
                 <input
                   class="validate"
                   id="unit"

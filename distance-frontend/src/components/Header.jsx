@@ -5,16 +5,18 @@ class Header extends Component {
   render() {
     return (
       <div class="container">
-        <div class="row center-align">
-          <div class="col s12">
+        <div class="row center-align valign-wrapper">
+          <div class="col s3">
             <img
-              width="450"
+              class="responsive-img"
               src="https://www.littletonps.org/files/Images/LPS%20Logo%20-%20large%20text.jpg"
               alt=""
             />
-            <h3 class="indigo-text darken-4 center-align">
+          </div>
+          <div class="col s9">
+            <h4 class="indigo-text darken-4 center-align">
               Transportation Form
-            </h3>
+            </h4>
           </div>
         </div>
       </div>
