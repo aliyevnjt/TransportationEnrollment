@@ -52,19 +52,22 @@ class CreateStudentData extends Component {
   submitHandler = async (e) => {
     e.preventDefault();
     console.log(this.state);
-    console.log(appUrl.baseline);
-    let res;
     try {
-      res = await api.post("/", this.state);
-      this.setState({ resp: res });
-      if (this.state.resp.data.enrollmentStatus === "free") {
-        console.log(this.state.resp.data.enrollmentStatus);
+      let res = await api.post("/", this.state);
+      if (res.data.enrollmentStatus === "free") {
         this.props.history.push({
           pathname: "/freeReg",
           search: "",
-          state: { detail: this.state.resp.data },
+          state: { detail: res.data },
+          student: res.data,
         });
-      } else this.props.history.push("/payment");
+      } else
+        this.props.history.push({
+          pathname: "/payment",
+          search: "",
+          state: { detail: res.data },
+          student: res.data,
+        });
     } catch (err) {
       console.log(err);
     }

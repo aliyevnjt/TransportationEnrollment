@@ -20,9 +20,10 @@ const api = axios.create({
 const stripePromise = loadStripe(keys.publishableKey);
 const fee = 650;
 
-const CheckoutForm = (success) => {
+const CheckoutForm = (success, props) => {
   const stripe = useStripe();
   const elements = useElements();
+  console.log(props);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -51,19 +52,22 @@ const CheckoutForm = (success) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      Your Child is eligible for paid transportation. Transportation cost for
-      this school year is ${fee}.
-      <div class="row">
-        <div class="col s4"></div>
-        <div class="col s4">
-          <CardElement />
+    <div>
+      <form onSubmit={handleSubmit}>
+        Your Child is eligible for paid transportation. Transportation cost for
+        this school year is ${fee}.
+        <div class="row">
+          <div class="col s4"></div>
+          <div class="col s4">
+            <CardElement />
+          </div>
         </div>
-      </div>
-      <button type="submit" disabled={!stripe}>
-        Pay
-      </button>
-    </form>
+        <button type="submit" disabled={!stripe}>
+          Pay
+        </button>
+      </form>
+      <div></div>
+    </div>
   );
 };
 
