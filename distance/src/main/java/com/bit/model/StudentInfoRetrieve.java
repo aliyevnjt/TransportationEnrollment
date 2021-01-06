@@ -18,8 +18,6 @@ public class StudentInfoRetrieve {
     @Size(min = 1, max = 30)
     private String lname;
     private String grade;
-    @Size(min = 1, max = 50)
-    @NotNull(message = "School is mandatory")
     private String school;
     private String enrollmentStatus;
     public StudentInfoRetrieve() {
