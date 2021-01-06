@@ -7,6 +7,11 @@ import ErrorMessage from "./components/ErrorMessage";
 import FreeEnrollment from "./components/FreeEnrollment";
 import PaymentPage from "./components/PaymentPage";
 import Test from "./components/test";
+import Test2 from "./components/test2";
+import SuccessPage from "./components/SuccessPage";
+import "materialize-css/dist/css/materialize.min.css";
+import M from "materialize-css/dist/js/materialize.min.js";
+import "materialize-css";
 
 class App extends Component {
   render() {
@@ -19,7 +24,9 @@ class App extends Component {
             <Route path="/errmsg" component={ErrorMessage} />
             <Route path="/freeReg" component={FreeEnrollment} />
             <Route path="/payment" component={PaymentPage} />
+            <Route path="/success" component={SuccessPage} />
             <Route path="/test" component={Test} />
+            <Route path="/test2" component={Test2} />
           </Switch>
         </div>
       </Router>

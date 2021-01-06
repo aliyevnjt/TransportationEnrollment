@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import "materialize-css/dist/css/materialize.min.css";
-import M from "materialize-css/dist/js/materialize.min.js";
-
+import { appUrl } from "./Data";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/submit",
+  baseURL: appUrl + "/submit",
 });
 
 class FreeEnrollment extends Component {
+  componentDidMount = () => {
+    //console.log(this.props.history.location.state);
+  };
   submitHandler = (e) => {
     e.preventDefault();
     try {
@@ -18,6 +21,9 @@ class FreeEnrollment extends Component {
     }
   };
   render() {
+    if (this.props.history.location.state === undefined) {
+      this.props.history.push("/");
+    }
     return (
       <div class="container">
         <p class="flow-text">
@@ -26,7 +32,7 @@ class FreeEnrollment extends Component {
         </p>
         <p class="flow-text">
           Please note that your enrollment is not submitted until you submit
-          this form.
+          this form. Student Id =
         </p>
         <button
           type="submit"
