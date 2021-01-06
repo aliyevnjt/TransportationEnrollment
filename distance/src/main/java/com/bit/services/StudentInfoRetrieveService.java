@@ -25,9 +25,10 @@ public class StudentInfoRetrieveService {
         List<StudentInfo> studentInfoList = studentRepository.findAll();
         for (int i = 0; i < studentInfoList.size(); i++) {
             boolean flag = true;
-            if(!studentInfoList.get(i).getFname().equalsIgnoreCase(fname)||
-                    !studentInfoList.get(i).getLname().equalsIgnoreCase(lname)){
-                flag = false;
+            if(flag && fname!=null){
+                if(!studentInfoList.get(i).getFname().equalsIgnoreCase(fname)){
+                    flag = false;
+            }
             }if(flag && school!=null){
                 if(!studentInfoList.get(i).getSchool().equalsIgnoreCase(school)){
                     flag = false;

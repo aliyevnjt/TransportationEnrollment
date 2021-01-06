@@ -11,11 +11,7 @@ import java.util.UUID;
 
 public class StudentInfoRetrieve {
 
-    @NotNull(message = "First Name is mandatory")
-    @Size(min=1, max=30)
     private String fname;
-    @NotNull(message = "Last Name is mandatory")
-    @Size(min = 1, max = 30)
     private String lname;
     private String grade;
     private String school;
