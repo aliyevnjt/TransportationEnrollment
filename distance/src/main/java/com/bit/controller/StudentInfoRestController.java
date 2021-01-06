@@ -50,9 +50,9 @@ public class StudentInfoRestController {
         return new ResponseEntity(studentInfo, HttpStatus.CREATED);
     }
     @PostMapping("/submit")
-    public StudentInfo submitForm(@RequestBody StudentInfo studentInfo){
+    public ResponseEntity submitForm(@RequestBody StudentInfo studentInfo){
         studentRepository.save(studentInfo);
-        return studentInfo;
+        return new ResponseEntity(studentInfo, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/student/{id}")
