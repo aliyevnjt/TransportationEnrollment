@@ -1,47 +1,86 @@
 import React, { Component, useState } from "react";
-import "materialize-css/dist/css/materialize.min.css";
-import { Elements } from "@stripe/react-stripe-js";
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { keys, usa, appUrl } from "./Data";
+import "materialize-css/dist/css/materialize.min.css";
+import M from "materialize-css/dist/js/materialize.min.js";
+import "materialize-css";
+import axios from "axios";
+import SuccessPage from "./SuccessPage";
 
-async function handleToken(token, addresses) {
-  console.log({ token, addresses });
-}
+const api = axios.create({
+  baseURL: appUrl + "/charge",
+});
 
-class PaymentPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fee: 650,
-      name: "Transportation Fee",
-    };
-  }
-  render() {
-    const stripePromise = loadStripe(
-      "pk_test_JJ1eMdKN0Hp4UFJ6kWXWO4ix00jtXzq5XG"
-    );
-    return (
-      <div class="container">
-        <div class="row center-align">
-          <div class="col s12">
-            <h2 class="indigo-text darken-4 center-align">
-              This is a payment page.
-            </h2>
-          </div>
+const stripePromise = loadStripe(keys.publishableKey);
+const fee = 650;
+
+const CheckoutForm = (success) => {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: elements.getElement(CardElement),
+    });
+
+    if (!error) {
+      const { id } = paymentMethod;
+
+      try {
+        const info = {
+          id,
+          amount: fee * 100,
+        };
+        console.log(info);
+        const { data } = await api.post("/", info);
+        console.log(data);
+        success();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      Your Child is eligible for paid transportation. Transportation cost for
+      this school year is ${fee}.
+      <div class="row">
+        <div class="col s4"></div>
+        <div class="col s4">
+          <CardElement />
         </div>
-        {/* <Elements stripe={stripePromise}>
-          <MyCheckoutForm />
-        </Elements> */}
-        {/* <StripeCheckout
-          stripeKey="pk_test_51I5QOxJuvhMix0vIzNnxK95fD4KadqVex6UylU7RG0jUUYQW3hpWF2rOjUonbpceQwtM7RGZ4xSrDvL5BY07a1R300DBtO4EeD"
-          token={handleToken}
-          billingAddress
-          shippingAddress
-          amount={this.state.fee * 100}
-          name={this.state.name}
-        /> */}
       </div>
-    );
+      <button type="submit" disabled={!stripe}>
+        Pay
+      </button>
+    </form>
+  );
+};
+
+const PaymentPage = () => {
+  const [status, setStatus] = React.useState("ready");
+  if (status === "success") {
+    return <SuccessPage />;
   }
-}
+  return (
+    <Elements stripe={stripePromise}>
+      <CheckoutForm
+        success={() => {
+          setStatus("success");
+        }}
+      />
+    </Elements>
+  );
+};
 
 export default PaymentPage;

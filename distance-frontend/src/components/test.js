@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "materialize-css/dist/css/materialize.min.css";
 import { schools, grades } from "./Data";
 import M from "materialize-css/dist/js/materialize.min.js";
+import { Redirect } from "react-router-dom";
 
 class Test extends Component {
   constructor(props) {
@@ -24,8 +25,22 @@ class Test extends Component {
       resp: [],
     };
   }
+
   submitHandler = (e) => {
-    console.log(schools.filter((s) => s.level === "elem"));
+    console.log("button works");
+    this.props.history.push("/test2", {
+      params: {
+        student: "new student",
+      },
+    });
+    // <Redirect
+    //   push
+    //   to="/test2"
+    //   // {{
+    //   //   pathname: "/test2",
+    //   //   state: { student: "Nice Student" },
+    //   // }}
+    // />;
   };
 
   changeHandler = (e) => {
@@ -44,6 +59,7 @@ class Test extends Component {
   }
 
   render() {
+    let option = [];
     return (
       <div class="container">
         <p class="flow-text">This is a test page</p>
@@ -76,15 +92,13 @@ class Test extends Component {
             <label for="grade">* Grade</label>
           </div>
         </div>
-        <form>
-          <button
-            type="submit"
-            class="btn-lg btn-primary"
-            onClick={this.submitHandler}
-          >
-            Complete Enrollment
-          </button>
-        </form>
+        <button
+          type="submit"
+          class="btn-lg btn-primary"
+          onClick={this.submitHandler}
+        >
+          Complete Enrollment
+        </button>
       </div>
     );
   }

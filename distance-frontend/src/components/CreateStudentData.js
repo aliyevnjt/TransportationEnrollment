@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import axios from "axios";
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
-import { grades, schools } from "./Data";
+import "materialize-css";
+import { grades, schools, appUrl } from "./Data";
 import { Redirect } from "react-router-dom";
-import { withRouter } from 'react-router-dom'
-
+import { withRouter } from "react-router-dom";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/student",
+  baseURL: appUrl.baseline + "/student",
 });
 
 function errorMessage(statusCode) {
@@ -52,13 +52,18 @@ class CreateStudentData extends Component {
   submitHandler = async (e) => {
     e.preventDefault();
     console.log(this.state);
+    console.log(appUrl.baseline);
     let res;
     try {
       res = await api.post("/", this.state);
       this.setState({ resp: res });
       if (this.state.resp.data.enrollmentStatus === "free") {
         console.log(this.state.resp.data.enrollmentStatus);
-        this.props.history.push("/freeReg");
+        this.props.history.push({
+          pathname: "/freeReg",
+          search: "",
+          state: { detail: this.state.resp.data },
+        });
       } else this.props.history.push("/payment");
     } catch (err) {
       console.log(err);
@@ -197,7 +202,7 @@ class CreateStudentData extends Component {
                   value={state}
                   onChange={this.changeHandler}
                 >
-                  <option value="" disabled selected>
+                  <option value="" disabled>
                     Choose State
                   </option>
                   <option value="MA"> MA </option>
@@ -261,6 +266,5 @@ class CreateStudentData extends Component {
     );
   }
 }
-
 
 export default CreateStudentData;
