@@ -25,19 +25,24 @@ public class StudentInfoRetrieveService {
         List<StudentInfo> studentInfoList = studentRepository.findAll();
         for (int i = 0; i < studentInfoList.size(); i++) {
             boolean flag = true;
-            if(flag && fname!=null){
-                if(!studentInfoList.get(i).getFname().equalsIgnoreCase(fname)){
+            if(flag && fname!=null && !fname.isEmpty()) {
+                if (!studentInfoList.get(i).getFname().equalsIgnoreCase(fname)) {
                     flag = false;
+                }
             }
-            }if(flag && school!=null){
+            if(flag && lname!=null && !lname.isEmpty()) {
+                if (!studentInfoList.get(i).getLname().equalsIgnoreCase(lname)) {
+                    flag = false;
+                }
+            }if(flag && school!=null && !school.isEmpty()){
                 if(!studentInfoList.get(i).getSchool().equalsIgnoreCase(school)){
                     flag = false;
                 }
-            }if(flag && grade!=null){
+            }if(flag && grade!=null && !grade.isEmpty()){
                 if(!studentInfoList.get(i).getGrade().equalsIgnoreCase(grade)){
                     flag = false;
                 }
-            }if(flag && status!=null){
+            }if(flag && status!=null && !status.isEmpty()){
                 if(!studentInfoList.get(i).getEnrollmentStatus().equalsIgnoreCase(status)){
                     flag = false;
                 }
