@@ -12,10 +12,20 @@ class FreeEnrollment extends Component {
   componentDidMount = () => {
     //console.log(this.props.history.location.state);
   };
+  // submitHandler = (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     console.log(api.post("/", this.state));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   submitHandler = (e) => {
     e.preventDefault();
+    const { student } = this.props.location
+    console.log("baby:" + student.enrollmentStatus)
     try {
-      console.log(api.post("/", this.state));
+      console.log(api.post("http://localhost:8080/submit", student));
     } catch (error) {
       console.log(error);
     }

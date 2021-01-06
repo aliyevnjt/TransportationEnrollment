@@ -53,22 +53,37 @@ class CreateStudentData extends Component {
     e.preventDefault();
     console.log(this.state);
     console.log(appUrl.baseline);
-    let res;
-    try {
-      res = await api.post("/", this.state);
-      this.setState({ resp: res });
-      if (this.state.resp.data.enrollmentStatus === "free") {
-        console.log(this.state.resp.data.enrollmentStatus);
-        this.props.history.push({
-          pathname: "/freeReg",
-          search: "",
-          state: { detail: this.state.resp.data },
-        });
-      } else this.props.history.push("/payment");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //   let res;
+  //   try {
+  //     res = await api.post("/", this.state);
+  //     this.setState({ resp: res });
+  //     if (this.state.resp.data.enrollmentStatus === "free") {
+  //       console.log(this.state.resp.data.enrollmentStatus);
+  //       this.props.history.push({
+  //         pathname: "/freeReg",
+  //         search: "",
+  //         state: { detail: this.state.resp.data },
+  //       });
+  //     } else this.props.history.push("/payment");
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  try {
+    const resp = await api.post('/', this.state);
+    console.log("hey: " + resp.data.distanceFromSchool)  
+    if (resp.data.enrollmentStatus === "free") {
+      console.log(resp.data.enrollmentStatus);
+      this.props.history.push({pathname: '/freeReg',
+                               search: "",
+                               state: { detail: this.state.resp.data },
+                               student: resp.data
+                              })                      
+     } else this.props.history.push("/payment");
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   render() {
     const {

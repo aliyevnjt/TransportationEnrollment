@@ -28,7 +28,6 @@ public class StudentInfoRestController {
     @Autowired
     private StudentInfoRetrieveService studentInfoRetrieveService;
 
-    private StudentInfo studentInfo;
 
     @PostMapping("/student")
     public ResponseEntity getDistance(@Valid @RequestBody StudentInfo studentInfo){
@@ -48,12 +47,10 @@ public class StudentInfoRestController {
                 studentInfo.setEnrollmentStatus("paid");
             }
         }
-        //studentRepository.save(studentInfo);
-        this.studentInfo = studentInfo;
         return new ResponseEntity(studentInfo, HttpStatus.CREATED);
     }
     @PostMapping("/submit")
-    public StudentInfo submitForm(){
+    public StudentInfo submitForm(@RequestBody StudentInfo studentInfo){
         studentRepository.save(studentInfo);
         return studentInfo;
     }
