@@ -1,13 +1,13 @@
-package com.bit.argis;
+package com.bit.services;
 
 import com.bit.model.Summary;
 import com.bit.model.Total;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.json.JsonParserFactory;
 import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -18,11 +18,12 @@ import java.util.List;
 import java.util.Map;
 
 
-public class DistanceCalculator {
+@Service
+public class DistanceCalculatorService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public DistanceCalculator() {
+    public DistanceCalculatorService() {
     }
 
     private static String stops = "{\n" +
@@ -128,6 +129,7 @@ public class DistanceCalculator {
         }
         return xAndy;
     }
+
 
 
 
