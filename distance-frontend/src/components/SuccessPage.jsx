@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import "materialize-css/dist/css/materialize.min.css";
 
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "http://localhost:8080/submit",
-});
-
 class FreeEnrollment extends Component {
   render() {
     return (

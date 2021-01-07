@@ -14,16 +14,24 @@ import axios from "axios";
 import SuccessPage from "./SuccessPage";
 
 const api = axios.create({
-  baseURL: appUrl + "/charge",
+  baseURL: appUrl.baseline,
 });
+//for testing purposes submits student data
+const clickHandler = (student) => {
+  try {
+    const data = api.post("/submit", student);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
+const studentData = () => {};
 const stripePromise = loadStripe(keys.publishableKey);
 const fee = 650;
 
-const CheckoutForm = (success, props) => {
+const CheckoutForm = (success) => {
   const stripe = useStripe();
   const elements = useElements();
-  console.log(props);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,14 +43,14 @@ const CheckoutForm = (success, props) => {
 
     if (!error) {
       const { id } = paymentMethod;
-
+      console.log(paymentMethod);
       try {
         const info = {
-          id,
+          id: id,
           amount: fee * 100,
         };
         console.log(info);
-        const { data } = await api.post("/", info);
+        const { data } = await api.post("/charge", info);
         console.log(data);
         success();
       } catch (error) {
@@ -71,19 +79,23 @@ const CheckoutForm = (success, props) => {
   );
 };
 
-const PaymentPage = () => {
+const PaymentPage = (props) => {
   const [status, setStatus] = React.useState("ready");
+  console.log(props.location.student);
   if (status === "success") {
     return <SuccessPage />;
   }
   return (
-    <Elements stripe={stripePromise}>
-      <CheckoutForm
-        success={() => {
-          setStatus("success");
-        }}
-      />
-    </Elements>
+    <div>
+      <Elements stripe={stripePromise}>
+        <CheckoutForm
+          success={() => {
+            setStatus("success");
+          }}
+        />
+      </Elements>
+      {/* <button onClick={clickHandler(props.location.student)}>Test</button> */}
+    </div>
   );
 };
 
