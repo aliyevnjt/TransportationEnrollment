@@ -51,7 +51,12 @@
 			<artifactId>tomcat-jasper</artifactId>
 			<version>9.0.41</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/com.stripe/stripe-java -->
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>20.33.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
