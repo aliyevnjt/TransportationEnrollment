@@ -21,7 +21,7 @@ public class StripeClient {
 
     @Autowired
     StripeClient() {
-        Stripe.apiKey = "sk_test_51I5QOxJuvhMix0vIOQyOOupcFxWcybrKZmJ1ndjkKlJg0gy7ZinyIlK7zPl1HAYhv9mbGSXdUS48ZkvldCuDR7po00nSxeHBwq";
+        Stripe.apiKey = "sk_test_";
     }
 
     public Map<String, Object> chargeCreditCard(String token, int amount) throws Exception {
