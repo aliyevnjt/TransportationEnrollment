@@ -18,6 +18,7 @@ class FreeEnrollment extends Component {
     console.log(student);
     try {
       console.log(api.post("/", student));
+      this.props.history.push("/success");
     } catch (error) {
       console.log(error);
     }
@@ -26,6 +27,7 @@ class FreeEnrollment extends Component {
     if (this.props.history.location.state === undefined) {
       this.props.history.push("/");
     }
+    const st = this.props.location.student;
     return (
       <div class="container">
         <p class="flow-text">
@@ -34,7 +36,7 @@ class FreeEnrollment extends Component {
         </p>
         <p class="flow-text">
           Please note that your enrollment is not submitted until you submit
-          this form. Student Id =
+          this form.
         </p>
         <button
           type="submit"

@@ -2,27 +2,31 @@ import React, { Component } from "react";
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css";
-import { usa, appUrl, grades, schools } from "./Data";
+import { appUrl, grades, schools } from "./Data";
 import axios from "axios";
 
 const api = axios.create({
   baseURL: appUrl.baseline + "/student/request",
 });
-
+const list = [];
 class AdminSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fname: "",
-      lname: "",
-      grade: "",
-      school: "",
-      enrollmentStatus: "",
+      request: {
+        fname: "",
+        lname: "",
+        grade: "",
+        school: "",
+        enrollmentStatus: "",
+      },
+      tableContent: [],
+      res: [],
     };
   }
 
   changeHandler = (e) => {
-    this.setState({ [e.target.id]: e.target.value });
+    this.setState({ request: { [e.target.id]: e.target.value } });
   };
 
   componentDidMount() {
@@ -34,15 +38,72 @@ class AdminSearch extends Component {
     e.preventDefault();
     console.log(this.state);
     try {
-      const data = await api.post("/", this.state);
-      console.log(data);
+      const data = await api.post("/", this.state.request);
+      this.setState({ tableContent: this.constructTable(data.data) });
+      //     console.log(data.data);
     } catch (err) {
       console.log(err);
     }
   };
 
+  constructTable = (st) => {
+    if (st === undefined) {
+      return [];
+    }
+    // console.log(st);
+    //  let list = st.map((li) => li.id);
+    // let list = st.map((li) => (
+    //   <tr key={li.id}>
+    //     <td>{li.fname + " " + li.lname}</td>
+    //     <td>{li.grade}</td>
+    //     <td>{schools.filter((sch) => sch.value === li.school)}</td>
+    //     <td>{li.address + ", " + li.city}</td>
+    //     <td>{li.distanceFromSchool}</td>
+    //     <td>{li.enrollmentStatus}</td>
+    //   </tr>
+    // ));
+    console.log(schools.filter((sch) => sch.value === st[0].school)[0].label);
+    return (
+      <table class="highlight">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Grade</th>
+            <th>School</th>
+            <th>Address</th>
+            <th>Distance</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {st.map((li) => (
+            <tr key={li.id}>
+              <td>{li.fname + " " + li.lname}</td>
+              <td>{li.grade}</td>
+              <td>
+                {schools.filter((sch) => sch.value === li.school)[0].label}
+              </td>
+              <td>{li.address + ", " + li.city}</td>
+              <td>{li.distanceFromSchool}</td>
+              <td>{li.enrollmentStatus}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
   render() {
-    const { fname, lname, grade, school, enrollmentStatus } = this.state;
+    const {
+      fname,
+      lname,
+      grade,
+      school,
+      enrollmentStatus,
+      tableContent,
+      res,
+    } = this.state;
     return (
       <div class="container">
         <div class="row left-align">
@@ -108,6 +169,7 @@ class AdminSearch extends Component {
             </button>
           </div>
         </form>
+        {tableContent}
       </div>
     );
   }
