@@ -16,7 +16,7 @@ import SuccessPage from "./SuccessPage";
 const api = axios.create({
   baseURL: appUrl.baseline,
 });
-//for testing purposes submits student data
+//for testin purposes submits
 const clickHandler = (student) => {
   try {
     const data = api.post("/submit", student);
@@ -25,7 +25,6 @@ const clickHandler = (student) => {
   }
 };
 
-const studentData = () => {};
 const stripePromise = loadStripe(keys.publishableKey);
 const fee = 650;
 
@@ -43,10 +42,9 @@ const CheckoutForm = (success) => {
 
     if (!error) {
       const { id } = paymentMethod;
-      console.log(paymentMethod);
       try {
         const info = {
-          id: id,
+          id,
           amount: fee * 100,
         };
         console.log(info);
@@ -94,7 +92,7 @@ const PaymentPage = (props) => {
           }}
         />
       </Elements>
-      {/* <button onClick={clickHandler(props.location.student)}>Test</button> */}
+      <button onClick={clickHandler()}>Test</button>
     </div>
   );
 };

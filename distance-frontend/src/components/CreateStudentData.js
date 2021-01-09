@@ -3,7 +3,7 @@ import axios from "axios";
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
 import "materialize-css";
-import { grades, schools, appUrl } from "./Data";
+import { grades, schools as sch, appUrl } from "./Data";
 import { Redirect } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
@@ -38,11 +38,20 @@ class CreateStudentData extends Component {
       parentEmailAddress: "",
       parentPhoneNumber: "",
       resp: [],
+      schools: sch,
     };
   }
 
   changeHandler = (e) => {
     this.setState({ [e.target.id]: e.target.value });
+  };
+
+  gradeChangeHandler = async (e) => {
+    this.setState({ [e.target.id]: e.target.value });
+    let gr = grades.filter((g) => g.value === e.target.value)[0].level;
+    let filtered = sch.filter((s) => s.level === gr);
+    await this.setState({ schools: filtered });
+    M.AutoInit();
   };
 
   /** Submit Handler creates a JSON format data from the form and posts it to the API
@@ -89,6 +98,7 @@ class CreateStudentData extends Component {
       parentEmailAddress,
       parentPhoneNumber,
       homeless,
+      schools,
     } = this.state;
 
     return (
@@ -135,7 +145,7 @@ class CreateStudentData extends Component {
                   id="grade"
                   required
                   value={grade}
-                  onChange={this.changeHandler}
+                  onChange={this.gradeChangeHandler}
                   required
                 >
                   <option value="">Choose Grade</option>

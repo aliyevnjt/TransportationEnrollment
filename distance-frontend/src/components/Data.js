@@ -17,8 +17,8 @@ const grades = [
 const schools = [
   { label: "LITTLETON HIGH SCHOOL", value: "LHS", level: "high" },
   { label: "LITTLETON MIDDLE SCHOOL", value: "LMS", level: "middle" },
-  { label: "RUSSELL STREET SCHOOL", value: "RSS" },
-  { label: "SHAKER LANE SCHOOL", value: "SLS" },
+  { label: "RUSSELL STREET SCHOOL", value: "RSS", level: "elem" },
+  { label: "SHAKER LANE SCHOOL", value: "SLS", level: "elem" },
 ];
 
 const keys = {
