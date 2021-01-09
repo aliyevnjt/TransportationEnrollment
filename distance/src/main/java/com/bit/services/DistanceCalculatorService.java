@@ -3,6 +3,8 @@ package com.bit.services;
 import com.bit.model.Summary;
 import com.bit.model.Total;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.json.JsonParserFactory;
@@ -20,6 +22,8 @@ import java.util.Map;
 
 @Service
 public class DistanceCalculatorService {
+
+
     @Autowired
     private RestTemplate restTemplate;
 
