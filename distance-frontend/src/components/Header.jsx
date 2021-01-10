@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { schoolYear as year } from "./Data";
 import "materialize-css/dist/css/materialize.min.css";
 
 class Header extends Component {
@@ -13,10 +14,13 @@ class Header extends Component {
               alt=""
             />
           </div>
-          <div class="col s9">
+          <div class="col s6">
             <h4 class="indigo-text darken-4 center-align">
               Transportation Form
             </h4>
+          </div>
+          <div class="col s3">
+            <h6 class="teal-text darken-4 center-align">School Year: {year}</h6>
           </div>
         </div>
       </div>

@@ -82,4 +82,6 @@ const usa = [
   { value: "WY", label: "Wyoming" },
 ];
 
-export { grades, schools, keys, usa, appUrl };
+const schoolYear = "2021-2022";
+
+export { grades, schools, keys, usa, appUrl, schoolYear };
