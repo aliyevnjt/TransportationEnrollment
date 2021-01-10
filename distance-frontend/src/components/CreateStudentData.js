@@ -227,10 +227,11 @@ class CreateStudentData extends Component {
                   class="validate"
                   id="zip"
                   type="text"
-                  data-length="10"
+                  data-length="5"
                   value={zip}
                   onChange={this.changeHandler}
                   required
+                  aria-required="true"
                 />
                 <label for="zip">* Zip Code</label>
               </div>
