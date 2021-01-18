@@ -1,8 +1,6 @@
-package com.bit.model;
-
+package com.bit.model.directions;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
