@@ -1,4 +1,4 @@
-package com.bit.model;
+package com.bit.model.directions;
 
 public class Directions {
 
