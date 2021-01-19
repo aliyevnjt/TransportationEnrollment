@@ -4,9 +4,7 @@ import com.bit.model.StudentInfoRetrieve;
 import com.bit.services.DistanceCalculatorService;
 import com.bit.model.StudentInfo;
 import com.bit.repo.StudentRepository;
-import com.bit.services.StudentInfoRetrieveService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.bit.services.StudentInfoWriteAndReadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +22,9 @@ public class StudentInfoRestController {
     @Autowired
     private DistanceCalculatorService distanceCalculatorService;
 
-    @Autowired
-    private StudentRepository studentRepository;
 
     @Autowired
-    private StudentInfoRetrieveService studentInfoRetrieveService;
+    private StudentInfoWriteAndReadService studentInfoWriteAndReadService;
 
     @PostMapping("/student")
     public ResponseEntity getDistance(@Valid @RequestBody StudentInfo studentInfo){
@@ -42,25 +38,20 @@ public class StudentInfoRestController {
 
     @PostMapping("/submit")
     public ResponseEntity submitForm(@RequestBody StudentInfo studentInfo){
-        studentRepository.save(studentInfo);
+        studentInfoWriteAndReadService.saveStudent(studentInfo);
         return new ResponseEntity(studentInfo, HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/submitAll")
-    public ResponseEntity submitForm(@RequestBody List<StudentInfo> studentInfo){
-        studentInfo.forEach(studentInfo1 -> studentRepository.save(studentInfo1));
-        return new ResponseEntity(studentInfo, HttpStatus.ACCEPTED);
+    public ResponseEntity submitForm(@RequestBody List<StudentInfo> studentInfos){
+        studentInfoWriteAndReadService.saveStudentS(studentInfos);
+        return new ResponseEntity(studentInfos, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/student/{id}")
-    public StudentInfo getById(@PathVariable Long id){
-        StudentInfo studentInfo = studentRepository.getOne(id);
-        return studentInfo;
-    }
 
     @PostMapping("/student/request")
     public List<StudentInfo> getStudentInfo(@Valid @RequestBody StudentInfoRetrieve studentInfoRetrieve){
-        return studentInfoRetrieveService.retrieveMatchingStudents(studentInfoRetrieve);
+        return studentInfoWriteAndReadService.retrieveMatchingStudents(studentInfoRetrieve);
     }
 
 

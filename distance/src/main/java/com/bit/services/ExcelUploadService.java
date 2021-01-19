@@ -1,21 +1,26 @@
 package com.bit.services;
 
 import com.bit.model.form_data.AddresExcel;
+import com.bit.repo.ExcelAddressRepo;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Service
 public class ExcelUploadService {
+
+    @Autowired
+    ExcelAddressRepo excelAddressRepo;
 
     public List<AddresExcel> writeExcelToDB(MultipartFile reapExcelDataFile) {
         List<AddresExcel> addresExcelList = new ArrayList<>();
@@ -58,5 +63,24 @@ public class ExcelUploadService {
 
         }
         return worksheet;
+    }
+
+    @Transactional
+    public void saveToAddresses(List<AddresExcel> list){
+        list.forEach(s -> excelAddressRepo.save(s));
+    }
+
+    @Transactional
+    public void saveAllToAddresses(List<AddresExcel> list){
+        excelAddressRepo.saveAll(list);
+    }
+
+    @Transactional
+    public AddresExcel findOneAddress(AddresExcel addresExcel){
+        ExampleMatcher ignoringExampleMatcher = ExampleMatcher.matchingAny()
+                .withMatcher("address", ExampleMatcher.GenericPropertyMatchers.startsWith().ignoreCase())
+                .withIgnorePaths("distanceRSS", "distanceSLS", "distanceLMS", "distanceLHS");
+        AddresExcel addresExcel1 = excelAddressRepo.findOne(Example.of(addresExcel,ignoringExampleMatcher )).get();
+    return addresExcel1;
     }
 }

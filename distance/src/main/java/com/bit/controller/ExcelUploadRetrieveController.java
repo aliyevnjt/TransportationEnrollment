@@ -3,14 +3,11 @@ package com.bit.controller;
 
 import com.bit.model.form_data.AddresExcel;
 import com.bit.model.StudentInfo;
-import com.bit.repo.ExcelAddressRepo;
 import com.bit.services.DistanceCalculatorService;
 import com.bit.services.ExcelUploadService;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,9 +23,6 @@ import java.util.Map;
 
 @RestController
 public class ExcelUploadRetrieveController {
-
-    @Autowired
-    ExcelAddressRepo excelAddressRepo;
 
     @Autowired
     ExcelUploadService excelUploadService;
@@ -41,11 +34,8 @@ public class ExcelUploadRetrieveController {
     public ResponseEntity getDistanceLocal(@Valid @RequestBody StudentInfo studentInfo){
         AddresExcel addresExcel = new AddresExcel();
         addresExcel.setAddress(studentInfo.getAddress());
-        ExampleMatcher ignoringExampleMatcher = ExampleMatcher.matchingAny()
-                .withMatcher("address", ExampleMatcher.GenericPropertyMatchers.startsWith().ignoreCase())
-                .withIgnorePaths("distanceRSS", "distanceSLS", "distanceLMS", "distanceLHS");
         double distance = 0;
-        addresExcel = excelAddressRepo.findOne(Example.of(addresExcel,ignoringExampleMatcher )).get();
+        addresExcel = excelUploadService.findOneAddress(addresExcel);
         if(studentInfo.getSchool().equalsIgnoreCase("RSS")){
             distance = addresExcel.getDistanceRSS();
         }else if(studentInfo.getSchool().equalsIgnoreCase("SLS")){
@@ -95,11 +85,13 @@ public class ExcelUploadRetrieveController {
         }
         Map<String, Integer> map = new HashMap<>();
         map.put("recorded_rows", addresExcelList.size());
-        addresExcelList.forEach(address -> excelAddressRepo.save(address));
+        excelUploadService.saveAllToAddresses(addresExcelList);
         if(listOfBadRows.size() > 0) {
             return new ResponseEntity(listOfBadRows, HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity(map, HttpStatus.CREATED);
     }
+
+
 }

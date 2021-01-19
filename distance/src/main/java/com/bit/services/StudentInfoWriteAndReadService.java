@@ -5,12 +5,13 @@ import com.bit.model.StudentInfoRetrieve;
 import com.bit.repo.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class StudentInfoRetrieveService {
+public class StudentInfoWriteAndReadService {
 
     @Autowired
     private StudentRepository studentRepository;
@@ -52,5 +53,15 @@ public class StudentInfoRetrieveService {
         }
         return resultStudents;
 
+    }
+
+    @Transactional
+    public void saveStudent(StudentInfo studentInfo){
+        studentRepository.save(studentInfo);
+    }
+
+    @Transactional
+    public void saveStudentS(List<StudentInfo> studentInfos){
+        studentRepository.saveAll(studentInfos);
     }
 }

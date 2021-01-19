@@ -163,7 +163,7 @@ public class DistanceCalculatorService {
             String fullAddress = studentInfo.get(i).getAddress() + " " + studentInfo.get(i).getCity()
                     + " " + studentInfo.get(i).getState() + " " + studentInfo.get(i).getZip();
             double dist = getDistance(fullAddress, studentInfo.get(i).getSchool()).getTotalLength();
-            studentInfo.get(i).setDistanceFromSchool(round(dist,2));
+            studentInfo.get(i).setDistanceFromSchool(round(dist,4));
             String grade = studentInfo.get(i).getGrade();
             if(grade.equals("7") || grade.equals("8") || grade.equals("9")
                     || grade.equals("10") || grade.equals("11") || grade.equals("12")){
