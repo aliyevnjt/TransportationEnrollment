@@ -1,10 +1,10 @@
 package com.bit.services;
 
-import com.bit.model.Summary;
-import com.bit.model.Total;
+import com.bit.model.StudentInfo;
+import com.bit.model.directions.Summary;
+import com.bit.model.directions.Total;
+import com.bit.model.coordinates.Coordinates;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.json.JsonParserFactory;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,33 +67,29 @@ public class DistanceCalculatorService {
         return map.get("access_token").toString();
     }
 
-    public Map<String, Double> getCoordinates(String address){
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates")
-                .queryParam("f", "json")
-                .queryParam("singleLine", address)
-                .queryParam("outFields", "Match_addr,Addr_type");
-        String response = restTemplate.getForObject(builder.build().encode().toUri(), String.class);
-        JsonParser jsonParser = JsonParserFactory.getJsonParser();
-        Map<String, Object> map = jsonParser.parseMap(response);
-        List list = ((List)map.get("candidates"));
-        Map candidates = (Map)list.get(0);
-        Map <String, Double> location = (Map)candidates.get("location");
+    public Map<String, String> getCoordinates(String address){
+        String uri = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?f=json&singleLine=" + address + "&outFields=Match_addr,Addr_type";
+        ResponseEntity <Coordinates> responseEntity = restTemplate.getForEntity(uri, Coordinates.class);
+        Coordinates coordinates = responseEntity.getBody();
+        Map <String, String> location = new HashMap<>();
+        location.put("x", coordinates.getCandidates().get(0).getLocation().getX());
+        location.put("y", coordinates.getCandidates().get(0).getLocation().getY());
         return location;
 
     }
 
     public Summary getDistance(String start, String schoolName){
-        Map <String, Double> locations = getCoordinates(start);
+        Map <String, String> locations = getCoordinates(start);
         Map<String , String> schoolCoord= new HashMap<>();
         schoolCoord = schoolXandY(schoolName);
         ObjectMapper mapper = new ObjectMapper();
         Map<String,Object> map = null;
         try {
             map = mapper.readValue(stops, Map.class);
-            ((Map)(((Map)((List)map.get("features")).get(0)).get("geometry"))).put("x", schoolCoord.get("x"));
-            ((Map)(((Map)((List)map.get("features")).get(0)).get("geometry"))).put("y", schoolCoord.get("y"));
-            ((Map)(((Map)((List)map.get("features")).get(1)).get("geometry"))).put("x", locations.get("x").toString());
-            ((Map)(((Map)((List)map.get("features")).get(1)).get("geometry"))).put("y", locations.get("y").toString());
+            ((Map)(((Map)((List)map.get("features")).get(1)).get("geometry"))).put("x", schoolCoord.get("x"));
+            ((Map)(((Map)((List)map.get("features")).get(1)).get("geometry"))).put("y", schoolCoord.get("y"));
+            ((Map)(((Map)((List)map.get("features")).get(0)).get("geometry"))).put("x", locations.get("x"));
+            ((Map)(((Map)((List)map.get("features")).get(0)).get("geometry"))).put("y", locations.get("y"));
         }catch (Exception e){
 
         }
@@ -134,8 +130,63 @@ public class DistanceCalculatorService {
         return xAndy;
     }
 
+    public StudentInfo createStudent(StudentInfo studentInfo, Double distance){
+        String fullAddress = studentInfo.getAddress() + " " + studentInfo.getCity()
+                + " " + studentInfo.getState() + " " + studentInfo.getZip();
+        double dist = 0;
+        if(distance == null){
+            dist = getDistance(fullAddress, studentInfo.getSchool()).getTotalLength();
+        }else {
+            dist = distance;
+        }
+        studentInfo.setDistanceFromSchool(round(dist,4));
+        String grade = studentInfo.getGrade();
+        if(grade.equals("7") || grade.equals("8") || grade.equals("9")
+                || grade.equals("10") || grade.equals("11") || grade.equals("12")){
+            studentInfo.setEnrollmentStatus("paid");
+        }
+        else {
+            if(studentInfo.getDistanceFromSchool() > 2){
+                studentInfo.setEnrollmentStatus("free");
+            }else {
+                studentInfo.setEnrollmentStatus("paid");
+            }
+        }
+        return studentInfo;
+    }
 
 
 
+    public  List<StudentInfo> createStudents(List<StudentInfo> studentInfo){
+        List<StudentInfo> responseStudentInfo = new ArrayList<>();
+        for (int i = 0; i < studentInfo.size(); i++) {
+            String fullAddress = studentInfo.get(i).getAddress() + " " + studentInfo.get(i).getCity()
+                    + " " + studentInfo.get(i).getState() + " " + studentInfo.get(i).getZip();
+            double dist = getDistance(fullAddress, studentInfo.get(i).getSchool()).getTotalLength();
+            studentInfo.get(i).setDistanceFromSchool(round(dist,4));
+            String grade = studentInfo.get(i).getGrade();
+            if(grade.equals("7") || grade.equals("8") || grade.equals("9")
+                    || grade.equals("10") || grade.equals("11") || grade.equals("12")){
+                studentInfo.get(i).setEnrollmentStatus("paid");
+            }
+            else {
+                if(studentInfo.get(i).getDistanceFromSchool() > 2){
+                    studentInfo.get(i).setEnrollmentStatus("free");
+                }else {
+                    studentInfo.get(i).setEnrollmentStatus("paid");
+                }
+            }
+            responseStudentInfo.add(studentInfo.get(i));
+        }
+        return responseStudentInfo;
+    }
+
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
 
 }

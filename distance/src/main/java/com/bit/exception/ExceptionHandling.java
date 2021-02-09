@@ -1,7 +1,4 @@
 package com.bit.exception;
-
-import com.bit.model.StudentInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,9 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 @ControllerAdvice
 public class ExceptionHandling {
-
-
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
@@ -28,4 +22,6 @@ public class ExceptionHandling {
 
         return errors;
     }
+
+
 }

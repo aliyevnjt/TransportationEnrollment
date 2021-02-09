@@ -25,7 +25,7 @@ public class StripeClient {
     Logger logger = LoggerFactory.getLogger(Logger.class);
 
 
-    @Value("${stripe.secret}")
+   // @Value("${stripe.secret}")
     private String secret;
 
 //    @Autowired

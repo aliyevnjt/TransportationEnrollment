@@ -1,19 +1,15 @@
 package com.bit.controller;
 
-
 import com.bit.model.StudentInfoRetrieve;
 import com.bit.services.DistanceCalculatorService;
 import com.bit.model.StudentInfo;
 import com.bit.repo.StudentRepository;
-import com.bit.services.StudentInfoRetrieveService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.bit.services.StudentInfoWriteAndReadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,97 +18,44 @@ import java.util.List;
 @RestController
 public class StudentInfoRestController {
 
-    Logger logger = LoggerFactory.getLogger(StudentInfoRestController.class);
 
     @Autowired
     private DistanceCalculatorService distanceCalculatorService;
 
-    @Autowired
-    private StudentRepository studentRepository;
 
     @Autowired
-    private StudentInfoRetrieveService studentInfoRetrieveService;
-
-
+    private StudentInfoWriteAndReadService studentInfoWriteAndReadService;
 
     @PostMapping("/student")
     public ResponseEntity getDistance(@Valid @RequestBody StudentInfo studentInfo){
-        String fullAddress = studentInfo.getAddress() + " " + studentInfo.getCity()
-                + " " + studentInfo.getState() + " " + studentInfo.getZip();
-        double dist = distanceCalculatorService.getDistance(fullAddress, studentInfo.getSchool()).getTotalLength();
-        studentInfo.setDistanceFromSchool(round(dist,2));
-        String grade = studentInfo.getGrade();
-        if(grade.equals("7") || grade.equals("8") || grade.equals("9")
-                || grade.equals("10") || grade.equals("11") || grade.equals("12")){
-            studentInfo.setEnrollmentStatus("paid");
-        }
-        else {
-            if(studentInfo.getDistanceFromSchool() > 2){
-                studentInfo.setEnrollmentStatus("free");
-            }else {
-                studentInfo.setEnrollmentStatus("paid");
-            }
-        }
-        return new ResponseEntity(studentInfo, HttpStatus.CREATED);
+        return new ResponseEntity(distanceCalculatorService.createStudent(studentInfo, null), HttpStatus.CREATED);
     }
 
     @PostMapping("/students")
     public ResponseEntity getDistance(@Valid @RequestBody List<StudentInfo> studentInfo){
-        List<StudentInfo> responseStudentInfo = new ArrayList<>();
-        for (int i = 0; i < studentInfo.size(); i++) {
-            String fullAddress = studentInfo.get(i).getAddress() + " " + studentInfo.get(i).getCity()
-                    + " " + studentInfo.get(i).getState() + " " + studentInfo.get(i).getZip();
-            double dist = distanceCalculatorService.getDistance(fullAddress, studentInfo.get(i).getSchool()).getTotalLength();
-            studentInfo.get(i).setDistanceFromSchool(round(dist,2));
-            String grade = studentInfo.get(i).getGrade();
-            if(grade.equals("7") || grade.equals("8") || grade.equals("9")
-                    || grade.equals("10") || grade.equals("11") || grade.equals("12")){
-                studentInfo.get(i).setEnrollmentStatus("paid");
-            }
-            else {
-                if(studentInfo.get(i).getDistanceFromSchool() > 2){
-                    studentInfo.get(i).setEnrollmentStatus("free");
-                }else {
-                    studentInfo.get(i).setEnrollmentStatus("paid");
-                }
-            }
-            responseStudentInfo.add(studentInfo.get(i));
-        }
-
-        return new ResponseEntity(responseStudentInfo, HttpStatus.CREATED);
+        return new ResponseEntity(distanceCalculatorService.createStudents(studentInfo), HttpStatus.CREATED);
     }
 
     @PostMapping("/submit")
     public ResponseEntity submitForm(@RequestBody StudentInfo studentInfo){
-        studentRepository.save(studentInfo);
+        studentInfoWriteAndReadService.saveStudent(studentInfo);
         return new ResponseEntity(studentInfo, HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/submitAll")
-    public ResponseEntity submitForm(@RequestBody List<StudentInfo> studentInfo){
-        studentInfo.forEach(studentInfo1 -> studentRepository.save(studentInfo1));
-        return new ResponseEntity(studentInfo, HttpStatus.ACCEPTED);
+    public ResponseEntity submitForm(@RequestBody List<StudentInfo> studentInfos){
+        studentInfoWriteAndReadService.saveStudentS(studentInfos);
+        return new ResponseEntity(studentInfos, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/student/{id}")
-    public StudentInfo getById(@PathVariable Long id){
-        StudentInfo studentInfo = studentRepository.getOne(id);
-        return studentInfo;
-    }
 
     @PostMapping("/student/request")
     public List<StudentInfo> getStudentInfo(@Valid @RequestBody StudentInfoRetrieve studentInfoRetrieve){
-        return studentInfoRetrieveService.retrieveMatchingStudents(studentInfoRetrieve);
+        return studentInfoWriteAndReadService.retrieveMatchingStudents(studentInfoRetrieve);
     }
 
 
-    private static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
-    }
+
 
 
 
