@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from 'react';
-import M from 'materialize-css/dist/js/materialize.min.js';
+import M from 'materialize-css/dist/js/materialize.min';
 import Button from './toolbox/Button';
 import InputBox from './toolbox/InputBox';
 import Spinner from './toolbox/Spinner';

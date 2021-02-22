@@ -1,9 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const FreeReg = (props) => {
-  return <div>Free</div>;
-};
+const FreeReg = (props) => <div>Free</div>;
 
 FreeReg.propTypes = {};
 

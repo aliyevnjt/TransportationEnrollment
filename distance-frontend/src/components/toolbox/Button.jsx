@@ -1,11 +1,9 @@
-import React from "react";
+import React from 'react';
 
-const Button = (props) => {
-  return (
-    <button type={props.type} className="btn btn-primary">
-      {props.label}
-    </button>
-  );
-};
+const Button = (props) => (
+  <button type={props.type} className="btn btn-primary">
+    {props.label}
+  </button>
+);
 
 export default Button;

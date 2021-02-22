@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Component } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
-import M from 'materialize-css/dist/js/materialize.min.js';
+import M from 'materialize-css/dist/js/materialize.min';
 import 'materialize-css';
 import axios from 'axios';
 import { appUrl, grades, schools } from '../data/Data';

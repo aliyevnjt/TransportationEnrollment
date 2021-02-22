@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const DropDown = (props) => {
-  let label = props.label;
+  let { label } = props;
 
-  if (label.startsWith("*")) {
+  if (label.startsWith('*')) {
     label = label.substr(2);
   } else label = label;
   return (
     <div>
-      <div class={"input-field col " + props.col}>
+      <div className={`input-field col ${props.col}`}>
         <select
           id={props.id}
           value={props.value}
@@ -22,7 +22,7 @@ const DropDown = (props) => {
             <option value={o.value}>{o.label}</option>
           ))}
         </select>
-        <label for={props.id}>{props.label}</label>
+        <label htmlFor={props.id}>{props.label}</label>
       </div>
     </div>
   );
@@ -40,7 +40,7 @@ DropDown.prototype = {
 };
 
 DropDown.defaultProps = {
-  type: "text",
+  type: 'text',
   onChange: () => {},
   required: false,
 };

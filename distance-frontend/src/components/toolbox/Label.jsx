@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Label = (props) => {
   if (props.show) {
     return <label htmlFor={props.id}>{props.label}</label>;
   }
-  return "";
+  return '';
 };
 
 Label.propTypes = {};
