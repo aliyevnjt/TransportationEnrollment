@@ -1,11 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import * as serviceWorker from "./serviceWorker.js";
-import "./index.css";
-import App from "./App";
-import "materialize-css/dist/css/materialize.min.css";
-import "materialize-css";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
 
-ReactDOM.render(<App />, document.getElementById("root"));
+if (module.hot) {
+  module.hot.accept();
+}
 
-serviceWorker.unregister();
+ReactDOM.render(
+  <App />,
+  document.getElementById('root'),
+);

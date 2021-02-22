@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import "materialize-css/dist/css/materialize.min.css";
-import M from "materialize-css/dist/js/materialize.min.js";
-import "materialize-css";
-import { appUrl, grades, schools } from "./Data";
-import axios from "axios";
+import React, { useState, useEffect, Component } from 'react';
+import 'materialize-css/dist/css/materialize.min.css';
+import M from 'materialize-css/dist/js/materialize.min.js';
+import 'materialize-css';
+import axios from 'axios';
+import { appUrl, grades, schools } from '../data/Data';
 
 const api = axios.create({
-  baseURL: appUrl.baseline + "/student/request",
+  baseURL: `${appUrl.baseline}/student/request`,
 });
 const list = [];
 class AdminSearch extends Component {
@@ -14,31 +14,31 @@ class AdminSearch extends Component {
     super(props);
     this.state = {
       request: {
-        fname: "",
-        lname: "",
-        grade: "",
-        school: "",
-        enrollmentStatus: "",
+        fname: '',
+        lname: '',
+        grade: '',
+        school: '',
+        enrollmentStatus: '',
       },
       tableContent: [],
       res: [],
     };
   }
 
-  changeHandler = (e) => {
-    this.setState({ request: { [e.target.id]: e.target.value } });
-  };
-
   componentDidMount() {
     console.log(M);
     M.AutoInit();
   }
 
+  changeHandler = async (e) => {
+    this.setState({ request: { [e.target.id]: e.target.value } });
+  };
+
   submitHandler = async (e) => {
     e.preventDefault();
     console.log(this.state);
     try {
-      const data = await api.post("/", this.state.request);
+      const data = await api.post('/', this.state.request);
       this.setState({ tableContent: this.constructTable(data.data) });
       //     console.log(data.data);
     } catch (err) {
@@ -64,7 +64,7 @@ class AdminSearch extends Component {
     // ));
     console.log(schools.filter((sch) => sch.value === st[0].school)[0].label);
     return (
-      <table class="highlight">
+      <table className="highlight">
         <thead>
           <tr>
             <th>Name</th>
@@ -79,12 +79,12 @@ class AdminSearch extends Component {
         <tbody>
           {st.map((li) => (
             <tr key={li.id}>
-              <td>{li.fname + " " + li.lname}</td>
+              <td>{`${li.fname} ${li.lname}`}</td>
               <td>{li.grade}</td>
               <td>
                 {schools.filter((sch) => sch.value === li.school)[0].label}
               </td>
-              <td>{li.address + ", " + li.city}</td>
+              <td>{`${li.address}, ${li.city}`}</td>
               <td>{li.distanceFromSchool}</td>
               <td>{li.enrollmentStatus}</td>
             </tr>
@@ -105,33 +105,34 @@ class AdminSearch extends Component {
       res,
     } = this.state;
     return (
-      <div class="container">
-        <div class="row left-align">
-          <div class="col s12">
-            <p class="flow-text">Please pick at least one field.</p>
+      <div className="col s9">
+
+        <div className="row left-align">
+          <div className="col s10">
+            <p className="flow-text">Please pick at least one field.</p>
           </div>
         </div>
-        <form class="col s12" onSubmit={this.submitHandler}>
-          <div class="row center-align">
-            <div class="col input-field s4">
+        <form className="col s9" onSubmit={this.submitHandler}>
+          <div className="row center-align">
+            <div className="col input-field s3">
               <input
                 id="fname"
                 type="text"
                 value={fname}
                 onChange={this.changeHandler}
               />
-              <label for="fname">First Name</label>
+              <label htmlFor="fname">First Name</label>
             </div>
-            <div class="col input-field s4">
+            <div className="col input-field s3">
               <input
                 id="lname"
                 type="text"
                 value={lname}
                 onChange={this.changeHandler}
               />
-              <label for="lname">Last Name</label>
+              <label htmlFor="lname">Last Name</label>
             </div>
-            <div class="col input-field s4">
+            <div className="col input-field s3">
               <select
                 id="enrollmentStatus"
                 value={enrollmentStatus}
@@ -143,8 +144,8 @@ class AdminSearch extends Component {
               </select>
             </div>
           </div>
-          <div class="row">
-            <div class="col input-field s6">
+          <div className="row">
+            <div className="col input-field s6">
               <select id="grade" value={grade} onChange={this.changeHandler}>
                 <option value="">Choose Grade</option>
 
@@ -153,7 +154,7 @@ class AdminSearch extends Component {
                 ))}
               </select>
             </div>
-            <div class="col input-field s6">
+            <div className="col input-field s6">
               <select id="school" value={school} onChange={this.changeHandler}>
                 <option value="">Choose School</option>
 
@@ -163,16 +164,16 @@ class AdminSearch extends Component {
               </select>
             </div>
           </div>
-          <div class="row">
-            <button type="submit" class="btn btn-primary">
+          <div className="row">
+            <button type="submit" className="btn btn-primary">
               Search
             </button>
           </div>
         </form>
         {tableContent}
+
       </div>
     );
   }
 }
-
 export default AdminSearch;
