@@ -1,9 +1,11 @@
 services:
   app:
-    image: 'docker-spring-boot-postgres:latest'
+    image: 'distance-spring-boot:latest'
     build:
       context: .
     container_name: app
+    ports:
+      - "8080:8080"
     depends_on:
       - db
     environment:
@@ -15,6 +17,8 @@ services:
   db:
     image: 'postgres:13.1-alpine'
     container_name: db
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
