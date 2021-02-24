@@ -1,6 +1,5 @@
 package com.bit.controller;
 
-import com.bit.model.form_data.Grades;
 import com.bit.repo.GradeRepository;
 import com.bit.repo.SchoolNamesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
