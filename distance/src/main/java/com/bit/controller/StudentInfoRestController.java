@@ -14,7 +14,7 @@ import java.util.List;
 
 
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @RestController
 public class StudentInfoRestController {
 

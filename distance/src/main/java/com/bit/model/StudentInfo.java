@@ -1,10 +1,15 @@
 package com.bit.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 
@@ -56,6 +61,21 @@ public class StudentInfo {
     private boolean homeless;
     @Size(min = 0, max = 15)
     private String mName;
+    @NotNull(message = "School Year is mandatory")
+    private String schoolYear;
+
+    @Column(name = "birthDate")
+    @JsonFormat(pattern = "MM/dd/yyyy")
+    private LocalDate birthDate;
+
+    public String getSchoolYear() {
+        return schoolYear;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
     private String enrollmentStatus;
     private LocalDateTime formSubmitTime = LocalDateTime.now();
 
@@ -160,6 +180,8 @@ public class StudentInfo {
                 ", unit='" + unit + '\'' +
                 ", homeless=" + homeless +
                 ", mName='" + mName + '\'' +
+                ", schoolYear='" + schoolYear + '\'' +
+                ", birthDate=" + birthDate +
                 ", enrollmentStatus='" + enrollmentStatus + '\'' +
                 ", formSubmitTime=" + formSubmitTime +
                 '}';
