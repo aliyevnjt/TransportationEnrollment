@@ -4,6 +4,7 @@ import M from 'materialize-css/dist/js/materialize.min';
 import 'materialize-css';
 import axios from 'axios';
 import { appUrl, grades, schools } from '../data/Data';
+import DropDown from './toolbox/DropDown';
 
 const api = axios.create({
   baseURL: `${appUrl.baseline}/student/request`,
@@ -145,24 +146,31 @@ class AdminSearch extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col input-field s6">
-              <select id="grade" value={grade} onChange={this.changeHandler}>
-                <option value="">Choose Grade</option>
-
-                {grades.map((gr) => (
-                  <option value={gr.value}>{gr.label}</option>
-                ))}
-              </select>
-            </div>
-            <div className="col input-field s6">
-              <select id="school" value={school} onChange={this.changeHandler}>
-                <option value="">Choose School</option>
-
-                {schools.map((sch) => (
-                  <option value={sch.value}>{sch.label}</option>
-                ))}
-              </select>
-            </div>
+            <DropDown
+              id="school"
+              value={school}
+              onChange={(e) => {
+                this.changeHandler(e);
+                this.setState({
+                  gradeOptions: grades.filter(
+                    (g) => g.level === e.target.value,
+                  ),
+                });
+              }}
+              label="* School"
+              col="s5"
+              required
+              options={schools}
+            />
+            <DropDown
+              id="grade"
+              value={grade}
+              onChange={this.changeHandler}
+              label="* Grade"
+              col="s2"
+              required
+              options={this.state.gradeOptions}
+            />
           </div>
           <div className="row">
             <button type="submit" className="btn btn-primary">
