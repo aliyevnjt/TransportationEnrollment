@@ -22,3 +22,11 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
+
+  ui:
+    image: 'distance-ui:latest'
+    build:
+      context: .
+    container_name: ui
+    ports:
+      - 3000:3000
