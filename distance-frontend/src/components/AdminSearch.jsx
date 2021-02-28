@@ -1,162 +1,103 @@
-import React, { useState, useEffect, Component } from 'react';
-import 'materialize-css/dist/css/materialize.min.css';
+import React, { useState, useEffect } from 'react';
 import M from 'materialize-css/dist/js/materialize.min';
-import 'materialize-css';
-import axios from 'axios';
-import { appUrl, grades, schools } from '../data/Data';
+import InputBox from './toolbox/InputBox';
 import DropDown from './toolbox/DropDown';
+import useAdminInput from './useAdminInput';
+import {
+  cities, grades, schools, states,
+} from '../data/Data';
+import Button from './toolbox/Button';
 
-const api = axios.create({
-  baseURL: `${appUrl.baseline}/student/request`,
-});
-const list = [];
-class AdminSearch extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      request: {
-        fname: '',
-        lname: '',
-        grade: '',
-        school: '',
-        enrollmentStatus: '',
-      },
-      tableContent: [],
-      res: [],
-    };
-  }
-
-  componentDidMount() {
-    console.log(M);
+function AdminSearch() {
+  const { inputs, handleInputChange, handleSubmit } = useAdminInput();
+  const [gradeOptions, setGradeOptions] = useState(grades);
+  useEffect(() => {
     M.AutoInit();
-  }
-
-  changeHandler = async (e) => {
-    this.setState({ request: { [e.target.id]: e.target.value } });
+  });
+  const handleSchoolDropdown = (event) => {
+    const newGradeOptions = grades.filter((g) => g.level === event.target.value);
+    setGradeOptions(newGradeOptions);
+    handleInputChange(event);
   };
 
-  submitHandler = async (e) => {
-    e.preventDefault();
-    console.log(this.state);
-    try {
-      const data = await api.post('/', this.state.request);
-      this.setState({ tableContent: this.constructTable(data.data) });
-      //     console.log(data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  constructTable = (st) => {
-    if (st === undefined) {
-      return [];
-    }
-    // console.log(st);
-    //  let list = st.map((li) => li.id);
-    // let list = st.map((li) => (
-    //   <tr key={li.id}>
-    //     <td>{li.fname + " " + li.lname}</td>
-    //     <td>{li.grade}</td>
-    //     <td>{schools.filter((sch) => sch.value === li.school)}</td>
-    //     <td>{li.address + ", " + li.city}</td>
-    //     <td>{li.distanceFromSchool}</td>
-    //     <td>{li.enrollmentStatus}</td>
-    //   </tr>
-    // ));
-    console.log(schools.filter((sch) => sch.value === st[0].school)[0].label);
-    return (
-      <table className="highlight">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Grade</th>
-            <th>School</th>
-            <th>Address</th>
-            <th>Distance</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {st.map((li) => (
-            <tr key={li.id}>
-              <td>{`${li.fname} ${li.lname}`}</td>
-              <td>{li.grade}</td>
-              <td>
-                {schools.filter((sch) => sch.value === li.school)[0].label}
-              </td>
-              <td>{`${li.address}, ${li.city}`}</td>
-              <td>{li.distanceFromSchool}</td>
-              <td>{li.enrollmentStatus}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  };
-
-  render() {
-    const {
-      fname,
-      lname,
-      grade,
-      school,
-      enrollmentStatus,
-      tableContent,
-      res,
-    } = this.state;
-    return (
-      <div className="col s9">
-
-        <div className="row left-align">
-          <div className="col s10">
-            <p className="flow-text">Please pick at least one field.</p>
+  return (
+    <div>
+      <div className="divider" />
+      <div className="container">
+        <form className="col s12" onSubmit={handleSubmit}>
+          <div className="row">
+            <InputBox
+              id="fname"
+              type="text"
+              value={inputs.fname}
+              onChange={handleInputChange}
+              label="* First Name"
+              col="s4"
+              required
+            />
+            <InputBox
+              id="mName"
+              type="text"
+              value={inputs.mName}
+              onChange={handleInputChange}
+              label="Middle Name"
+              col="s4"
+            />
+            <InputBox
+              id="lname"
+              type="text"
+              value={inputs.lname}
+              onChange={handleInputChange}
+              label="* Last Name"
+              col="s4"
+              required
+            />
           </div>
-        </div>
-        <form className="col s9" onSubmit={this.submitHandler}>
-          <div className="row center-align">
-            <div className="col input-field s3">
-              <input
-                id="fname"
-                type="text"
-                value={fname}
-                onChange={this.changeHandler}
-              />
-              <label htmlFor="fname">First Name</label>
-            </div>
-            <div className="col input-field s3">
-              <input
-                id="lname"
-                type="text"
-                value={lname}
-                onChange={this.changeHandler}
-              />
-              <label htmlFor="lname">Last Name</label>
-            </div>
-            <div className="col input-field s3">
-              <select
-                id="enrollmentStatus"
-                value={enrollmentStatus}
-                onChange={this.changeHandler}
-              >
-                <option value="">Free/Paid</option>
-                <option value="free">Free</option>
-                <option value="paid">Paid</option>
-              </select>
-            </div>
+          <div className="row">
+            <InputBox
+              id="address"
+              type="text"
+              value={inputs.address}
+              onChange={handleInputChange}
+              label="* Address"
+              col="s5"
+              required
+            />
+            <DropDown
+              id="city"
+              value={inputs.city}
+              onChange={handleInputChange}
+              label="* City"
+              col="s2"
+              required
+              options={cities}
+            />
+            <DropDown
+              id="state"
+              value={inputs.state}
+              onChange={handleInputChange}
+              label="* State"
+              col="s3"
+              options={states}
+              required
+            />
+            <InputBox
+              id="lname"
+              type="text"
+              value={inputs.zip}
+              onChange={handleInputChange}
+              label="* Zip"
+              col="s2"
+              required
+              showLabel
+              disabled
+            />
           </div>
           <div className="row">
             <DropDown
               id="school"
-              value={school}
-              onChange={(e) => {
-                this.changeHandler(e);
-                this.setState({
-                  gradeOptions: grades.filter(
-                    (g) => g.level === e.target.value,
-                  ),
-                });
-              }}
+              value={inputs.school}
+              onChange={handleSchoolDropdown}
               label="* School"
               col="s5"
               required
@@ -164,24 +105,20 @@ class AdminSearch extends Component {
             />
             <DropDown
               id="grade"
-              value={grade}
-              onChange={this.changeHandler}
+              value={inputs.grade}
+              onChange={handleInputChange}
               label="* Grade"
               col="s2"
               required
-              options={this.state.gradeOptions}
+              options={gradeOptions}
             />
           </div>
-          <div className="row">
-            <button type="submit" className="btn btn-primary">
-              Search
-            </button>
-          </div>
+          <Button label="Search" type="submit" />
         </form>
-        {tableContent}
-
+        <div />
       </div>
-    );
-  }
+    </div>
+  );
 }
+
 export default AdminSearch;

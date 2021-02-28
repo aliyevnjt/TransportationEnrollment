@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import 'materialize-css';
 import AdminSearch from './AdminSearch';
 import AdminSettings from './AdminSettings';
@@ -38,7 +38,7 @@ function AdminPanel() {
               {
               list.map((item) => (
                 <li key={item} className="flow-text">
-                    <span id={item} onClick={updateAdmPanel}>{item}</span>
+                  <span id={item} onClick={updateAdmPanel}>{item}</span>
                 </li>
               ))
             }
