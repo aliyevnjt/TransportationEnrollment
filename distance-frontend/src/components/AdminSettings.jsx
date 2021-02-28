@@ -2,8 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import M from 'materialize-css/dist/js/materialize.min';
 import TextField from './toolbox/TextField';
 import Button from './toolbox/Button';
+import {schoolYears} from '../data/Data';
+import DropDown from './toolbox/DropDown';
+import useAdminInput from './useAdminInput';
+
 
 function AdminSettings() {
+  const { inputs, handleInputChange, handleSubmit } = useAdminInput();
   const btnRef = useRef();
   const onBtnClick = (e) => {
     if (btnRef.current) {
@@ -21,6 +26,19 @@ function AdminSettings() {
   const [lateReg, setLateReg] = useState('');
   return (
     <div>
+
+{/* TODO  */}
+
+      <div className="row">
+      <DropDown
+        id="schoolYear"
+        value={inputs.schoolYear}
+        onChange={handleInputChange}
+        label="Bus Registration Year"
+        col="s3"
+        options={schoolYears}
+      />
+      </div>
       AdminSettings
       <TextField id="message" value={message} onChange={handleChange} />
 

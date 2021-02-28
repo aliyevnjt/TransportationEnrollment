@@ -13,7 +13,9 @@ function AdminSearch() {
   const [gradeOptions, setGradeOptions] = useState(grades);
   useEffect(() => {
     M.AutoInit();
+    M.updateTextFields();
   });
+
   const handleSchoolDropdown = (event) => {
     const newGradeOptions = grades.filter((g) => g.level === event.target.value);
     setGradeOptions(newGradeOptions);
@@ -31,9 +33,8 @@ function AdminSearch() {
               type="text"
               value={inputs.fname}
               onChange={handleInputChange}
-              label="* First Name"
+              label="First Name"
               col="s4"
-              required
             />
             <InputBox
               id="mName"
@@ -48,9 +49,8 @@ function AdminSearch() {
               type="text"
               value={inputs.lname}
               onChange={handleInputChange}
-              label="* Last Name"
+              label="Last Name"
               col="s4"
-              required
             />
           </div>
           <div className="row">
@@ -59,36 +59,32 @@ function AdminSearch() {
               type="text"
               value={inputs.address}
               onChange={handleInputChange}
-              label="* Address"
+              label="Address"
               col="s5"
-              required
             />
             <DropDown
               id="city"
               value={inputs.city}
               onChange={handleInputChange}
-              label="* City"
+              label="City"
               col="s2"
-              required
               options={cities}
             />
             <DropDown
               id="state"
               value={inputs.state}
               onChange={handleInputChange}
-              label="* State"
+              label="State"
               col="s3"
               options={states}
-              required
             />
             <InputBox
-              id="lname"
+              id="zip"
               type="text"
-              value={inputs.zip}
+              value="01406"
               onChange={handleInputChange}
-              label="* Zip"
+              label="Zip"
               col="s2"
-              required
               showLabel
               disabled
             />
@@ -100,7 +96,6 @@ function AdminSearch() {
               onChange={handleSchoolDropdown}
               label="* School"
               col="s5"
-              required
               options={schools}
             />
             <DropDown
@@ -109,7 +104,6 @@ function AdminSearch() {
               onChange={handleInputChange}
               label="* Grade"
               col="s2"
-              required
               options={gradeOptions}
             />
           </div>

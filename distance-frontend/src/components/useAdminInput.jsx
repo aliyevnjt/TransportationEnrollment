@@ -6,6 +6,7 @@ const useAdminInput = (callback) => {
   const handleSubmit = (event) => {
     if (event) {
       event.preventDefault();
+      console.log(inputs)
     }
   };
   const handleInputChange = (event) => {
