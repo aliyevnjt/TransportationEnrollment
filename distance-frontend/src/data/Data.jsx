@@ -31,13 +31,11 @@ const keys = {
     'pk_test_51I5QOxJuvhMix0vIzNnxK95fD4KadqVex6UylU7RG0jUUYQW3hpWF2rOjUonbpceQwtM7RGZ4xSrDvL5BY07a1R300DBtO4EeD',
 };
 
-
 const schoolYears = [
   { label: 'School Year 2021-2022', value: 'FY22' },
   { label: 'School Year 2022-2023', value: 'FY23' },
   { label: 'School Year 2023-2024', value: 'FY24' },
   { label: 'School Year 2024-2025', value: 'FY25' },
-
 
 ];
 
@@ -98,5 +96,5 @@ const usa = [
 const schoolYear = '2021-2022';
 
 export {
-  appUrl, grades, schools, keys, usa, schoolYear, cities, states, schoolYears
+  appUrl, grades, schools, keys, usa, schoolYear, cities, states, schoolYears,
 };

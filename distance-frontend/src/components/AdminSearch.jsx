@@ -26,7 +26,7 @@ function AdminSearch() {
     <div>
       <div className="divider" />
       <div className="container">
-        <form className="col s12" onSubmit={handleSubmit}>
+        <form id="adminForm" className="col s12" onSubmit={handleSubmit}>
           <div className="row">
             <InputBox
               id="fname"
