@@ -9,8 +9,10 @@ import {
 } from '../data/Data';
 
 function RegistrationForm() {
-  const { inputs, handleInputChange, handleSubmit } = useAdminInput();
+  const { inputs, setInputs, handleInputChange, handleSubmit } = useAdminInput();
+
   const [gradeOptions, setGradeOptions] = useState(grades);
+  //const schoolYear="FY22";
 
   useEffect(() => {
     M.AutoInit();
@@ -44,7 +46,7 @@ function RegistrationForm() {
               value={inputs.mName}
               onChange={handleInputChange}
               label="Middle Name"
-              col="s4"
+              col="s1"
             />
             <InputBox
               id="lname"
@@ -53,6 +55,15 @@ function RegistrationForm() {
               onChange={handleInputChange}
               label="* Last Name"
               col="s4"
+              required
+            />
+            <InputBox
+              id="birthDate"
+              type="text"
+              value={inputs.birthDate}
+              onChange={handleInputChange}
+              label="* Date of Birth (mm/dd/yyyy)"
+              col="s3"
               required
             />
           </div>
@@ -85,7 +96,7 @@ function RegistrationForm() {
               options={states}
             />
             <InputBox
-              id="lname"
+              id="zip"
               type="text"
               value={inputs.zip}
               onChange={handleInputChange}
@@ -93,7 +104,6 @@ function RegistrationForm() {
               col="s2"
               required
               showLabel
-              disabled
             />
           </div>
           <div className="row">
