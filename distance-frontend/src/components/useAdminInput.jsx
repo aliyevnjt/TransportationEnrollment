@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { studentApi as api} from '../api/studentApi'
+import { baseURL } from '../data/Data';
+import constructAdminTable from './toolbox/ConstructAdminTable';
 
-const useAdminInput = (callback) => {
-  const [inputs, setInputs] = useState({"schoolYear":"FY22"});
-//  const [history, setHistory] = useState({});
-  let history = useHistory();
+const useAdminInput = () => {
+  const [inputs, setInputs] = useState({ schoolYear: 'FY22' });
+  const [table, setTable] = useState();
+  const history = useHistory();
 
   const handleSubmit = async (event) => {
     if (event) {
@@ -14,36 +15,30 @@ const useAdminInput = (callback) => {
       console.log(inputs);
       if (event.target.id === 'registrationForm') {
         try {
-          // const baseURL = 'http://ec2-3-23-113-213.us-east-2.compute.amazonaws.com:9090/student/request';
-          // const api = axios.create({
-          //   baseURL,
-          // });
-          const res = await api.post('/student', inputs);
+          const res = await axios.post(`${baseURL}/student/`, inputs);
           console.log(res);
           if (res.data.enrollmentStatus === 'free') {
-            // setHistory({
-            //   pathname: '/freeReg',
-            //   search: '',
-            //   state: { detail: res.data },
-            //   student: res.data,
-            // });
-            history.push({
-              pathname: "/freeReg",
-              search: "",
+            history({
+              pathname: '/freeReg',
+              search: '',
               state: { detail: res.data },
               student: res.data,
             });
           } else {
-          //   setHistory({
-          //     pathname: '/payment',
-          //     search: '',
-          //     state: { detail: res.data },
-          //     student: res.data,
-          //   });
+            history({
+              pathname: '/payment',
+              search: '',
+              state: { detail: res.data },
+              student: res.data,
+            });
           }
         } catch (err) {
           console.log(err);
         }
+      } else if (event.target.id === 'adminForm') {
+        const res = await axios.post(`${baseURL}/student/request/`, inputs);
+        console.log(res);
+        setTable(constructAdminTable(res.data));
       }
     }
   };
@@ -55,7 +50,7 @@ const useAdminInput = (callback) => {
     handleInputChange,
     inputs,
     history,
-    
+    table,
   };
 };
 

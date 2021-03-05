@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import Dropdown from './toolbox/Dropdown';
 import useAdminInput from './useAdminInput';
 import {
   cities, grades, schools, states,
 } from '../data/Data';
 import FormGroup from './toolbox/FormGroup';
+import Dropdown from './toolbox/Dropdown';
+import constructAdminTable from './toolbox/ConstructAdminTable';
+import { sample } from '../data/sample';
 
-function AdminSearch() {
+function Demo() {
   const {
-    inputs, handleInputChange, handleSubmit, table,
+    inputs, handleInputChange, handleSubmit,
   } = useAdminInput();
   const [gradeOptions, setGradeOptions] = useState(grades);
 
@@ -20,28 +22,28 @@ function AdminSearch() {
   };
   return (
     <div>
-      <Form id="adminForm" onSubmit={handleSubmit}>
+      <Form id="demoForm" onSubmit={handleSubmit}>
         <Form.Row>
           <FormGroup
-            id="fname"
+            id="firstName"
             onChange={handleInputChange}
-            value={inputs.fname}
+            value={inputs.firstName}
             label="First Name"
             type="text"
             placeholder="enter first name"
           />
           <FormGroup
-            id="mName"
+            id="middleName"
             onChange={handleInputChange}
-            value={inputs.mName}
+            value={inputs.middleName}
             label="Middle Name"
             type="text"
             placeholder="enter middle name"
           />
           <FormGroup
-            id="lname"
+            id="lastName"
             onChange={handleInputChange}
-            value={inputs.lname}
+            value={inputs.lastName}
             label="Last Name"
             type="text"
             placeholder="enter last name"
@@ -96,12 +98,12 @@ function AdminSearch() {
             options={gradeOptions}
           />
         </Form.Row>
-        <Button as="input" type="submit" value="Search" />
+        <Button as="input" type="submit" value="Submit" />
       </Form>
       <br />
-      {table}
+      {constructAdminTable(sample)}
     </div>
   );
 }
 
-export default AdminSearch;
+export default Demo;

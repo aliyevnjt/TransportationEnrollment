@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const TextField = (props) => (
   <div>
-    <textarea label="Standard" className="materialize-textarea" />
+    <textarea label="Standard" />
   </div>
 );
 

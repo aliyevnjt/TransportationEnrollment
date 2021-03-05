@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
-import M from 'materialize-css/dist/js/materialize.min';
+import React, { useState, useRef } from 'react';
+import { Button } from 'react-bootstrap';
 import TextField from './toolbox/TextField';
-import Button from './toolbox/Button';
+import InputComponent from './toolbox/InputComponent';
 import { schoolYears } from '../data/Data';
-import DropDown from './toolbox/DropDown';
+import Dropdown from './toolbox/Dropdown';
 import useAdminInput from './useAdminInput';
 
 function AdminSettings() {
@@ -15,9 +15,6 @@ function AdminSettings() {
       btnRef.current.setAttribute('disabled', 'disabled');
     }
   };
-  useEffect(() => {
-    M.AutoInit();
-  });
   const handleChange = (event) => {
 
   };
@@ -30,12 +27,11 @@ function AdminSettings() {
       {/* TODO  */}
 
       <div className="row">
-        <DropDown
+        <Dropdown
           id="schoolYear"
           value={inputs.schoolYear}
           onChange={handleInputChange}
           label="Bus Registration Year"
-          col="s3"
           options={schoolYears}
         />
       </div>
@@ -45,8 +41,13 @@ function AdminSettings() {
       <TextField id="earlyReg" value={earlyReg} onChange={handleChange} />
 
       <TextField id="lateReg" value={lateReg} onChange={handleChange} />
-
-      <Button ref={btnRef} onClick={onBtnClick} label="Save" type="submit" disabled="true" />
+      <br />
+      <InputComponent
+        size="lg"
+        id="message"
+      />
+      <br />
+      <Button as="input" ref={btnRef} onClick={onBtnClick} value="Save" type="submit" disabled="true" />
     </div>
   );
 }

@@ -15,6 +15,7 @@ const grades = [
 ];
 
 const appUrl = { baseline: 'http://localhost:8080' };
+const baseURL = 'http://ec2-3-142-117-252.us-east-2.compute.amazonaws.com:8080/api';
 
 const schools = [
   { label: 'LITTLETON HIGH SCHOOL', value: 'LHS' },
@@ -96,5 +97,5 @@ const usa = [
 const schoolYear = '2021-2022';
 
 export {
-  appUrl, grades, schools, keys, usa, schoolYear, cities, states, schoolYears,
+  appUrl, grades, schools, keys, usa, schoolYear, cities, states, schoolYears, baseURL,
 };

@@ -1,14 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const Label = (props) => {
+  const { id, label } = props;
   if (props.show) {
-    return <label htmlFor={props.id}>{props.label}</label>;
+    return <label htmlFor={id}>{label}</label>;
   }
   return '';
 };
 
-Label.propTypes = {};
 Label.defaultProps = {
   show: true,
 };
