@@ -63,7 +63,7 @@ public class StudentInfo {
     private String mName;
     @NotNull(message = "School Year is mandatory")
     private String schoolYear;
-
+    @NotNull(message = "Birth Date is mandatory")
     @Column(name = "birthDate")
     @JsonFormat(pattern = "MM/dd/yyyy")
     private LocalDate birthDate;
