@@ -14,6 +14,16 @@ const grades = [
   { label: '12', value: '12', level: 'LHS' },
 ];
 
+const headers = [
+  { label: 'First Name', key: 'fname' },
+  { label: 'Last Name', key: 'lname' },
+  { label: 'Grade', key: 'grade' },
+  { label: 'Status', key: 'enrollmentStatus' },
+  { label: 'Distance', key: 'distanceFromSchool' },
+  { label: 'Address', key: 'address' },
+  { label: 'School', key: 'school' },
+];
+
 const appUrl = { baseline: 'http://localhost:8080' };
 const baseURL = 'http://ec2-3-142-117-252.us-east-2.compute.amazonaws.com:8080/api';
 
@@ -97,5 +107,5 @@ const usa = [
 const schoolYear = '2021-2022';
 
 export {
-  appUrl, grades, schools, keys, usa, schoolYear, cities, states, schoolYears, baseURL,
+  appUrl, grades, schools, keys, usa, schoolYear, cities, states, schoolYears, baseURL, headers,
 };

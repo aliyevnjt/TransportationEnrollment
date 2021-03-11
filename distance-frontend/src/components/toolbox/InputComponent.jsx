@@ -16,6 +16,5 @@ const InputComponent = (props) => {
 InputComponent.propTypes = {
   id: PropTypes.string.isRequired,
   size: PropTypes.string.isRequired,
-  // label: PropTypes.string.isRequired,
 };
 export default InputComponent;

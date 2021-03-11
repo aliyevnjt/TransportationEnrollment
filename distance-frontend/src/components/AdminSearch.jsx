@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { CSVLink } from 'react-csv';
+
 import Dropdown from './toolbox/Dropdown';
 import useAdminInput from './useAdminInput';
 import {
-  cities, grades, schools, states,
+  cities, grades, schools, states, headers,
 } from '../data/Data';
 import FormGroup from './toolbox/FormGroup';
 
 function AdminSearch() {
   const {
-    inputs, handleInputChange, handleSubmit, table,
+    inputs, handleInputChange, handleSubmit, table, adminSearchData,
   } = useAdminInput();
   const [gradeOptions, setGradeOptions] = useState(grades);
 
@@ -96,7 +98,16 @@ function AdminSearch() {
             options={gradeOptions}
           />
         </Form.Row>
-        <Button as="input" type="submit" value="Search" />
+        <Button as="input" className="mr-1" type="submit" value="Search" />
+        &nbsp;&nbsp;&nbsp;
+        <CSVLink
+          data={adminSearchData}
+          headers={headers}
+          filename="my-file.csv"
+          className="btn btn-primary ml-3"
+        >
+          Download as CSV
+        </CSVLink>
       </Form>
       <br />
       {table}

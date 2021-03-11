@@ -7,6 +7,7 @@ import constructAdminTable from './toolbox/ConstructAdminTable';
 const useAdminInput = () => {
   const [inputs, setInputs] = useState({ schoolYear: 'FY22' });
   const [table, setTable] = useState();
+  const [adminSearchData, setAdminSearchData] = useState([{}]);
   const history = useHistory();
 
   const handleSubmit = async (event) => {
@@ -37,8 +38,9 @@ const useAdminInput = () => {
         }
       } else if (event.target.id === 'adminForm') {
         const res = await axios.post(`${baseURL}/student/request/`, inputs);
-        console.log(res);
+        console.log(res.data);
         setTable(constructAdminTable(res.data));
+        setAdminSearchData(res.data);
       }
     }
   };
@@ -50,6 +52,7 @@ const useAdminInput = () => {
     handleInputChange,
     inputs,
     history,
+    adminSearchData,
     table,
   };
 };

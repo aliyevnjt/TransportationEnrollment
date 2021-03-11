@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { Button } from 'react-bootstrap';
-import TextField from './toolbox/TextField';
+import {
+  Button, InputGroup,
+} from 'react-bootstrap';
 import InputComponent from './toolbox/InputComponent';
 import { schoolYears } from '../data/Data';
 import Dropdown from './toolbox/Dropdown';
@@ -35,17 +36,51 @@ function AdminSettings() {
           options={schoolYears}
         />
       </div>
-      AdminSettings
-      <TextField id="message" value={message} onChange={handleChange} />
 
-      <TextField id="earlyReg" value={earlyReg} onChange={handleChange} />
-
-      <TextField id="lateReg" value={lateReg} onChange={handleChange} />
+      <InputGroup className="mb-3">
+        <InputGroup.Prepend>
+          <InputGroup.Radio
+            id="message"
+            value={message}
+            aria-label="Checkbox for following text input"
+          />
+        </InputGroup.Prepend>
+        {/* <FormControl aria-label="Text input with checkbox" /> */}
+        <InputComponent
+          size="s"
+          id="Open"
+        />
+      </InputGroup>
+      <InputGroup className="mb-3">
+        <InputGroup.Prepend>
+          <InputGroup.Radio
+            id="message"
+            value={message}
+            aria-label="Checkbox for following text input"
+          />
+        </InputGroup.Prepend>
+        {/* <FormControl aria-label="Text input with checkbox" /> */}
+        <InputComponent
+          size="s"
+          id="Closed"
+        />
+      </InputGroup>
       <br />
-      <InputComponent
-        size="lg"
-        id="message"
-      />
+
+      <InputGroup className="mb-3">
+        <InputGroup.Prepend>
+          <InputGroup.Checkbox
+            id="message"
+            value={message}
+            aria-label="Checkbox for following text input"
+          />
+        </InputGroup.Prepend>
+        {/* <FormControl aria-label="Text input with checkbox" /> */}
+        <InputComponent
+          size="s"
+          id="message"
+        />
+      </InputGroup>
       <br />
       <Button as="input" ref={btnRef} onClick={onBtnClick} value="Save" type="submit" disabled="true" />
     </div>

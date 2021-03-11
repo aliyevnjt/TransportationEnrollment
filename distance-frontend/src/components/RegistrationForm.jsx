@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Container, Form, Col, Row, Image, Button, Jumbotron,
+  Container, Form, Button, Jumbotron,
 } from 'react-bootstrap';
 import useAdminInput from './useAdminInput';
 import Dropdown from './toolbox/Dropdown';
@@ -12,7 +12,7 @@ import FormGroup from './toolbox/FormGroup';
 
 function RegistrationForm() {
   const {
-    inputs, setInputs, handleInputChange, handleSubmit,
+    inputs, handleInputChange, handleSubmit,
   } = useAdminInput();
 
   const [gradeOptions, setGradeOptions] = useState(grades);
