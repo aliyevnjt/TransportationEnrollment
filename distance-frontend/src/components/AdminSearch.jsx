@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { CSVLink } from 'react-csv';
-
+import JsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import Dropdown from './toolbox/Dropdown';
 import useAdminInput from './useAdminInput';
 import {
@@ -19,6 +20,11 @@ function AdminSearch() {
     const newGradeOptions = grades.filter((g) => g.level === event.target.value);
     setGradeOptions(newGradeOptions);
     handleInputChange(event);
+  };
+  const handlePDFdownload = () => {
+    const doc = new JsPDF();
+    autoTable(doc, { html: '#adminSearch' });
+    doc.save('adminSearch.pdf');
   };
   return (
     <div>
@@ -99,7 +105,6 @@ function AdminSearch() {
           />
         </Form.Row>
         <Button as="input" className="mr-1" type="submit" value="Search" />
-        &nbsp;&nbsp;&nbsp;
         <CSVLink
           data={adminSearchData}
           headers={headers}
@@ -108,6 +113,13 @@ function AdminSearch() {
         >
           Download as CSV
         </CSVLink>
+        <Button
+          as="input"
+          onClick={handlePDFdownload}
+          className="ml-3"
+          type="submit"
+          value="Download as PDF"
+        />
       </Form>
       <br />
       {table}
