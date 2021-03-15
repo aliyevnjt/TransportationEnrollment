@@ -12,7 +12,11 @@ function AdminUpload() {
   const uploadFile = async () => {
     console.log(file);
     if (file.size > 0) {
-      await axios.post(`${importURL}`, file);
+      await axios.post(`${importURL}`, file, {
+        headers: {
+          'Content-Type': file.type,
+        },
+      });
     }
   };
   return (
