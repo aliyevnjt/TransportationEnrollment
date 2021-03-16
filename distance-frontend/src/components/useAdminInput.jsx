@@ -41,6 +41,13 @@ const useAdminInput = () => {
         console.log(res.data);
         setTable(constructAdminTable(res.data));
         setAdminSearchData(res.data);
+      } else if (event.target.id === 'adminSettings') {
+        // const res = await axios.post(`${baseURL}/student/request/`, inputs);
+        // console.log(res.data);
+        // setTable(constructAdminTable(res.data));
+        // setAdminSearchData(res.data);
+
+        console.log('===========HI');
       }
     }
   };
