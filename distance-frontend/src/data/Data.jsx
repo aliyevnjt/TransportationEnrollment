@@ -50,6 +50,10 @@ const schoolYears = [
   { label: 'School Year 2024-2025', value: 'FY25' },
 
 ];
+const registration = [
+  { label: 'Open', value: 'open' },
+  { label: 'Closed', value: 'closed' },
+];
 
 const usa = [
   { value: 'AL', label: 'Alabama' },
@@ -109,5 +113,5 @@ const schoolYear = '2021-2022';
 
 export {
   appUrl, grades, schools, keys, usa, schoolYear, cities, states, schoolYears,
-  baseURL, importURL, headers,
+  baseURL, importURL, headers, registration,
 };

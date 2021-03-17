@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import {
-  Button, InputGroup, Col, Row, Form,
+  Button, FormControl, InputGroup, Row,
 } from 'react-bootstrap';
 import InputComponent from './toolbox/InputComponent';
-import { schoolYears } from '../data/Data';
+import { schoolYears, registration } from '../data/Data';
 import Dropdown from './toolbox/Dropdown';
 import useAdminInput from './useAdminInput';
 
@@ -17,21 +17,23 @@ function AdminSettings() {
 
   const { inputs, handleInputChange, handleSubmit } = useAdminInput();
   const [message, setMessage] = useState({
-    earlyReg: { value: 'earlyReg', status: false },
-    lateReg: { value: 'lateReg', status: false },
-    notification: { value: 'notification', status: false },
+    open: 'earlyReg',
+    closed: 'lateReg',
+    notification: 'notification',
   });
   const [saveButton, setSaveButton] = useState(true);
+  const [checkButtonStatus, setCheckButtonStatus] = useState(false);
 
   const handleMessageChange = (event) => {
-    setMessage(() => ({ ...message, [event.target.id]: { value: event.target.value } }));
+    setMessage(() => ({ ...message, [event.target.id]: event.target.value }));
     setSaveButton(false);
   };
-  const handleClick = (event) => {
-    console.log(event);
-    if (event.target.value === 'on') {
-      setMessage(() => ({ ...message, [event.target.name]: { status: true } }));
-    }
+  const handleDropdownChange = (event) => {
+    handleInputChange(event);
+    setSaveButton(false);
+  };
+  const handleCheckButton = () => {
+    setCheckButtonStatus(!checkButtonStatus);
     setSaveButton(false);
   };
   const handleSave = (event) => {
@@ -56,62 +58,53 @@ function AdminSettings() {
           options={schoolYears}
         />
       </Row>
-      <InputGroup className="mb-3">
+      <Row>
+        <Dropdown
+          id="registrationStatus"
+          value={inputs.registration}
+          onChange={handleDropdownChange}
+          label="Registration Status"
+          options={registration}
+        />
+      </Row>
+      <div>
         <Row>
-          <InputGroup.Prepend>
-            <InputGroup.Radio
-              name="earlyReg"
-              aria-label="Checkbox for following text input"
-              onClick={handleClick}
-            />
-            <InputComponent
-              size="s"
-              buttonText="Open"
-              id="earlyReg"
-              value={message.earlyReg.value}
-              onChange={handleMessageChange}
-            />
-          </InputGroup.Prepend>
+          <InputComponent
+            buttonText="Open"
+            id="open"
+            value={message.open}
+            onChange={handleMessageChange}
+          />
         </Row>
         <br />
         <Row>
-          <InputGroup.Prepend>
-            <InputGroup.Radio
-              name="lateReg"
-              aria-label="Checkbox for following text input"
-              onClick={handleClick}
-            />
-            <InputComponent
-              size="s"
-              buttonText="Closed"
-              id="lateReg"
-              value={message.lateReg.value}
-              onChange={handleMessageChange}
-            />
-          </InputGroup.Prepend>
+          <InputComponent
+            buttonText="Closed"
+            id="closed"
+            value={message.closed}
+            onChange={handleMessageChange}
+          />
         </Row>
-      </InputGroup>
+        <br />
+        <InputGroup.Prepend>
+          <InputGroup.Checkbox
+            name="notification"
+            aria-label="Checkbox for following text input"
+            checked={checkButtonStatus}
+            onClick={handleCheckButton}
+          />
+          <InputComponent
+            buttonText="Notification"
+            id="notification"
+            onChange={handleMessageChange}
+            value={message.notification}
+          />
+        </InputGroup.Prepend>
+      </div>
       <br />
-      <InputGroup className="mb-3">
-        <Row>
-          <InputGroup.Prepend>
-            <InputGroup.Checkbox
-              name="notification"
-              aria-label="Checkbox for following text input"
-              onClick={handleClick}
-            />
-            <InputComponent
-              size="s"
-              buttonText="Notification"
-              id="notification"
-              onChange={handleMessageChange}
-              value={message.notification.value}
-            />
-          </InputGroup.Prepend>
-        </Row>
-      </InputGroup>
       <Button
         disabled={saveButton}
+        size="lg"
         as="input"
         id="adminSettings"
         type="submit"
