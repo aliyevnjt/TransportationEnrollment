@@ -9,6 +9,7 @@ import {
 } from '../data/Data';
 import Header from './Header';
 import FormGroup from './toolbox/FormGroup';
+import Student  from './Student';
 
 function RegistrationForm() {
   const {
@@ -24,49 +25,21 @@ function RegistrationForm() {
     handleInputChange(event);
   };
 
+  const [counter, setCounter] = useState(1);
+  const [sibling,setSibling]=useState([]);
+
+  const addSibling = (event) => {
+    setSibling([...sibling, <Student key = {counter} id={`Student${counter}`}/>])
+    setCounter(counter+1);
+  }
+
   return (
     <div>
       <Header />
       <Container className="pt-3">
         <Jumbotron>
           <Form id="registrationForm" onSubmit={handleSubmit}>
-            <Form.Row>
-              <FormGroup
-                id="fname"
-                type="text"
-                value={inputs.fname}
-                onChange={handleInputChange}
-                label="* First Name"
-                placeholder="enter first name"
-                required
-              />
-              <FormGroup
-                id="mName"
-                type="text"
-                value={inputs.mName}
-                onChange={handleInputChange}
-                label="Middle Name"
-              />
-              <FormGroup
-                id="lname"
-                type="text"
-                value={inputs.lname}
-                onChange={handleInputChange}
-                label="* Last Name"
-                placeholder="enter last name"
-                required
-              />
-              <FormGroup
-                id="birthDate"
-                type="text"
-                value={inputs.birthDate}
-                onChange={handleInputChange}
-                label="* Date of Birth"
-                placeholder="mm/dd/yyyy"
-                required
-              />
-            </Form.Row>
-
+            <Student />
             <Form.Row>
               <FormGroup
                 id="address"
@@ -106,25 +79,6 @@ function RegistrationForm() {
             </Form.Row>
 
             <Form.Row>
-              <Dropdown
-                id="school"
-                value={inputs.school}
-                onChange={handleSchoolDropdown}
-                label="* School"
-                required
-                options={schools}
-              />
-              <Dropdown
-                id="grade"
-                value={inputs.grade}
-                onChange={handleInputChange}
-                label="* Grade"
-                required
-                options={gradeOptions}
-              />
-            </Form.Row>
-
-            <Form.Row>
               <FormGroup
                 id="parentName"
                 type="text"
@@ -150,6 +104,13 @@ function RegistrationForm() {
                 required
               />
             </Form.Row>
+            {sibling.map(sblg =>sblg)}
+
+            <Form.Row>
+            <Button as="input" value="Add Sibling" onClick={addSibling}/>
+            
+            </Form.Row>
+
             <Button as="input" value="Continue" type="submit" />
           </Form>
           {/* <button onClick={this.freeSample}>Free Sample</button> */}

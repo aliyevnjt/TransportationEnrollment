@@ -9,6 +9,7 @@ import {
   cities, grades, schools, states, headers,
 } from '../data/Data';
 import FormGroup from './toolbox/FormGroup';
+import Student from './Student';
 
 function AdminSearch() {
   const {
@@ -29,33 +30,8 @@ function AdminSearch() {
   return (
     <div>
       <Form id="adminForm" onSubmit={handleSubmit}>
-        <Form.Row>
-          <FormGroup
-            id="fname"
-            onChange={handleInputChange}
-            value={inputs.fname}
-            label="First Name"
-            type="text"
-            placeholder="enter first name"
-          />
-          <FormGroup
-            id="mName"
-            onChange={handleInputChange}
-            value={inputs.mName}
-            label="Middle Name"
-            type="text"
-            placeholder="enter middle name"
-          />
-          <FormGroup
-            id="lname"
-            onChange={handleInputChange}
-            value={inputs.lname}
-            label="Last Name"
-            type="text"
-            placeholder="enter last name"
-          />
-        </Form.Row>
-
+        
+        <Student />
         <Form.Row>
           <FormGroup
             id="address"
@@ -88,22 +64,6 @@ function AdminSearch() {
           />
         </Form.Row>
 
-        <Form.Row>
-          <Dropdown
-            id="school"
-            onChange={handleSchoolDropdown}
-            value={inputs.school}
-            label="* School"
-            options={schools}
-          />
-          <Dropdown
-            id="grade"
-            onChange={handleInputChange}
-            value={inputs.grade}
-            label="* Grade"
-            options={gradeOptions}
-          />
-        </Form.Row>
         <Button as="input" className="mr-1" type="submit" value="Search" />
         <CSVLink
           data={adminSearchData}
