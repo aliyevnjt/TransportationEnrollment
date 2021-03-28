@@ -26,9 +26,7 @@ COPY --from=build /app/build /var/www
 
 # Copy our custom nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
-#RUN mkdir -p /etc/ngnix/ssl/
-#COPY /etc/ngnix/ssl /etc/ngnix/ssl/
-#COPY /etc/ngnix/ssl /etc/ngnix/ssl/
+
 # Expose port 80 to the Docker host, so we can access it 
 # from the outside.
 EXPOSE 80
