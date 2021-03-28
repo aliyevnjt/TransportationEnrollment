@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 const Dropdown = (props) => {
   const {
@@ -11,17 +11,16 @@ const Dropdown = (props) => {
     label = label.substr(2);
   }
   return (
-    <Form.Group
-      as={Col}
-    >
+    <Form.Group>
       <Form.Label>
         {label}
       </Form.Label>
       <Form.Control
         as="select"
-        defaultValue="Choose..."
         id={id}
         onChange={onChange}
+        
+
       >
         <option value="">{label}</option>
         {

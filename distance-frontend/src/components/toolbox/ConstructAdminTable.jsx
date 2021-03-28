@@ -16,7 +16,7 @@ const constructAdminTable = (data) => {
     school: 'School',
   };
   return (
-    <Table striped bordered hover>
+    <Table id="adminSearch" striped bordered hover>
       <thead>
         <tr>
           {

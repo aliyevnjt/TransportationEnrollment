@@ -1,21 +1,31 @@
 import React from 'react';
-import { FormControl, InputGroup } from 'react-bootstrap';
+import { FormControl, InputGroup, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 const InputComponent = (props) => {
-  const { id, size } = props;
+  const {
+    id, value, onChange, buttonText,
+  } = props;
   return (
-    <InputGroup size={size}>
+    <InputGroup size="lg">
       <InputGroup.Prepend>
-        <InputGroup.Text id={id}>{id}</InputGroup.Text>
+        <InputGroup.Text>{buttonText}</InputGroup.Text>
       </InputGroup.Prepend>
-      <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
+      <FormControl
+        as="textarea"
+        id={id}
+        onChange={onChange}
+        value={value}
+        aria-label="With textarea"
+        aria-describedby="inputGroup-sizing-lg"
+      />
     </InputGroup>
   );
 };
 InputComponent.propTypes = {
   id: PropTypes.string.isRequired,
-  size: PropTypes.string.isRequired,
-  // label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  buttonText: PropTypes.string.isRequired,
 };
 export default InputComponent;

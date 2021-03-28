@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { CSVLink } from 'react-csv';
+import JsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import Dropdown from './toolbox/Dropdown';
 import useAdminInput from './useAdminInput';
 import {
-  cities, grades, schools, states,
+  cities, grades, schools, states, headers,
 } from '../data/Data';
 import FormGroup from './toolbox/FormGroup';
+import Student from './Student';
 
 function AdminSearch() {
   const {
-    inputs, handleInputChange, handleSubmit, table,
+    inputs, handleInputChange, handleSubmit, table, adminSearchData,
   } = useAdminInput();
   const [gradeOptions, setGradeOptions] = useState(grades);
 
@@ -18,36 +22,16 @@ function AdminSearch() {
     setGradeOptions(newGradeOptions);
     handleInputChange(event);
   };
+  const handlePDFdownload = () => {
+    const doc = new JsPDF();
+    autoTable(doc, { html: '#adminSearch' });
+    doc.save('adminSearch.pdf');
+  };
   return (
     <div>
       <Form id="adminForm" onSubmit={handleSubmit}>
-        <Form.Row>
-          <FormGroup
-            id="fname"
-            onChange={handleInputChange}
-            value={inputs.fname}
-            label="First Name"
-            type="text"
-            placeholder="enter first name"
-          />
-          <FormGroup
-            id="mName"
-            onChange={handleInputChange}
-            value={inputs.mName}
-            label="Middle Name"
-            type="text"
-            placeholder="enter middle name"
-          />
-          <FormGroup
-            id="lname"
-            onChange={handleInputChange}
-            value={inputs.lname}
-            label="Last Name"
-            type="text"
-            placeholder="enter last name"
-          />
-        </Form.Row>
 
+        <Student />
         <Form.Row>
           <FormGroup
             id="address"
@@ -80,23 +64,22 @@ function AdminSearch() {
           />
         </Form.Row>
 
-        <Form.Row>
-          <Dropdown
-            id="school"
-            onChange={handleSchoolDropdown}
-            value={inputs.school}
-            label="* School"
-            options={schools}
-          />
-          <Dropdown
-            id="grade"
-            onChange={handleInputChange}
-            value={inputs.grade}
-            label="* Grade"
-            options={gradeOptions}
-          />
-        </Form.Row>
-        <Button as="input" type="submit" value="Search" />
+        <Button as="input" className="mr-1" type="submit" value="Search" />
+        <CSVLink
+          data={adminSearchData}
+          headers={headers}
+          filename="my-file.csv"
+          className="btn btn-primary ml-3"
+        >
+          Download as CSV
+        </CSVLink>
+        <Button
+          as="input"
+          onClick={handlePDFdownload}
+          className="ml-3"
+          type="submit"
+          value="Download as PDF"
+        />
       </Form>
       <br />
       {table}
