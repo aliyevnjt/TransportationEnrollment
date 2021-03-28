@@ -3,6 +3,7 @@ package com.bit.controller;
 import com.bit.model.StudentInfoRetrieve;
 import com.bit.services.DistanceCalculatorService;
 import com.bit.model.StudentInfo;
+import com.bit.services.DistanceFromFileService;
 import com.bit.services.StudentInfoWriteAndReadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,9 @@ public class StudentInfoRestController {
 
     @Autowired
     private StudentInfoWriteAndReadService studentInfoWriteAndReadService;
+
+    @Autowired
+    private DistanceFromFileService distanceFromFileService;
 
     @PostMapping("/api/student")
     public ResponseEntity getDistance(@Valid @RequestBody StudentInfo studentInfo){
@@ -50,6 +54,19 @@ public class StudentInfoRestController {
     public List<StudentInfo> getStudentInfo(@Valid @RequestBody StudentInfoRetrieve studentInfoRetrieve){
         return studentInfoWriteAndReadService.retrieveMatchingStudents(studentInfoRetrieve);
     }
+
+    @PostMapping("/api/calculate")
+    public ResponseEntity getCalculation(@Valid @RequestBody List<StudentInfo> studentInfo){
+        return new ResponseEntity(distanceCalculatorService.createStudents(studentInfo), HttpStatus.CREATED);
+    }
+
+
+    @PostMapping("/api/calculateFile")
+    public ResponseEntity getCalculationFromFile(@Valid @RequestBody List<StudentInfo> studentInfo){
+        distanceFromFileService.createStudents(studentInfo);
+        return new ResponseEntity(distanceFromFileService.createStudents(studentInfo), HttpStatus.CREATED);
+    }
+
 
 
 
