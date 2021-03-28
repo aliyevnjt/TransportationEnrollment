@@ -30,7 +30,7 @@ function AdminSearch() {
   return (
     <div>
       <Form id="adminForm" onSubmit={handleSubmit}>
-        
+
         <Student />
         <Form.Row>
           <FormGroup
