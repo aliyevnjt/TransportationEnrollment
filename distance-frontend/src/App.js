@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import RegistrationForm from './components/RegistrationForm';
 import FreeReg from './components/FreeReg';
 import AdminPanel from './components/AdminPanel';
+import RegistrationFormAutofill from './components/RegistrationFormAutofill';
+import AddressBox from './components/toolbox/AddressBox';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
           <Route path="/" exact component={RegistrationForm} />
           <Route path="/freereg" component={FreeReg} />
           <Route path="/admin" component={AdminPanel} />
+          <Route path="/regStatic" component={RegistrationFormAutofill} />
+          <Route path="/address" component={AddressBox} />
         </Switch>
       </Router>
     </div>
