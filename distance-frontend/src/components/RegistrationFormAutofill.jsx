@@ -10,6 +10,8 @@ import {
 import Header from './Header';
 import FormGroup from './toolbox/FormGroup';
 import Student  from './Student';
+import AddressBox from './toolbox/AddressBox'
+
 
 function regFormFromExcelAddress() {
   const {
@@ -41,7 +43,9 @@ function regFormFromExcelAddress() {
           <Form id="regFormFromExcelAddress" onSubmit={handleSubmit}>
             <Student />
             <Form.Row>
-              <FormGroup
+              <AddressBox />
+              
+              {/* <FormGroup
                 id="address"
                 type="text"
                 value={inputs.address}
@@ -49,7 +53,7 @@ function regFormFromExcelAddress() {
                 label="* Address"
                 placeholder="1234 Main St"
                 required
-              />
+              /> */}
               <Dropdown
                 id="city"
                 value={inputs.city}
@@ -118,6 +122,7 @@ function regFormFromExcelAddress() {
           
         </Jumbotron>
       </Container>
+
     </div>
   );
 }
