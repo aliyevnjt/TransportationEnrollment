@@ -26,8 +26,7 @@ const headers = [
 
 const appUrl = { baseline: 'http://localhost:8080' };
 const baseURL = 'http://localhost:8080/api';
-
-//const baseURL = 'http://ec2-3-142-117-252.us-east-2.compute.amazonaws.com:8080/api';
+// const baseURL = 'http://ec2-3-142-117-252.us-east-2.compute.amazonaws.com:8080/api';
 
 const importURL = 'http://ec2-3-142-117-252.us-east-2.compute.amazonaws.com:8080/import';
 
