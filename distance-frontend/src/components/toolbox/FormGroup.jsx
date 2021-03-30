@@ -26,7 +26,7 @@ const FormGroup = (props) => {
 
 FormGroup.defaultProps = {
   type: '',
-  disabled: false
+  disabled: false,
 };
 FormGroup.propTypes = {
   id: PropTypes.string.isRequired,

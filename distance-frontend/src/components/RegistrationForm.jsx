@@ -17,7 +17,7 @@ function RegistrationForm() {
     if (event) {
       event.preventDefault();
       console.log(studentData);
-      // TODO add address info for siblings in studentData
+      // TODO add commonInfo info for siblings in studentData
       if (event.target.id === 'registrationForm') {
         try {
           console.log(studentData);
@@ -87,12 +87,14 @@ function RegistrationForm() {
                 id="city"
                 value={locality.city}
                 label="City"
+                placeholder={locality.city}
                 disabled="true"
               />
               <FormGroup
                 id="state"
                 value={locality.state}
                 label="State"
+                placeholder={locality.state}
                 disabled="true"
               />
               <FormGroup
@@ -100,6 +102,7 @@ function RegistrationForm() {
                 type="text"
                 value={locality.zipCode}
                 label="Zip"
+                placeholder={locality.zipCode}
                 disabled="true"
               />
             </Form.Row>
