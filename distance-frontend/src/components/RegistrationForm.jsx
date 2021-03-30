@@ -4,24 +4,20 @@ import axios from 'axios';
 import {
   Container, Form, Button, Jumbotron,
 } from 'react-bootstrap';
-import Dropdown from './toolbox/Dropdown';
-import {
-  states, cities, baseURL,
-} from '../data/Data';
+import { baseURL, locality } from '../data/Data';
 import Header from './Header';
 import FormGroup from './toolbox/FormGroup';
 import Student from './Student';
 
 function RegistrationForm() {
   const [studentData, setStudentData] = useState([{ schoolYear: 'FY22' }]);
-  const [counter, setCounter] = useState(0);
-  const [sibling, setSibling] = useState([]);
   const history = useHistory();
 
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
       console.log(studentData);
+      // TODO add address info for siblings in studentData
       if (event.target.id === 'registrationForm') {
         try {
           console.log(studentData);
@@ -51,45 +47,21 @@ function RegistrationForm() {
 
   const handleInputChange = (event) => {
     const eventCounter = parseInt(event.target.parentElement.parentElement.getAttribute('counter'));
-    console.log('counter:', counter);
-    console.log('studentData:', studentData);
+    console.log('eventCounter:', eventCounter);
+    // console.log('studentData:', studentData);
+    // setTempStudent((student) => ({ ...student, [event.target.id]: event.target.value }));
+    const allStudents = [...studentData];
+    const tempStudent = { ...studentData[eventCounter] };
+    tempStudent[event.target.id] = event.target.value;
+    allStudents[eventCounter] = tempStudent;
 
-    setStudentData(() => (studentData.map((currentStudent, index) => {
-      console.log('currentStudent:', currentStudent);
-      console.log('index:', index);
-      console.log('eventCounter:', eventCounter);
-      console.log('EQUAL?:', index === eventCounter);
-
-      if (index === eventCounter) {
-        console.log('INSIDEinputObj:', currentStudent);
-        return {
-          ...currentStudent,
-          [event.target.id]: event.target.value,
-        };
-      }
-      return currentStudent;
-    })));
-
-    // setStudentData(() => ({ ...studentData, [event.target.id]: event.target.value }));
+    setStudentData(() => allStudents);
   };
-
   const addSibling = () => {
-    setStudentData((previous) => [...previous, { schoolYear: 'FY23' }]);
-    setSibling((previous) => [...previous, <Student
-      counter={counter + 1}
-      //This is not passed properly
-        //does not matter even if we pass in as studentData[counter+1]
-        //https://stackoverflow.com/questions/59344747/changing-multiple-states-in-react-js-usestate-hook
-        //we are not just changing states but also passing it to a child to be rendered in the same load
-        //
-      studentData={studentData}
-      onChange={handleInputChange}
-    />]);
-    setCounter(counter + 1);
-    console.log('Siblings studentData:', studentData);
-    console.log('Sibling data:', sibling);
+    setStudentData((previous) => [...previous, { schoolYear: 'FY22' }]);
   };
 
+  console.log('StudentData:', studentData);
   return (
     <div>
       <Header />
@@ -98,7 +70,7 @@ function RegistrationForm() {
           <Form id="registrationForm" onSubmit={handleSubmit}>
             <Student
               counter={0}
-              studentData={studentData}
+              studentData={studentData[0]}
               onChange={handleInputChange}
             />
             <Form.Row counter={0}>
@@ -111,31 +83,24 @@ function RegistrationForm() {
                 placeholder="1234 Main St"
                 required
               />
-              <Dropdown
+              <FormGroup
                 id="city"
-                value={studentData[0].city}
-                onChange={handleInputChange}
-                label="* City"
-                required
-                options={cities}
+                value={locality.city}
+                label="City"
+                disabled="true"
               />
-              <Dropdown
+              <FormGroup
                 id="state"
-                value={studentData[0].state}
-                onChange={handleInputChange}
-                label="* State"
-                required
-                options={states}
+                value={locality.state}
+                label="State"
+                disabled="true"
               />
               <FormGroup
                 id="zip"
                 type="text"
-                value={studentData[0].zip}
-                onChange={handleInputChange}
-                label="* Zip"
-                placeholder="enter zip code"
-                required
-                showLabel
+                value={locality.zipCode}
+                label="Zip"
+                disabled="true"
               />
             </Form.Row>
 
@@ -165,7 +130,15 @@ function RegistrationForm() {
                 required
               />
             </Form.Row>
-            {sibling.map((sblg) => sblg)}
+            {
+              studentData.slice(1).map((student, index) => (
+                <Student
+                  counter={index + 1}
+                  studentData={student}
+                  onChange={handleInputChange}
+                />
+              ))
+                 }
             <Form.Row>
               <Button as="input" value="Add Sibling" onClick={addSibling} />
             </Form.Row>
