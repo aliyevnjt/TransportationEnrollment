@@ -21,7 +21,7 @@ const Student = (props) => {
         <FormGroup
           id="fname"
           type="text"
-          value={studentData ? studentData.fname : ''}
+          value={studentData}
           onChange={onChange}
           label="* First Name"
           placeholder="enter first name"
@@ -30,14 +30,14 @@ const Student = (props) => {
         <FormGroup
           id="mName"
           type="text"
-          value={studentData ? studentData.mName : ''}
+          value={studentData}
           onChange={onChange}
           label="Middle Name"
         />
         <FormGroup
           id="lname"
           type="text"
-          value={studentData ? studentData.lname : ''}
+          value={studentData}
           onChange={onChange}
           label="* Last Name"
           placeholder="enter last name"
@@ -46,18 +46,17 @@ const Student = (props) => {
         <FormGroup
           id="birthDate"
           type="text"
-          value={studentData ? studentData.birthDate : ''}
+          value={studentData}
           onChange={onChange}
           label="* Date of Birth"
           placeholder="mm/dd/yyyy"
           required
         />
       </Form.Row>
-
       <Form.Row counter={counter}>
         <Dropdown
           id="school"
-          value={studentData ? studentData.school : ''}
+          value={studentData}
           onChange={handleSchoolDropdown}
           label="* School"
           required
@@ -65,7 +64,7 @@ const Student = (props) => {
         />
         <Dropdown
           id="grade"
-          value={studentData ? studentData.grade : ''}
+          value={studentData}
           onChange={onChange}
           label="* Grade"
           required

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const FormGroup = (props) => {
   const {
-    id, onChange, label, type, placeholder, disabled
+    id, onChange, label, type, placeholder, disabled,
   } = props;
   return (
     <Form.Group

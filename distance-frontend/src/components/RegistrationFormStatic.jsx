@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import {
   Container, Form, Button, Jumbotron,
 } from 'react-bootstrap';
-import { baseURL, locality } from '../data/Data';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import {
+  locality, baseURL,
+} from '../data/Data';
 import Header from './Header';
 import Student from './Student';
+import AddressBoxStatic from './toolbox/AddressBoxStatic';
 import ParentBox from './toolbox/ParentBox';
-import AddressBox from './toolbox/AddressBox';
 
-function RegistrationForm() {
-  const [studentData, setStudentData] = useState([]);
+function RegistrationFormStatic() {
+  const schoolYear = { schoolYear: 'FY22' };
+  const [studentData, setStudentData] = useState([schoolYear]);
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
@@ -23,7 +26,6 @@ function RegistrationForm() {
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
-      console.log(studentData);
       if (event.target.id === 'registrationForm') {
         setStudentData((current) => current.map(
           (student) => ({
@@ -69,11 +71,10 @@ function RegistrationForm() {
     setStudentData(() => allStudents);
   };
   const addSibling = () => {
-    setStudentData((previous) => [...previous, { schoolYear: 'FY22' }]);
+    setStudentData((previous) => [...previous, schoolYear]);
   };
-  const handleAddressInfoChange = (address) => {
-    console.log(address);
-    setAddressInfo((previous) => ({ ...previous, address }));
+  const handleAddressInfoChange = (event) => {
+    setAddressInfo((previous) => ({ ...previous, [event.target.id]: event.target.value }));
   };
   const handleParentInfoChange = (event) => {
     setParentInfo((previous) => ({ ...previous, [event.target.id]: event.target.value }));
@@ -91,7 +92,7 @@ function RegistrationForm() {
               studentData={studentData[0]}
               onChange={handleInputChange}
             />
-            <AddressBox
+            <AddressBoxStatic
               addressInfo={addressInfo}
               onChange={handleAddressInfoChange}
             />
@@ -108,7 +109,7 @@ function RegistrationForm() {
                   onChange={handleInputChange}
                 />
               ))
-                 }
+              }
             <Form.Row>
               <Button as="input" value="Add Sibling" onClick={addSibling} />
             </Form.Row>
@@ -123,4 +124,4 @@ function RegistrationForm() {
   );
 }
 
-export default RegistrationForm;
+export default RegistrationFormStatic;

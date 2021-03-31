@@ -65,8 +65,6 @@ const useAdminInput = () => {
       }
       return currentStudent;
     })));
-
-    // setInputs(() => ({ ...inputs, [event.target.id]: event.target.value }));
   };
   return {
     handleSubmit,
