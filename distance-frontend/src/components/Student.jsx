@@ -15,14 +15,13 @@ const Student = (props) => {
     onChange(event);
     console.log(props);
   };
-  console.log('Siblings studentData from child:', studentData);
   return (
     <div>
       <Form.Row counter={counter}>
         <FormGroup
           id="fname"
           type="text"
-          value={studentData ? studentData[counter].fname : ''}
+          value={studentData ? studentData.fname : ''}
           onChange={onChange}
           label="* First Name"
           placeholder="enter first name"
@@ -31,14 +30,14 @@ const Student = (props) => {
         <FormGroup
           id="mName"
           type="text"
-          value={studentData ? studentData[counter].mName : ''}
+          value={studentData ? studentData.mName : ''}
           onChange={onChange}
           label="Middle Name"
         />
         <FormGroup
           id="lname"
           type="text"
-          value={studentData ? studentData[counter].lname : ''}
+          value={studentData ? studentData.lname : ''}
           onChange={onChange}
           label="* Last Name"
           placeholder="enter last name"
@@ -47,7 +46,7 @@ const Student = (props) => {
         <FormGroup
           id="birthDate"
           type="text"
-          value={studentData ? studentData[counter].birthDate : ''}
+          value={studentData ? studentData.birthDate : ''}
           onChange={onChange}
           label="* Date of Birth"
           placeholder="mm/dd/yyyy"
@@ -58,7 +57,7 @@ const Student = (props) => {
       <Form.Row counter={counter}>
         <Dropdown
           id="school"
-          value={studentData ? studentData[counter].school : ''}
+          value={studentData ? studentData.school : ''}
           onChange={handleSchoolDropdown}
           label="* School"
           required
@@ -66,7 +65,7 @@ const Student = (props) => {
         />
         <Dropdown
           id="grade"
-          value={studentData ? studentData[counter].grade : ''}
+          value={studentData ? studentData.grade : ''}
           onChange={onChange}
           label="* Grade"
           required

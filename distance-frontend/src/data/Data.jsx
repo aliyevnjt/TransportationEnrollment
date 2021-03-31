@@ -40,6 +40,8 @@ const schools = [
 const cities = [{ label: 'Littleton', value: 'Littleton' }];
 const states = [{ label: 'Massachussets', value: 'MA' }];
 
+const locality = { city: 'Littleton', state: 'Massachussets', zipCode: '01460' };
+
 const keys = {
   publishableKey:
     'pk_test_51I5QOxJuvhMix0vIzNnxK95fD4KadqVex6UylU7RG0jUUYQW3hpWF2rOjUonbpceQwtM7RGZ4xSrDvL5BY07a1R300DBtO4EeD',
@@ -115,5 +117,5 @@ const schoolYear = '2021-2022';
 
 export {
   appUrl, grades, schools, keys, usa, schoolYear, cities, states, schoolYears,
-  baseURL, importURL, headers, registration,
+  baseURL, importURL, headers, registration, locality,
 };
