@@ -6,14 +6,13 @@ import { schools, grades } from '../data/Data';
 import FormGroup from './toolbox/FormGroup';
 
 const Student = (props) => {
-  const { studentData, counter, onChange } = props;
+  const { counter, onChange } = props;
   const [gradeOptions, setGradeOptions] = useState(grades);
 
   const handleSchoolDropdown = (event) => {
     const newGradeOptions = grades.filter((g) => g.level === event.target.value);
     setGradeOptions(newGradeOptions);
     onChange(event);
-    console.log(props);
   };
   return (
     <div>
@@ -21,7 +20,6 @@ const Student = (props) => {
         <FormGroup
           id="fname"
           type="text"
-          value={studentData}
           onChange={onChange}
           label="* First Name"
           placeholder="enter first name"
@@ -30,14 +28,12 @@ const Student = (props) => {
         <FormGroup
           id="mName"
           type="text"
-          value={studentData}
           onChange={onChange}
           label="Middle Name"
         />
         <FormGroup
           id="lname"
           type="text"
-          value={studentData}
           onChange={onChange}
           label="* Last Name"
           placeholder="enter last name"
@@ -46,7 +42,6 @@ const Student = (props) => {
         <FormGroup
           id="birthDate"
           type="text"
-          value={studentData}
           onChange={onChange}
           label="* Date of Birth"
           placeholder="mm/dd/yyyy"
@@ -56,7 +51,6 @@ const Student = (props) => {
       <Form.Row counter={counter}>
         <Dropdown
           id="school"
-          value={studentData}
           onChange={handleSchoolDropdown}
           label="* School"
           required
@@ -64,7 +58,6 @@ const Student = (props) => {
         />
         <Dropdown
           id="grade"
-          value={studentData}
           onChange={onChange}
           label="* Grade"
           required
@@ -76,7 +69,6 @@ const Student = (props) => {
 };
 Student.propTypes = {
   counter: PropTypes.number.isRequired,
-  studentData: PropTypes.instanceOf([]).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 export default Student;

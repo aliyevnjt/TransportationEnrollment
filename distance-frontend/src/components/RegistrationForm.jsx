@@ -31,7 +31,6 @@ function RegistrationForm() {
           }),
         ));
         try {
-          console.log(studentData);
           const res = await axios.post(`${baseURL}/student/`, studentData);
           console.log(res);
           if (res.data.enrollmentStatus === 'free') {
@@ -80,6 +79,7 @@ function RegistrationForm() {
   };
 
   console.log('StudentData:', studentData);
+  // FIXME must add a unique key for all iterated elements
   return (
     <div>
       <Header />
@@ -88,7 +88,6 @@ function RegistrationForm() {
           <Form id="registrationForm" onSubmit={handleSubmit}>
             <Student
               counter={0}
-              studentData={studentData[0]}
               onChange={handleInputChange}
             />
             <AddressBox
@@ -102,7 +101,7 @@ function RegistrationForm() {
             {
               studentData.slice(1).map((student, index) => (
                 <Student
-                  key="Student"
+                  key={student}
                   counter={index + 1}
                   studentData={student}
                   onChange={handleInputChange}

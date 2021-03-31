@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import {
-  Button, FormControl, InputGroup, Row,
+  Button, InputGroup, Row,
 } from 'react-bootstrap';
 import InputComponent from './toolbox/InputComponent';
-import { schoolYears, registration } from '../data/Data';
+import {schoolYears, registration, baseURL} from '../data/Data';
 import Dropdown from './toolbox/Dropdown';
-import useAdminInput from './useAdminInput';
+import axios from "axios";
+import constructAdminTable from "./toolbox/ConstructAdminTable";
 
 function AdminSettings() {
   // Bonus: reset to default(saved version from DB)
@@ -14,8 +15,6 @@ function AdminSettings() {
   // initial state from DB
   // Different defaults for each year
   //
-
-  const { inputs, handleInputChange, handleSubmit } = useAdminInput();
   const [message, setMessage] = useState({
     open: 'earlyReg',
     closed: 'lateReg',
@@ -23,7 +22,30 @@ function AdminSettings() {
   });
   const [saveButton, setSaveButton] = useState(true);
   const [checkButtonStatus, setCheckButtonStatus] = useState(false);
+  const [adminSettings, setAdminSettings] = useState();
 
+  const handleSubmit = async (event) => {
+    if (event) {
+      // event.preventDefault();
+      // if (event.target.id === 'adminForm') {
+      //   console.log(addressInfo);
+      //   setInputs((current) => ({
+      //     ...current, ...addressInfo,
+      //   }));
+      //   try {
+      //     const res = await axios.post(`${baseURL}/student/request/`, inputs);
+      //     console.log(res);
+      //     setTable(constructAdminTable(res.data));
+      //     setAdminSearchData(res.data);
+      //   } catch (err) {
+      //     console.log(err);
+      //   }
+      // }
+    }
+  };
+  const handleInputChange = (event) => {
+    setAdminSettings((previous) => ({ ...previous, [event.target.id]: event.target.value }));
+  };
   const handleMessageChange = (event) => {
     setMessage(() => ({ ...message, [event.target.id]: event.target.value }));
     setSaveButton(false);
@@ -52,7 +74,6 @@ function AdminSettings() {
       <Row>
         <Dropdown
           id="schoolYear"
-          value={inputs.schoolYear}
           onChange={handleInputChange}
           label="Bus Registration Year"
           options={schoolYears}
@@ -61,7 +82,6 @@ function AdminSettings() {
       <Row>
         <Dropdown
           id="registrationStatus"
-          value={inputs.registration}
           onChange={handleDropdownChange}
           label="Registration Status"
           options={registration}

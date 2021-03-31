@@ -11,17 +11,24 @@ const AddressBox = (props) => {
   const [selections, setSelections] = useState([]);
   const [address, setAddress] = useState([]);
 
-  useEffect(async () => {
-    const res = await axios.get(`${appUrl.baseline}/addresses`);
-    setAddress(res.data);
-    onChange(selections);
+  useEffect(() => {
+    async function fetchData() {
+      const res = await axios.get(`${appUrl.baseline}/addresses`);
+      setAddress(res.data);
+      onChange(selections);
+    }
+    fetchData();
   }, []);
   const handleAddressChange = (event) => {
-    console.log(event);
+    // console.log(event);
     setSelections(event);
-    onChange(event[0].address);
+    if (event[0]) {
+      console.log(event);
+      onChange(event[0].address);
+    }
   };
-  console.log(selections);
+  // console.log(selections);
+  // FIXME disabled attributes are not working properly
   return (
     <div>
       <Form.Row>
