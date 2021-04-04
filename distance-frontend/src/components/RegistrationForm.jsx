@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Container, Form, Button, Jumbotron, Col
+  Container, Form, Button, Jumbotron, Col,Row
 } from 'react-bootstrap';
 import { baseURL, locality } from '../data/Data';
 import Header from './Header';
 import Student from './Student';
 import ParentBox from './toolbox/ParentBox';
 import AddressBox from './toolbox/AddressBox';
+import {bigSample} from '../data/BigSample'
 //import { v4 as uuidv4 } from 'uuid';
 
 
@@ -21,11 +22,26 @@ function RegistrationForm() {
   });
   const [parentInfo, setParentInfo] = useState({});
   const history = useHistory();
+  
+  // logs free sample data for easy entry
+  const showFreeSample = () => {
+    
+    const st = bigSample.filter(s => s.enrollmentStatus==="free");
+    const index = parseInt(Math.random()*st.length);
+    console.log(st[index]);
+  }
+  // logs paid sample data for easy entry
+  const showPaidSample = () => {
+    
+    const st = bigSample.filter(s => s.enrollmentStatus==="paid");
+    const index = parseInt(Math.random()*st.length);
+    console.log(st[index]);
+  }
+
 
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
-      console.log(studentData);
       if (event.target.id === 'registrationForm') {
         setStudentData((current) => current.map(
           (student) => ({
@@ -33,7 +49,9 @@ function RegistrationForm() {
           }),
         ));
         try {
-          const res = await axios.post(`${baseURL}/student/`, studentData);
+          console.log('StudentData:',studentData)
+          const res = await axios.post(`${baseURL}/calculateFile/`, studentData);
+          
           console.log(res);
           if (res.data.enrollmentStatus === 'free') {
             studentData({
@@ -60,7 +78,7 @@ function RegistrationForm() {
   const handleInputChange = (event) => {
     
     const eventCounter = parseInt(event.target.parentElement.parentElement.getAttribute('counter'));
-    console.log('eventCounter:', eventCounter);
+    // console.log('eventCounter:', eventCounter);
     const allStudents = [...studentData];
     const tempStudent = {
       ...studentData[eventCounter],
@@ -74,14 +92,14 @@ function RegistrationForm() {
     setStudentData((previous) => [...previous, { schoolYear: 'FY22' }]);
   };
   const handleAddressInfoChange = (address) => {
-    console.log(address);
+    //console.log(address);
     setAddressInfo((previous) => ({ ...previous, address }));
   };
   const handleParentInfoChange = (event) => {
     setParentInfo((previous) => ({ ...previous, [event.target.id]: event.target.value }));
   };
 
-  console.log('StudentData:', studentData);
+  // console.log('StudentData:', studentData);
   // FIXME must add a unique key for all iterated elements
   return (
     <div>
@@ -121,6 +139,14 @@ function RegistrationForm() {
               </Col>
             </Form.Row>
           </Form>
+          <Row className = "mt-5">
+          <Col>
+            <Button as="input" value="Show Free Sample" type="button"  onClick={showFreeSample} />
+          </Col>
+          <Col>
+            <Button as="input" value="Show Paid Sample" type="button"  onClick={showPaidSample} />
+          </Col>
+          </Row>
           {/* <button onClick={this.freeSample}>Free Sample</button> */}
           {/* <button onClick={this.paidSample}>Paid Sample</button> */}
         </Jumbotron>
