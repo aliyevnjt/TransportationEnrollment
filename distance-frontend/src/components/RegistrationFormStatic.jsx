@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Container, Form, Button, Jumbotron,
+  Container, Form, Button, Jumbotron, Col
 } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -72,6 +72,7 @@ function RegistrationFormStatic() {
   };
   const addSibling = () => {
     setStudentData((previous) => [...previous, schoolYear]);
+    
   };
   const handleAddressInfoChange = (event) => {
     setAddressInfo((previous) => ({ ...previous, [event.target.id]: event.target.value }));
@@ -110,11 +111,17 @@ function RegistrationFormStatic() {
                 />
               ))
               }
-            <Form.Row>
-              <Button as="input" value="Add Sibling" onClick={addSibling} />
+            <Form.Row className="justify-content-md-center">
+              <Col>
+                <Button disabled={studentData.length>4} as="input" value="Add Sibling" onClick={addSibling} />
+              </Col>
+              <Col>&nbsp;</Col>
+              <Col>
+                <Button as="input" value="Continue" type="submit" />
+              </Col>
             </Form.Row>
 
-            <Button as="input" value="Continue" type="submit" />
+            
           </Form>
           {/* <button onClick={this.freeSample}>Free Sample</button> */}
           {/* <button onClick={this.paidSample}>Paid Sample</button> */}

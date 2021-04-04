@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Container, Form, Button, Jumbotron,
+  Container, Form, Button, Jumbotron, Col
 } from 'react-bootstrap';
 import { baseURL, locality } from '../data/Data';
 import Header from './Header';
 import Student from './Student';
 import ParentBox from './toolbox/ParentBox';
 import AddressBox from './toolbox/AddressBox';
+//import { v4 as uuidv4 } from 'uuid';
+
 
 function RegistrationForm() {
-  const [studentData, setStudentData] = useState([]);
+  const [studentData, setStudentData] = useState([{schoolYear: 'FY22'}]);
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
@@ -56,6 +58,7 @@ function RegistrationForm() {
   };
 
   const handleInputChange = (event) => {
+    
     const eventCounter = parseInt(event.target.parentElement.parentElement.getAttribute('counter'));
     console.log('eventCounter:', eventCounter);
     const allStudents = [...studentData];
@@ -108,11 +111,15 @@ function RegistrationForm() {
                 />
               ))
                  }
-            <Form.Row>
-              <Button as="input" value="Add Sibling" onClick={addSibling} />
+            <Form.Row className="justify-content-md-center">
+              <Col>
+                <Button disabled={studentData.length>4} as="input" value="Add Sibling" type="button"  onClick={addSibling} />
+              </Col>
+              <Col>&nbsp;</Col>
+              <Col>
+                <Button as="input" value="Continue" type="submit" />
+              </Col>
             </Form.Row>
-
-            <Button as="input" value="Continue" type="submit" />
           </Form>
           {/* <button onClick={this.freeSample}>Free Sample</button> */}
           {/* <button onClick={this.paidSample}>Paid Sample</button> */}

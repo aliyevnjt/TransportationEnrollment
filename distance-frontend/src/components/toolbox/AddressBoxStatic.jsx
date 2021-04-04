@@ -23,14 +23,14 @@ const AddressBoxStatic = (props) => {
           value={addressInfo.city}
           label="City"
           placeholder={addressInfo.city}
-          disabled="true"
+          disabled={true}
         />
         <FormGroup
           id="state"
           value={addressInfo.state}
           label="State"
           placeholder={addressInfo.state}
-          disabled="true"
+          disabled={true}
         />
         <FormGroup
           id="zip"
@@ -38,7 +38,7 @@ const AddressBoxStatic = (props) => {
           value={addressInfo.zipCode}
           label="Zip"
           placeholder={addressInfo.zipCode}
-          disabled="true"
+          disabled={true}
         />
       </Form.Row>
     </div>
