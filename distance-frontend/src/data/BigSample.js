@@ -1,4 +1,4 @@
-[
+export const bigSample = [
   {
     fname: 'Todd',
     lname: 'Phillips',

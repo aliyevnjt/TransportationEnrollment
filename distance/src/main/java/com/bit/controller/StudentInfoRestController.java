@@ -3,7 +3,6 @@ package com.bit.controller;
 import com.bit.model.StudentInfoRetrieve;
 import com.bit.services.DistanceCalculatorService;
 import com.bit.model.StudentInfo;
-//import com.bit.services.DistanceFromFileService;
 import com.bit.services.DistanceFromFileService;
 import com.bit.services.StudentInfoWriteAndReadService;
 import org.springframework.beans.factory.annotation.Autowired;

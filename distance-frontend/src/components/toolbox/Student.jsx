@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import Dropdown from './toolbox/Dropdown';
-import { schools, grades } from '../data/Data';
-import FormGroup from './toolbox/FormGroup';
+import Dropdown from './Dropdown';
+import { schools, grades } from '../../data/Data';
+import FormGroup from './FormGroup';
 
 const Student = (props) => {
   const { counter, onChange } = props;
   const [gradeOptions, setGradeOptions] = useState(grades);
-
+  
   const handleSchoolDropdown = (event) => {
     const newGradeOptions = grades.filter((g) => g.level === event.target.value);
     setGradeOptions(newGradeOptions);
@@ -64,6 +64,7 @@ const Student = (props) => {
           options={gradeOptions}
         />
       </Form.Row>
+      
     </div>
   );
 };

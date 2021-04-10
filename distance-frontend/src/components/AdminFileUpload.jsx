@@ -5,7 +5,7 @@ import {
 import axios from 'axios';
 import { importURL } from '../data/Data';
 
-function AdminUpload() {
+function AdminFileUpload() {
   const [file, setFile] = useState({
     name: 'Select file',
   });
@@ -40,4 +40,4 @@ function AdminUpload() {
     </div>
   );
 }
-export default AdminUpload;
+export default AdminFileUpload;

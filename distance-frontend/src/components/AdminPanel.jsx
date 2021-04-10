@@ -6,8 +6,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import AdminSearch from './AdminSearch';
 import AdminSettings from './AdminSettings';
-import AdminUpload from './AdminUpload';
-import Demo from './Demo';
+import AdminFileUpload from './AdminFileUpload';
+import AdminStudentEntry from './AdminStudentEntry';
 
 function AdminPanel() {
   return (
@@ -24,8 +24,8 @@ function AdminPanel() {
           <LinkContainer to="/admin/fileUpload">
             <Nav.Link>File Upload</Nav.Link>
           </LinkContainer>
-          <LinkContainer to="/admin/demo">
-            <Nav.Link>Demo</Nav.Link>
+          <LinkContainer to="/admin/studentEntry">
+            <Nav.Link>Student Entry</Nav.Link>
           </LinkContainer>
         </Nav>
         <Navbar.Brand>
@@ -44,8 +44,8 @@ function AdminPanel() {
           <Switch>
             <Route path="/admin/" exact component={AdminSearch} />
             <Route path="/admin/settings" component={AdminSettings} />
-            <Route path="/admin/fileUpload" component={AdminUpload} />
-            <Route path="/admin/demo" component={Demo} />
+            <Route path="/admin/fileUpload" component={AdminFileUpload} />
+            <Route path="/admin/studentEntry" component={AdminStudentEntry} />
           </Switch>
         </Container>
       </Jumbotron>
