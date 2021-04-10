@@ -1,32 +1,51 @@
+version: '3.7'
+
+# Define services
 services:
-  app:
+  # App backend service
+  app-server:
+    # Configuration for building the docker image for the backend service
     image: 'distance-spring-boot:latest'
     build:
-      context: .
-    container_name: app
+      context: distance
+      dockerfile: Dockerfile
     ports:
-      - "8080:8080"
-    depends_on:
-      - db
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    restart: always
+    depends_on: 
+      - db # This service depends on mysql. Start that first.
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=1234
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
+  # Frontend Service 
+  app-client:
+    image: 'distance-ui:latest'
+    build:
+      context: distance-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80" # Map the exposed port 80 on the container to port 9090 on the host machine
+      - "443:443"
+    restart: always
+    volumes:
+     - /etc/ngnix/ssl:/etc/ngnix/ssl
+    depends_on:
+      - app-server
+
   db:
     image: 'postgres:13.1-alpine'
-    container_name: db
     ports:
       - "5432:5432"
+    restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
+    volumes:
+      - data:/var/lib/postgresql/data
 
-  ui:
-    image: 'distance-ui:latest'
-    build:
-      context: .
-    container_name: ui
-    ports:
-      - 3000:3000
+volumes:
+  data:
+    external: true

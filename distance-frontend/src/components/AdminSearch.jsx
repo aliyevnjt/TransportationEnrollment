@@ -1,102 +1,83 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import Dropdown from './toolbox/Dropdown';
-import useAdminInput from './useAdminInput';
-import {
-  cities, grades, schools, states,
-} from '../data/Data';
-import FormGroup from './toolbox/FormGroup';
+import { CSVLink } from 'react-csv';
+import JsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import axios from 'axios';
+import { headers, baseURL, locality } from '../data/Data';
+import Student from './Student';
+import constructAdminTable from './toolbox/ConstructAdminTable';
+import AddressBox from './toolbox/AddressBox';
 
 function AdminSearch() {
-  const {
-    inputs, handleInputChange, handleSubmit, table,
-  } = useAdminInput();
-  const [gradeOptions, setGradeOptions] = useState(grades);
+  const [addressInfo, setAddressInfo] = useState({
+    city: locality.city,
+    state: locality.state,
+    zipCode: locality.zipCode,
+  });
+  const [inputs, setInputs] = useState({});
+  const [table, setTable] = useState();
+  const [adminSearchData, setAdminSearchData] = useState([{}]);
 
-  const handleSchoolDropdown = (event) => {
-    const newGradeOptions = grades.filter((g) => g.level === event.target.value);
-    setGradeOptions(newGradeOptions);
-    handleInputChange(event);
+  const handlePDFdownload = () => {
+    const doc = new JsPDF();
+    autoTable(doc, { html: '#adminSearch' });
+    doc.save('adminSearch.pdf');
+  };
+  const handleSubmit = async (event) => {
+    if (event) {
+      event.preventDefault();
+      if (event.target.id === 'adminForm') {
+        console.log(addressInfo);
+        setInputs((current) => ({
+          ...current, ...addressInfo,
+        }));
+        try {
+          const res = await axios.post(`${baseURL}/student/request/`, inputs);
+          console.log(res);
+          setTable(constructAdminTable(res.data));
+          setAdminSearchData(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    }
+  };
+  const handleInputChange = (event) => {
+    setInputs((previous) => ({ ...previous, [event.target.id]: event.target.value }));
+  };
+  const handleAddressInfoChange = (address) => {
+    setAddressInfo((previous) => ({ ...previous, address }));
+    console.log(address);
   };
   return (
     <div>
       <Form id="adminForm" onSubmit={handleSubmit}>
-        <Form.Row>
-          <FormGroup
-            id="fname"
-            onChange={handleInputChange}
-            value={inputs.fname}
-            label="First Name"
-            type="text"
-            placeholder="enter first name"
-          />
-          <FormGroup
-            id="mName"
-            onChange={handleInputChange}
-            value={inputs.mName}
-            label="Middle Name"
-            type="text"
-            placeholder="enter middle name"
-          />
-          <FormGroup
-            id="lname"
-            onChange={handleInputChange}
-            value={inputs.lname}
-            label="Last Name"
-            type="text"
-            placeholder="enter last name"
-          />
-        </Form.Row>
+        <Student
+          counter={0}
+          onChange={handleInputChange}
+        />
+        <AddressBox
+          addressInfo={addressInfo}
+          onChange={handleAddressInfoChange}
+        />
 
-        <Form.Row>
-          <FormGroup
-            id="address"
-            onChange={handleInputChange}
-            value={inputs.address}
-            label="First Name"
-            type="text"
-            placeholder="1234 Main St"
-          />
-          <Dropdown
-            id="city"
-            onChange={handleInputChange}
-            value={inputs.city}
-            label="City"
-            options={cities}
-          />
-          <Dropdown
-            id="state"
-            onChange={handleInputChange}
-            value={inputs.state}
-            label="State"
-            options={states}
-          />
-          <FormGroup
-            id="zip"
-            onChange={handleInputChange}
-            value={inputs.zip}
-            label="Zip"
-            placeholder="enter zip code"
-          />
-        </Form.Row>
-
-        <Form.Row>
-          <Dropdown
-            id="school"
-            onChange={handleSchoolDropdown}
-            value={inputs.school}
-            label="* School"
-            options={schools}
-          />
-          <Dropdown
-            id="grade"
-            onChange={handleInputChange}
-            value={inputs.grade}
-            label="* Grade"
-            options={gradeOptions}
-          />
-        </Form.Row>
-        <Button as="input" type="submit" value="Search" />
+        <Button as="input" className="mr-1" type="submit" value="Search" />
+        <CSVLink
+          data={adminSearchData}
+          headers={headers}
+          filename="my-file.csv"
+          className="btn btn-primary ml-3"
+        >
+          Download as CSV
+        </CSVLink>
+        <Button
+          as="input"
+          onClick={handlePDFdownload}
+          className="ml-3"
+          type="submit"
+          value="Download as PDF"
+        />
       </Form>
       <br />
       {table}

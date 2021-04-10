@@ -3,8 +3,9 @@ import React from 'react';
 import { schools } from '../../data/Data';
 
 const constructAdminTable = (data) => {
-  if (data === undefined) {
-    return [];
+  if (!data[0]) {
+    console.log('HEYY!');
+    return (<p>No data is found!</p>);
   }
   const columnNames = {
     fname: 'First Name',
@@ -16,7 +17,7 @@ const constructAdminTable = (data) => {
     school: 'School',
   };
   return (
-    <Table striped bordered hover>
+    <Table id="adminSearch" striped bordered hover>
       <thead>
         <tr>
           {

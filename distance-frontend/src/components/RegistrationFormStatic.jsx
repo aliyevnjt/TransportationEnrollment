@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
+import {
+  Container, Form, Button, Jumbotron, Col
+} from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Container, Form, Button, Jumbotron, Col,Row
-} from 'react-bootstrap';
-import { baseURL, locality } from '../data/Data';
+  locality, baseURL,
+} from '../data/Data';
 import Header from './Header';
 import Student from './Student';
+import AddressBoxStatic from './toolbox/AddressBoxStatic';
 import ParentBox from './toolbox/ParentBox';
-import AddressBox from './toolbox/AddressBox';
-import {bigSample} from '../data/BigSample'
-//import { v4 as uuidv4 } from 'uuid';
 
-
-function RegistrationForm() {
-  const [studentData, setStudentData] = useState([{schoolYear: 'FY22'}]);
+function RegistrationFormStatic() {
+  const schoolYear = { schoolYear: 'FY22' };
+  const [studentData, setStudentData] = useState([schoolYear]);
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
@@ -22,22 +22,6 @@ function RegistrationForm() {
   });
   const [parentInfo, setParentInfo] = useState({});
   const history = useHistory();
-  
-  // logs free sample data for easy entry
-  const showFreeSample = () => {
-    
-    const st = bigSample.filter(s => s.enrollmentStatus==="free");
-    const index = parseInt(Math.random()*st.length);
-    console.log(st[index]);
-  }
-  // logs paid sample data for easy entry
-  const showPaidSample = () => {
-    
-    const st = bigSample.filter(s => s.enrollmentStatus==="paid");
-    const index = parseInt(Math.random()*st.length);
-    console.log(st[index]);
-  }
-
 
   const handleSubmit = async (event) => {
     if (event) {
@@ -49,9 +33,8 @@ function RegistrationForm() {
           }),
         ));
         try {
-          console.log('StudentData:',studentData)
-          const res = await axios.post(`${baseURL}/calculateFile/`, studentData);
-          
+          console.log(studentData);
+          const res = await axios.post(`${baseURL}/student/`, studentData);
           console.log(res);
           if (res.data.enrollmentStatus === 'free') {
             studentData({
@@ -76,9 +59,8 @@ function RegistrationForm() {
   };
 
   const handleInputChange = (event) => {
-    
     const eventCounter = parseInt(event.target.parentElement.parentElement.getAttribute('counter'));
-    // console.log('eventCounter:', eventCounter);
+    console.log('eventCounter:', eventCounter);
     const allStudents = [...studentData];
     const tempStudent = {
       ...studentData[eventCounter],
@@ -89,18 +71,17 @@ function RegistrationForm() {
     setStudentData(() => allStudents);
   };
   const addSibling = () => {
-    setStudentData((previous) => [...previous, { schoolYear: 'FY22' }]);
+    setStudentData((previous) => [...previous, schoolYear]);
+    
   };
-  const handleAddressInfoChange = (address) => {
-    //console.log(address);
-    setAddressInfo((previous) => ({ ...previous, address }));
+  const handleAddressInfoChange = (event) => {
+    setAddressInfo((previous) => ({ ...previous, [event.target.id]: event.target.value }));
   };
   const handleParentInfoChange = (event) => {
     setParentInfo((previous) => ({ ...previous, [event.target.id]: event.target.value }));
   };
 
-  // console.log('StudentData:', studentData);
-  // FIXME must add a unique key for all iterated elements
+  console.log('StudentData:', studentData);
   return (
     <div>
       <Header />
@@ -109,9 +90,10 @@ function RegistrationForm() {
           <Form id="registrationForm" onSubmit={handleSubmit}>
             <Student
               counter={0}
+              studentData={studentData[0]}
               onChange={handleInputChange}
             />
-            <AddressBox
+            <AddressBoxStatic
               addressInfo={addressInfo}
               onChange={handleAddressInfoChange}
             />
@@ -122,31 +104,25 @@ function RegistrationForm() {
             {
               studentData.slice(1).map((student, index) => (
                 <Student
-                  key={student}
+                  key="Student"
                   counter={index + 1}
                   studentData={student}
                   onChange={handleInputChange}
                 />
               ))
-                 }
+              }
             <Form.Row className="justify-content-md-center">
               <Col>
-                <Button disabled={studentData.length>4} as="input" value="Add Sibling" type="button"  onClick={addSibling} />
+                <Button disabled={studentData.length>4} as="input" value="Add Sibling" onClick={addSibling} />
               </Col>
               <Col>&nbsp;</Col>
               <Col>
                 <Button as="input" value="Continue" type="submit" />
               </Col>
             </Form.Row>
+
+            
           </Form>
-          <Row className = "mt-5">
-          <Col>
-            <Button as="input" value="Show Free Sample" type="button"  onClick={showFreeSample} />
-          </Col>
-          <Col>
-            <Button as="input" value="Show Paid Sample" type="button"  onClick={showPaidSample} />
-          </Col>
-          </Row>
           {/* <button onClick={this.freeSample}>Free Sample</button> */}
           {/* <button onClick={this.paidSample}>Paid Sample</button> */}
         </Jumbotron>
@@ -155,4 +131,4 @@ function RegistrationForm() {
   );
 }
 
-export default RegistrationForm;
+export default RegistrationFormStatic;

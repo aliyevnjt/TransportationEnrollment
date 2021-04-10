@@ -23,7 +23,7 @@ import java.util.*;
 public class ExcelUploadService {
 
     @Autowired
-    ExcelAddressRepo excelAddressRepo;
+    private ExcelAddressRepo excelAddressRepo;
 
     public List<AddresExcel> writeExcelToDB(MultipartFile reapExcelDataFile) {
         List<AddresExcel> addresExcelList = new ArrayList<>();

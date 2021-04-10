@@ -1,5 +1,6 @@
 package com;
 
+import com.bit.model.form_data.AddresExcel;
 import com.bit.model.form_data.Grades;
 import com.bit.model.form_data.SchoolNames;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +24,11 @@ public class DistanceApplication {
 	@Bean
 	public SchoolNames getSchoolNames() {
 		return new SchoolNames();
+	}
+
+	@Bean
+	public AddresExcel getAddres(){
+		return new AddresExcel();
 	}
 
 

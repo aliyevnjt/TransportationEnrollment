@@ -1,55 +1,137 @@
-import React, { useState, useRef } from 'react';
-import { Button } from 'react-bootstrap';
-import TextField from './toolbox/TextField';
+import React, { useState } from 'react';
+import {
+  Button, InputGroup, Row,
+} from 'react-bootstrap';
 import InputComponent from './toolbox/InputComponent';
-import { schoolYears } from '../data/Data';
+import {schoolYears, registration, baseURL} from '../data/Data';
 import Dropdown from './toolbox/Dropdown';
-import useAdminInput from './useAdminInput';
+import axios from "axios";
+import constructAdminTable from "./toolbox/ConstructAdminTable";
 
 function AdminSettings() {
-  const { inputs, handleInputChange, handleSubmit } = useAdminInput();
-  const btnRef = useRef();
-  // TODO work in progress
-  const onBtnClick = (e) => {
-    if (btnRef.current) {
-      btnRef.current.setAttribute('disabled', 'disabled');
+  // Bonus: reset to default(saved version from DB)
+  // handle click, only one at a time
+  // handle save --> post to DB
+  // initial state from DB
+  // Different defaults for each year
+  //
+  const [message, setMessage] = useState({
+    open: 'earlyReg',
+    closed: 'lateReg',
+    notification: 'notification',
+  });
+  const [saveButton, setSaveButton] = useState(true);
+  const [checkButtonStatus, setCheckButtonStatus] = useState(false);
+  const [adminSettings, setAdminSettings] = useState();
+
+  const handleSubmit = async (event) => {
+    if (event) {
+      // event.preventDefault();
+      // if (event.target.id === 'adminForm') {
+      //   console.log(addressInfo);
+      //   setInputs((current) => ({
+      //     ...current, ...addressInfo,
+      //   }));
+      //   try {
+      //     const res = await axios.post(`${baseURL}/student/request/`, inputs);
+      //     console.log(res);
+      //     setTable(constructAdminTable(res.data));
+      //     setAdminSearchData(res.data);
+      //   } catch (err) {
+      //     console.log(err);
+      //   }
+      // }
     }
   };
-  const handleChange = (event) => {
-
+  const handleInputChange = (event) => {
+    setAdminSettings((previous) => ({ ...previous, [event.target.id]: event.target.value }));
   };
-  const [message, setMessage] = useState('');
-  const [earlyReg, setEarlyReg] = useState('');
-  const [lateReg, setLateReg] = useState('');
+  const handleMessageChange = (event) => {
+    setMessage(() => ({ ...message, [event.target.id]: event.target.value }));
+    setSaveButton(false);
+  };
+  const handleDropdownChange = (event) => {
+    handleInputChange(event);
+    setSaveButton(false);
+  };
+  const handleCheckButton = () => {
+    setCheckButtonStatus(!checkButtonStatus);
+    setSaveButton(false);
+  };
+  const handleSave = (event) => {
+    event.preventDefault();
+    // TODO AXIOS POST in handleSubmit
+    // Comparison to previous state before saving
+    // Post messages and status of the clicks and year
+    console.log(event);
+    console.log('===========');
+    console.log(message);
+    handleSubmit(event);
+    setSaveButton(true);
+  };
   return (
-    <div>
-
-      {/* TODO  */}
-
-      <div className="row">
+    <>
+      <Row>
         <Dropdown
           id="schoolYear"
-          value={inputs.schoolYear}
           onChange={handleInputChange}
           label="Bus Registration Year"
           options={schoolYears}
         />
+      </Row>
+      <Row>
+        <Dropdown
+          id="registrationStatus"
+          onChange={handleDropdownChange}
+          label="Registration Status"
+          options={registration}
+        />
+      </Row>
+      <div>
+        <Row>
+          <InputComponent
+            buttonText="Open"
+            id="open"
+            value={message.open}
+            onChange={handleMessageChange}
+          />
+        </Row>
+        <br />
+        <Row>
+          <InputComponent
+            buttonText="Closed"
+            id="closed"
+            value={message.closed}
+            onChange={handleMessageChange}
+          />
+        </Row>
+        <br />
+        <InputGroup.Prepend>
+          <InputGroup.Checkbox
+            name="notification"
+            aria-label="Checkbox for following text input"
+            checked={checkButtonStatus}
+            onClick={handleCheckButton}
+          />
+          <InputComponent
+            buttonText="Notification"
+            id="notification"
+            onChange={handleMessageChange}
+            value={message.notification}
+          />
+        </InputGroup.Prepend>
       </div>
-      AdminSettings
-      <TextField id="message" value={message} onChange={handleChange} />
-
-      <TextField id="earlyReg" value={earlyReg} onChange={handleChange} />
-
-      <TextField id="lateReg" value={lateReg} onChange={handleChange} />
       <br />
-      <InputComponent
+      <Button
+        disabled={saveButton}
         size="lg"
-        id="message"
+        as="input"
+        id="adminSettings"
+        type="submit"
+        value="Save"
+        onClick={handleSave}
       />
-      <br />
-      <Button as="input" ref={btnRef} onClick={onBtnClick} value="Save" type="submit" disabled="true" />
-    </div>
+    </>
   );
 }
-
 export default AdminSettings;
