@@ -24,18 +24,18 @@ public class FormRestController {
     @Autowired
     private ExcelAddressRepo addressRepo;
 
-    @GetMapping("/grades")
+    @GetMapping("/api/grades")
     public ResponseEntity getGrades(){
         return new ResponseEntity(gradeRepository.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/schoolNames")
+    @GetMapping("/api/schoolNames")
     public ResponseEntity getSchoolNames(){
         return new ResponseEntity(schoolNamesRepository.findAll(), HttpStatus.OK);
 
     }
 
-    @GetMapping("/addresses")
+    @GetMapping("/api/addresses")
     public ResponseEntity getAddresses() {
         return new ResponseEntity(addressRepo.findAll(), HttpStatus.OK);
     }

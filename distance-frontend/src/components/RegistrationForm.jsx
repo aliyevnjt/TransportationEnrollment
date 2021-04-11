@@ -21,6 +21,7 @@ function RegistrationForm() {
   });
   const [parentInfo, setParentInfo] = useState({});
   const history = useHistory();
+  
   useEffect(() => {
     // studentData state is updated with address info
     setStudentData((current) => current.map(
@@ -42,6 +43,7 @@ function RegistrationForm() {
     const index = parseInt(Math.random() * st.length);
     console.log(st[index]);
   };
+
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
@@ -49,29 +51,24 @@ function RegistrationForm() {
         try {
           console.log('StudentData:', studentData);
           const res = await axios.post(`${baseURL}/calculateFile/`, studentData);
-
-          console.log(res);
-          if (res.data.enrollmentStatus === 'free') {
-            studentData({
-              pathname: '/freeReg',
-              search: '',
-              state: { detail: res.data },
-              student: res.data,
-            });
-          } else {
-            history({
-              pathname: '/payment',
-              search: '',
-              state: { detail: res.data },
-              student: res.data,
-            });
-          }
+          console.log("Request completed",res);
+          redirectToPage(res.data);
         } catch (err) {
           console.log(err);
         }
       }
     }
   };
+
+  const redirectToPage = (data) => {
+    const free = data.filter(st=>st.enrollmentStatus==="free");
+    const paid = data.filter(st=>st.enrollmentStatus==="paid");
+    if (free.length>0 && !paid.length>0) {
+      history.push('/freereg',free);
+    } else {
+      
+    }
+  }
 
   const handleInputChange = (event) => {
     const eventCounter = parseInt(event.target.parentElement.parentElement.getAttribute('counter'));
@@ -96,9 +93,9 @@ function RegistrationForm() {
     setParentInfo((previous) => ({ ...previous, [event.target.id]: event.target.value }));
   };
 
-  console.log('StudentData2:', studentData);
-  console.log('addressInfo:', addressInfo);
-  console.log('parentInfo:', parentInfo);
+  // console.log('StudentData2:', studentData);
+  // console.log('addressInfo:', addressInfo);
+  // console.log('parentInfo:', parentInfo);
   // FIXME must add a unique key for all iterated elements
   return (
     <div>

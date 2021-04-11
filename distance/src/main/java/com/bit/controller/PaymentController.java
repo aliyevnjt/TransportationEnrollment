@@ -18,7 +18,7 @@ public class PaymentController {
     @Autowired
     private  StripeClient stripeClient;
 
-    @PostMapping("/charge")
+    @PostMapping("/api/charge")
     public Map<String, Object> chargeCard(@RequestBody Map<String, Object> request) throws Exception {
         String token = request.get("id").toString();
         Integer amount = (Integer)request.get("amount");;
