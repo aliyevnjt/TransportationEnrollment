@@ -3,18 +3,22 @@ import axios from 'axios';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { appUrl } from '../../data/Data';
+import { baseURL } from '../../data/Data';
 import FormGroup from './FormGroup';
 
 const AddressBox = (props) => {
   const { addressInfo, onChange } = props;
   const [selections, setSelections] = useState([]);
   const [address, setAddress] = useState([]);
+  let allData;
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get(`${appUrl.baseline}/addresses`);
-      setAddress(res.data);
+      // HOW MANY TIMES IS THIS CALL MADE???
+      const res = await axios.get(`${baseURL}/addresses`);
+      allData = res.data;
+      console.log(allData);
+      setAddress(allData);
       onChange(selections);
     }
     fetchData();
@@ -60,9 +64,9 @@ const AddressBox = (props) => {
         <FormGroup
           id="zip"
           type="text"
-          value={addressInfo.zipCode}
+          value={addressInfo.zip}
           label="Zip"
-          placeholder={addressInfo.zipCode}
+          placeholder={addressInfo.zip}
           disabled={true}
         />
       </Form.Row>
