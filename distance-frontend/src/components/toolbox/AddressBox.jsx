@@ -17,7 +17,7 @@ const AddressBox = (props) => {
       // HOW MANY TIMES IS THIS CALL MADE???
       const res = await axios.get(`${baseURL}/addresses`);
       allData = res.data;
-      console.log(allData);
+      //console.log(allData);
       setAddress(allData);
       onChange(selections);
     }

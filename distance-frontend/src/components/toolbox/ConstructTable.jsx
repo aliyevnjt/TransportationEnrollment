@@ -2,20 +2,13 @@ import { Table } from 'react-bootstrap';
 import React from 'react';
 import { schools } from '../../data/Data';
 
-const constructAdminTable = (data) => {
-  if (!data[0]) {
+const ConstructTable = (data) => {
+  console.log(data)
+  if (!data.options[0]) {
     console.log('HEYY!');
     return (<p>No data is found!</p>);
   }
-  const columnNames = {
-    fname: 'First Name',
-    lname: 'Last Name',
-    grade: 'Grade',
-    enrollmentStatus: 'Status',
-    distanceFromSchool: 'Distance',
-    address: 'Address',
-    school: 'School',
-  };
+  const columnNames = data.headers;
   return (
     <Table id="adminSearch" striped bordered hover>
       <thead>
@@ -27,7 +20,7 @@ const constructAdminTable = (data) => {
       </thead>
       <tbody>
         {
-          data.map((st) => (
+          data.options.map((st) => (
             <tr key={st.id}>
               { Object.keys(columnNames).map((key) => (
                 <td key={key}>
@@ -42,4 +35,4 @@ const constructAdminTable = (data) => {
   );
 };
 
-export default constructAdminTable;
+export default ConstructTable;
