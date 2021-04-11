@@ -3,10 +3,8 @@ import {
   Button, InputGroup, Row,
 } from 'react-bootstrap';
 import InputComponent from './toolbox/InputComponent';
-import {schoolYears, registration, baseURL} from '../data/Data';
+import {schoolYears, registration} from '../data/Data';
 import Dropdown from './toolbox/Dropdown';
-import axios from "axios";
-import constructAdminTable from "./toolbox/ConstructAdminTable";
 
 function AdminSettings() {
   // Bonus: reset to default(saved version from DB)
