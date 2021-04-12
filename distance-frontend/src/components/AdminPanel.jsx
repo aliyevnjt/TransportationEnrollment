@@ -8,6 +8,7 @@ import AdminSearch from './AdminSearch';
 import AdminSettings from './AdminSettings';
 import AdminAddressUpload from './AdminAddressUpload';
 import AdminStudentEntry from './AdminStudentEntry';
+import AdminLogin from './AdminLogin';
 
 function AdminPanel() {
   return (
@@ -17,7 +18,7 @@ function AdminPanel() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto navbar-fixed-top">
-            <LinkContainer to="/admin">
+            <LinkContainer to="/admin/search">
               <Nav.Link>Search</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/admin/settings">
@@ -45,7 +46,8 @@ function AdminPanel() {
       <Jumbotron fluid>
         <Container>
           <Switch>
-            <Route path="/admin/" exact component={AdminSearch} />
+            <Route path="/admin" exact component={AdminLogin} />
+            <Route path="/admin/search" component={AdminSearch} />
             <Route path="/admin/settings" component={AdminSettings} />
             <Route path="/admin/addressUpload" component={AdminAddressUpload} />
             <Route path="/admin/studentEntry" component={AdminStudentEntry} />

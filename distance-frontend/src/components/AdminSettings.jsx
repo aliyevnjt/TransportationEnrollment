@@ -3,7 +3,7 @@ import {
   Button, InputGroup, Row,
 } from 'react-bootstrap';
 import InputComponent from './toolbox/InputComponent';
-import {schoolYears, registration} from '../data/Data';
+import { schoolYears, registration } from '../data/Data';
 import Dropdown from './toolbox/Dropdown';
 
 function AdminSettings() {
