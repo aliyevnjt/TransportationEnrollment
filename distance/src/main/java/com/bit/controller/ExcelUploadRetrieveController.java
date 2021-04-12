@@ -29,7 +29,7 @@ public class ExcelUploadRetrieveController {
     @Autowired
     private DistanceCalculatorService distanceCalculatorService;
 
-    @PostMapping("/distanceLocal")
+    @PostMapping("/api/distanceLocal")
     public ResponseEntity getDistanceLocal(@Valid @RequestBody StudentInfo studentInfo){
         AddresExcel addresExcel = new AddresExcel();
         addresExcel.setAddress(studentInfo.getAddress());
@@ -38,7 +38,7 @@ public class ExcelUploadRetrieveController {
         return new ResponseEntity(distanceCalculatorService.createStudent(studentInfo, distance), HttpStatus.OK);
     }
 
-    @PostMapping("/import")
+    @PostMapping("/api/uploadAddresses")
     public ResponseEntity mapReapExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile)  {
         XSSFSheet worksheet = excelUploadService.getSheet(reapExcelDataFile);
         return excelUploadService.saveAllToAddresses(worksheet);

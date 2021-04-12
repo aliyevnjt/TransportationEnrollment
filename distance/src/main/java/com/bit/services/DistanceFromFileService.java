@@ -23,19 +23,19 @@ public class DistanceFromFileService {
         studentInfo.forEach(a -> {
             switch (a.getSchool().toLowerCase()) {
                 case "lhs":
-                a.setDistanceFromSchool(round(excelAddressRepo.findDistanceByAddress(a.getAddress()).get().getDistanceLHS(), 2));
+                a.setDistanceFromSchool(round(excelAddressRepo.findTopDistanceByAddress(a.getAddress()).get().getDistanceLHS(), 2));
                 a.setEnrollmentStatus(getEnrollmentStatus(a));
                 break;
                 case "lms":
-                a.setDistanceFromSchool(round(excelAddressRepo.findDistanceByAddress(a.getAddress()).get().getDistanceLMS(), 2));
+                a.setDistanceFromSchool(round(excelAddressRepo.findTopDistanceByAddress(a.getAddress()).get().getDistanceLMS(), 2));
                 a.setEnrollmentStatus(getEnrollmentStatus(a));
                 break;
                 case "rss":
-                a.setDistanceFromSchool(round(excelAddressRepo.findDistanceByAddress(a.getAddress()).get().getDistanceRSS(), 2));
+                a.setDistanceFromSchool(round(excelAddressRepo.findTopDistanceByAddress(a.getAddress()).get().getDistanceRSS(), 2));
                 a.setEnrollmentStatus(getEnrollmentStatus(a));
                 break;
                 case "sls":
-                a.setDistanceFromSchool(round(excelAddressRepo.findDistanceByAddress(a.getAddress()).get().getDistanceSLS(), 2));
+                a.setDistanceFromSchool(round(excelAddressRepo.findTopDistanceByAddress(a.getAddress()).get().getDistanceSLS(), 2));
                 a.setEnrollmentStatus(getEnrollmentStatus(a));
                 break;
             };
