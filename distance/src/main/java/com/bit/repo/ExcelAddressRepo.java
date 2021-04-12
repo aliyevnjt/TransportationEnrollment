@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface ExcelAddressRepo extends JpaRepository<AddresExcel, Long> {
 
-    Optional<AddresExcel> findDistanceByAddress(String address);
+    Optional<AddresExcel> findTopDistanceByAddress(String address);
+
+    Optional<AddresExcel> findTopAddressByAddress(String address);
 
 }

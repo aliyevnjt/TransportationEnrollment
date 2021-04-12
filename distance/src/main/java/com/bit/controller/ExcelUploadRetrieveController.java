@@ -38,7 +38,7 @@ public class ExcelUploadRetrieveController {
         return new ResponseEntity(distanceCalculatorService.createStudent(studentInfo, distance), HttpStatus.OK);
     }
 
-    @PostMapping("/api/import")
+    @PostMapping("/api/uploadAddresses")
     public ResponseEntity mapReapExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile)  {
         XSSFSheet worksheet = excelUploadService.getSheet(reapExcelDataFile);
         return excelUploadService.saveAllToAddresses(worksheet);
