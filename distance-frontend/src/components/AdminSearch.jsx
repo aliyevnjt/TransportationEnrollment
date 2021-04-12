@@ -63,21 +63,22 @@ function AdminSearch() {
         />
 
         <Button as="input" className="mr-1" type="submit" value="Search" />
+
+        <Button
+          as="input"
+          onClick={handlePDFdownload}
+          className="ml-3"
+          type="submit"
+          value="Download table as PDF"
+        />
         <CSVLink
           data={adminSearchData}
           headers={headers}
           filename="my-file.csv"
           className="btn btn-primary ml-3"
         >
-          Download as CSV
+          Download all data as CSV
         </CSVLink>
-        <Button
-          as="input"
-          onClick={handlePDFdownload}
-          className="ml-3"
-          type="submit"
-          value="Download as PDF"
-        />
       </Form>
       <br />
       {table}
