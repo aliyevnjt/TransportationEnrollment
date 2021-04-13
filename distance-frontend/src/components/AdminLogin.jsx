@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import LoginHooks from './LoginHooks';
-import LogoutHooks from './LogoutHooks';
 
 function AdminLogin() {
   return (

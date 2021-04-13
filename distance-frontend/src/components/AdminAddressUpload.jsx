@@ -3,7 +3,7 @@ import {
   Button, Form, Col, Table,
 } from 'react-bootstrap';
 import axios from 'axios';
-import { importURL, schools } from '../data/Data';
+import { importURL } from '../data/Data';
 
 function AdminAddressUpload() {
   const [file, setFile] = useState({

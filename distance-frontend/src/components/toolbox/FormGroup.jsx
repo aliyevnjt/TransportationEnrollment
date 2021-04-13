@@ -27,6 +27,8 @@ const FormGroup = (props) => {
 FormGroup.defaultProps = {
   type: '',
   disabled: false,
+  onChange: {},
+  placeholder: '',
 };
 FormGroup.propTypes = {
   id: PropTypes.string.isRequired,
