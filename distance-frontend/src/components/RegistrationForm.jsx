@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import {
-  Container, Form, Button, Jumbotron, Col, Row,
-} from 'react-bootstrap';
+import { Container, Form, Button, Jumbotron, Col, Row } from 'react-bootstrap';
 import { baseURL, locality } from '../data/Data';
 import Header from './Header';
 import Student from './Student';
@@ -21,14 +19,16 @@ function RegistrationForm() {
   });
   const [parentInfo, setParentInfo] = useState({});
   const history = useHistory();
-  
+
   useEffect(() => {
     // studentData state is updated with address info
-    setStudentData((current) => current.map(
-      (student) => ({
-        ...student, ...addressInfo, ...parentInfo,
-      }),
-    ));
+    setStudentData((current) =>
+      current.map((student) => ({
+        ...student,
+        ...addressInfo,
+        ...parentInfo,
+      }))
+    );
   }, [addressInfo, parentInfo]);
 
   // logs free sample data for easy entry
@@ -50,8 +50,11 @@ function RegistrationForm() {
       if (event.target.id === 'registrationForm') {
         try {
           console.log('StudentData:', studentData);
-          const res = await axios.post(`${baseURL}/calculateFile/`, studentData);
-          console.log("Request completed",res);
+          const res = await axios.post(
+            `${baseURL}/calculateFile/`,
+            studentData
+          );
+          console.log('Request completed', res);
           redirectToPage(res.data);
         } catch (err) {
           console.log(err);
@@ -61,17 +64,19 @@ function RegistrationForm() {
   };
 
   const redirectToPage = (data) => {
-    const free = data.filter(st=>st.enrollmentStatus==="free");
-    const paid = data.filter(st=>st.enrollmentStatus==="paid");
-    if (free.length>0 && !paid.length>0) {
-      history.push('/freereg',free);
+    const free = data.filter((st) => st.enrollmentStatus === 'free');
+    const paid = data.filter((st) => st.enrollmentStatus === 'paid');
+    if (free.length > 0 && !paid.length > 0) {
+      history.push('/freereg', free);
     } else {
-      
+      history.push('/paidreg', data);
     }
-  }
+  };
 
   const handleInputChange = (event) => {
-    const eventCounter = parseInt(event.target.parentElement.parentElement.getAttribute('counter'));
+    const eventCounter = parseInt(
+      event.target.parentElement.parentElement.getAttribute('counter')
+    );
     // console.log('eventCounter:', eventCounter);
     const allStudents = [...studentData];
     const tempStudent = {
@@ -83,14 +88,20 @@ function RegistrationForm() {
     setStudentData(() => allStudents);
   };
   const addSibling = () => {
-    setStudentData((previous) => [...previous, { schoolYear: 'FY22', ...addressInfo, ...parentInfo }]);
+    setStudentData((previous) => [
+      ...previous,
+      { schoolYear: 'FY22', ...addressInfo, ...parentInfo },
+    ]);
   };
   const handleAddressInfoChange = (address) => {
     // console.log(address);
     setAddressInfo((previous) => ({ ...previous, address }));
   };
   const handleParentInfoChange = (event) => {
-    setParentInfo((previous) => ({ ...previous, [event.target.id]: event.target.value }));
+    setParentInfo((previous) => ({
+      ...previous,
+      [event.target.id]: event.target.value,
+    }));
   };
 
   // console.log('StudentData2:', studentData);
@@ -100,13 +111,10 @@ function RegistrationForm() {
   return (
     <div>
       <Header />
-      <Container className="pt-3">
+      <Container className='pt-3'>
         <Jumbotron>
-          <Form id="registrationForm" onSubmit={handleSubmit}>
-            <Student
-              counter={0}
-              onChange={handleInputChange}
-            />
+          <Form id='registrationForm' onSubmit={handleSubmit}>
+            <Student counter={0} onChange={handleInputChange} />
             <AddressBox
               addressInfo={addressInfo}
               onChange={handleAddressInfoChange}
@@ -115,32 +123,46 @@ function RegistrationForm() {
               parentInfo={parentInfo}
               onChange={handleParentInfoChange}
             />
-            {
-              studentData.slice(1).map((student, index) => (
-                <Student
-                  key={student}
-                  counter={index + 1}
-                  studentData={student}
-                  onChange={handleInputChange}
-                />
-              ))
-                 }
-            <Form.Row className="justify-content-md-center">
+            {studentData.slice(1).map((student, index) => (
+              <Student
+                key={student}
+                counter={index + 1}
+                studentData={student}
+                onChange={handleInputChange}
+              />
+            ))}
+            <Form.Row className='justify-content-md-center'>
               <Col>
-                <Button disabled={studentData.length > 4} as="input" value="Add Sibling" type="button" onClick={addSibling} />
+                <Button
+                  disabled={studentData.length > 4}
+                  as='input'
+                  value='Add Sibling'
+                  type='button'
+                  onClick={addSibling}
+                />
               </Col>
               <Col>&nbsp;</Col>
               <Col>
-                <Button as="input" value="Continue" type="submit" />
+                <Button as='input' value='Continue' type='submit' />
               </Col>
             </Form.Row>
           </Form>
-          <Row className="mt-5">
+          <Row className='mt-5'>
             <Col>
-              <Button as="input" value="Show Free Sample" type="button" onClick={showFreeSample} />
+              <Button
+                as='input'
+                value='Show Free Sample'
+                type='button'
+                onClick={showFreeSample}
+              />
             </Col>
             <Col>
-              <Button as="input" value="Show Paid Sample" type="button" onClick={showPaidSample} />
+              <Button
+                as='input'
+                value='Show Paid Sample'
+                type='button'
+                onClick={showPaidSample}
+              />
             </Col>
           </Row>
           {/* <button onClick={this.freeSample}>Free Sample</button> */}
