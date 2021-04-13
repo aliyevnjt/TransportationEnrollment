@@ -2,34 +2,50 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Button, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import Header from './Header';
 import ConstructTable from './toolbox/ConstructTable';
 import { baseURL } from '../data/Data';
-import FormGroup from './toolbox/FormGroup';
 
-function FreeReg(props) {
+function PaidReg(props) {
+  const maxFee = 675;
+  let total = 0;
   const history = useHistory();
   const [pageBody, setPageBody] = useState();
-  const { location } = props;
-  console.log(location.state);
-  if (location.state === undefined) {
-    history.push('/');
-    return (<div />);
-  }
-  const studentData = location.state;
+  const [studentData, setStudentData] = useState(props.location.state);
   const data = {
     headers: {
       fname: 'First Name',
       lname: 'Last Name',
       grade: 'Grade',
+      due: 'Due',
       enrollmentStatus: 'Status',
       distanceFromSchool: 'Distance',
       school: 'School',
     },
     options: studentData,
   };
+  if (props.location.state == undefined) {
+    history.push('/');
+    return <div></div>;
+  }
+
+  const calculateFee = (students) => {
+    students.forEach((element) => {
+      if (element.enrollmentStatus === 'free') {
+        element['due'] = 0;
+      } else if (element.enrollmentStatus === 'paid') {
+        if (total < maxFee) {
+          element['due'] = 225;
+          total += 225;
+        } else element['due'] = 0;
+      }
+    });
+    console.log('total', total);
+    return students;
+  };
   useEffect(() => {
+    const st = calculateFee(studentData);
+    console.log('after calc', st);
     setPageBody(
       <div>
         <Container className="pt-3 " fluid="sm">
@@ -57,6 +73,7 @@ function FreeReg(props) {
       </div>
     );
   }, []);
+  console.log(props.location.state);
 
   const register = async () => {
     try {
@@ -73,8 +90,8 @@ function FreeReg(props) {
             </Col>
           </Row>
           {/* <Row className="justify-content-md-center">
-                <Button as="input" value="Go to home page" type="button" onClick={history.push('/')}/>
-              </Row> */}
+                        <Button as="input" value="Go to home page" type="button" onClick={history.push('/')}/>
+                    </Row> */}
         </Container>
       );
       console.log(res);
@@ -89,11 +106,5 @@ function FreeReg(props) {
     </div>
   );
 }
-FreeReg.defaultProps = {
-  location: {},
-};
-FreeReg.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  location: PropTypes.object,
-};
-export default FreeReg;
+
+export default PaidReg;
