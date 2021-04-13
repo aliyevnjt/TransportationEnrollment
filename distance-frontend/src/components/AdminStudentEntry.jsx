@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { baseURL, importURL, locality } from '../data/Data';
+import {
+  baseURL, enrollmentStatus, locality,
+} from '../data/Data';
 import Student from './Student';
 import AddressBox from './toolbox/AddressBox';
+import Dropdown from './toolbox/Dropdown';
 
 function AdminStudentEntry() {
   const [inputs, setInputs] = useState({
     city: locality.city,
     state: locality.state,
-    zipCode: locality.zipCode,
+    zip: locality.zipCode,
   });
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
       if (event.target.id === 'adminStudentEntry') {
         try {
-          const res = await axios.post(`${baseURL}/submit/`, inputs);
+          console.log(inputs);
+          const res = await axios.post(`${baseURL}/submit`, inputs);
           console.log(res);
         } catch (err) {
           console.log(err);
@@ -33,6 +37,12 @@ function AdminStudentEntry() {
         <Student
           counter={0}
           onChange={handleInputChange}
+        />
+        <Dropdown
+          id="enrollmentStatus"
+          onChange={handleInputChange}
+          label="Enrollment Status"
+          options={enrollmentStatus}
         />
         <AddressBox
           addressInfo={inputs}

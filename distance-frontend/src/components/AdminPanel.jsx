@@ -6,28 +6,32 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import AdminSearch from './AdminSearch';
 import AdminSettings from './AdminSettings';
-import AdminFileUpload from './AdminFileUpload';
+import AdminAddressUpload from './AdminAddressUpload';
 import AdminStudentEntry from './AdminStudentEntry';
+import AdminLogin from './AdminLogin';
 
 function AdminPanel() {
   return (
     <Router>
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg="dark" variant="dark" sticky="top">
         <Navbar.Brand>Transportation Admin</Navbar.Brand>
-        <Nav className="mr-auto navbar-fixed-top">
-          <LinkContainer to="/admin">
-            <Nav.Link>Search</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/admin/settings">
-            <Nav.Link>Settings</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/admin/fileUpload">
-            <Nav.Link>File Upload</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/admin/studentEntry">
-            <Nav.Link>Student Entry</Nav.Link>
-          </LinkContainer>
-        </Nav>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto navbar-fixed-top">
+            <LinkContainer to="/admin/search">
+              <Nav.Link>Search</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/admin/settings">
+              <Nav.Link>Settings</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/admin/addressUpload">
+              <Nav.Link>Address Upload</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/admin/studentEntry">
+              <Nav.Link>Student Entry</Nav.Link>
+            </LinkContainer>
+          </Nav>
+        </Navbar.Collapse>
         <Navbar.Brand>
           <img
             // src="../../public/?"
@@ -42,9 +46,10 @@ function AdminPanel() {
       <Jumbotron fluid>
         <Container>
           <Switch>
-            <Route path="/admin/" exact component={AdminSearch} />
+            <Route path="/admin" exact component={AdminLogin} />
+            <Route path="/admin/search" component={AdminSearch} />
             <Route path="/admin/settings" component={AdminSettings} />
-            <Route path="/admin/fileUpload" component={AdminFileUpload} />
+            <Route path="/admin/addressUpload" component={AdminAddressUpload} />
             <Route path="/admin/studentEntry" component={AdminStudentEntry} />
           </Switch>
         </Container>
