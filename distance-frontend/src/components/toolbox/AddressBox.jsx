@@ -23,8 +23,9 @@ const AddressBox = (props) => {
     }
     fetchData();
   }, []);
+
   const handleAddressChange = (event) => {
-    // console.log(event);
+    console.log('Handle Add Change', event);
     setSelections(event);
     if (event[0]) {
       console.log(event);
@@ -32,7 +33,8 @@ const AddressBox = (props) => {
     }
   };
   // console.log(selections);
-  // FIXME disabled attributes are not working properly
+  // FIXME chrome aufill does not update the state
+  // look in onInputChange of Typehead
   return (
     <div>
       <Form.Row>
@@ -43,7 +45,7 @@ const AddressBox = (props) => {
             labelKey="address"
             onChange={handleAddressChange}
             options={address}
-            placeholder="Enter your address"
+            placeholder="Select your address"
             selected={selections}
           />
         </Form.Group>
