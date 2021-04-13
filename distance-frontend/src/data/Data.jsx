@@ -16,12 +16,24 @@ const grades = [
 
 const headers = [
   { label: 'First Name', key: 'fname' },
+  { label: 'Last Name', key: 'mName' },
   { label: 'Last Name', key: 'lname' },
+  { label: 'Birth Date', key: 'birthDate' },
   { label: 'Grade', key: 'grade' },
-  { label: 'Status', key: 'enrollmentStatus' },
-  { label: 'Distance', key: 'distanceFromSchool' },
-  { label: 'Address', key: 'address' },
   { label: 'School', key: 'school' },
+  { label: 'School Year', key: 'schoolYear' },
+  { label: 'Distance From School', key: 'distanceFromSchool' },
+  { label: 'Enrollment Status', key: 'enrollmentStatus' },
+  { label: 'Address', key: 'address' },
+  { label: 'City', key: 'city' },
+  { label: 'State', key: 'state' },
+  { label: 'Zip Code', key: 'zip' },
+  { label: 'Parent Name', key: 'parentName' },
+  { label: 'Parent Email Address', key: 'parentEmailAddress' },
+  { label: 'Parent Phone Number', key: 'parentPhoneNumber' },
+  // { label: 'Homeless', key: 'homeless' },
+  // { label: 'Id', key: 'id' },
+  // { label: 'Unit', key: 'unit' },
 ];
 
 // const baseURL =  'http://localhost:8080';
@@ -41,7 +53,11 @@ const schools = [
 const cities = [{ label: 'Littleton', value: 'Littleton' }];
 const states = [{ label: 'Massachussets', value: 'MA' }];
 
-const locality = { city: 'Littleton', state: 'Massachussets', zipCode: '01460' };
+const locality = {
+  city: 'Littleton',
+  state: 'Massachussets',
+  zipCode: '01460',
+};
 
 const keys = {
   publishableKey:
@@ -53,11 +69,15 @@ const schoolYears = [
   { label: 'School Year 2022-2023', value: 'FY23' },
   { label: 'School Year 2023-2024', value: 'FY24' },
   { label: 'School Year 2024-2025', value: 'FY25' },
-
 ];
 const registration = [
   { label: 'Open', value: 'open' },
   { label: 'Closed', value: 'closed' },
+];
+
+const enrollmentStatus = [
+  { label: 'free', value: 'free' },
+  { label: 'paid', value: 'paid' },
 ];
 
 const usa = [
@@ -117,6 +137,18 @@ const usa = [
 const schoolYear = '2021-2022';
 
 export {
-  grades, schools, keys, usa, schoolYear, cities, states, schoolYears,
-  baseURL, importURL, headers, registration, locality,
+  grades,
+  schools,
+  keys,
+  usa,
+  schoolYear,
+  cities,
+  states,
+  schoolYears,
+  baseURL,
+  importURL,
+  headers,
+  registration,
+  locality,
+  enrollmentStatus,
 };

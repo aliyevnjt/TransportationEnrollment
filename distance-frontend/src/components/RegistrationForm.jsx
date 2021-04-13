@@ -44,6 +44,15 @@ function RegistrationForm() {
     console.log(st[index]);
   };
 
+  const redirectToPage = (data) => {
+    const free = data.filter((st) => st.enrollmentStatus === 'free');
+    const paid = data.filter((st) => st.enrollmentStatus === 'paid');
+    if (free.length > 0 && !paid.length > 0) {
+      history.push('/freereg', free);
+    } else {
+    }
+  };
+
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
@@ -52,7 +61,7 @@ function RegistrationForm() {
           console.log('StudentData:', studentData);
           const res = await axios.post(
             `${baseURL}/calculateFile/`,
-            studentData
+            studentData,
           );
           console.log('Request completed', res);
           redirectToPage(res.data);
@@ -113,7 +122,7 @@ function RegistrationForm() {
       <Header />
       <Container className='pt-3'>
         <Jumbotron>
-          <Form id='registrationForm' onSubmit={handleSubmit}>
+          <Form id="registrationForm" onSubmit={handleSubmit}>
             <Student counter={0} onChange={handleInputChange} />
             <AddressBox
               addressInfo={addressInfo}
@@ -131,13 +140,13 @@ function RegistrationForm() {
                 onChange={handleInputChange}
               />
             ))}
-            <Form.Row className='justify-content-md-center'>
+            <Form.Row className="justify-content-md-center">
               <Col>
                 <Button
                   disabled={studentData.length > 4}
-                  as='input'
-                  value='Add Sibling'
-                  type='button'
+                  as="input"
+                  value="Add Sibling"
+                  type="button"
                   onClick={addSibling}
                 />
               </Col>
@@ -150,17 +159,17 @@ function RegistrationForm() {
           <Row className='mt-5'>
             <Col>
               <Button
-                as='input'
-                value='Show Free Sample'
-                type='button'
+                as="input"
+                value="Show Free Sample"
+                type="button"
                 onClick={showFreeSample}
               />
             </Col>
             <Col>
               <Button
-                as='input'
-                value='Show Paid Sample'
-                type='button'
+                as="input"
+                value="Show Paid Sample"
+                type="button"
                 onClick={showPaidSample}
               />
             </Col>

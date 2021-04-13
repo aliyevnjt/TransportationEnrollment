@@ -1,0 +1,12 @@
+{
+  "web": {
+    "client_id": "199680818186-hej6rlkb9hbh1n5csgoqjhlalo2lfte0.apps.googleusercontent.com",
+    "project_id": "flowlyst-transport",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "DNxDCaJc5ZsipYmN0SNVcAZy",
+    "redirect_uris": ["http://localhost:3000/admin/search"],
+    "javascript_origins": ["http://localhost:3000"]
+  }
+}

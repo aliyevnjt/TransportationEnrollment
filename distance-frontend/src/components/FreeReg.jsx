@@ -2,13 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Button, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import Header from './Header';
 import ConstructTable from './toolbox/ConstructTable';
 import { baseURL } from '../data/Data';
+import FormGroup from './toolbox/FormGroup';
 
 function FreeReg(props) {
   const history = useHistory();
   const [pageBody, setPageBody] = useState();
+  const { location } = props;
+  console.log(location.state);
+  if (location.state === undefined) {
+    history.push('/');
+    return (<div />);
+  }
+  const studentData = location.state;
   const data = {
     headers: {
       fname: 'First Name',
@@ -20,11 +29,6 @@ function FreeReg(props) {
     },
     options: studentData,
   };
-  const studentData = props.location.state;
-  if (props.location.state == undefined) {
-    history.push('/');
-    return <div></div>;
-  }
   useEffect(() => {
     setPageBody(
       <div>
@@ -53,7 +57,6 @@ function FreeReg(props) {
       </div>
     );
   }, []);
-  console.log(props.location.state);
 
   const register = async () => {
     try {
@@ -86,5 +89,11 @@ function FreeReg(props) {
     </div>
   );
 }
-
+FreeReg.defaultProps = {
+  location: {},
+};
+FreeReg.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  location: PropTypes.object,
+};
 export default FreeReg;
