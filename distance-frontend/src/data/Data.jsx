@@ -36,12 +36,11 @@ const headers = [
   // { label: 'Unit', key: 'unit' },
 ];
 
-// const baseURL =  'http://localhost:8080';
-const baseURL = 'http://localhost:8080/api';
-// const baseURL = 'http://ec2-3-142-117-252.us-east-2.compute.amazonaws.com:8080/api';
+//const baseURL = 'http://localhost:8080/api';
+const baseURL = '/api';
 
-const importURL = 'http://localhost:8080';
-// const importURL = 'http://ec2-3-142-117-252.us-east-2.compute.amazonaws.com:8080/import';
+//const importURL = 'http://localhost:8080';
+const importURL = '/api';
 
 const schools = [
   { label: 'LITTLETON HIGH SCHOOL', value: 'LHS' },

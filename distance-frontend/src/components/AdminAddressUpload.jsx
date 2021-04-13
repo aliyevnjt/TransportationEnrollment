@@ -1,7 +1,5 @@
 ﻿import React, { useState } from 'react';
-import {
-  Button, Form, Col, Table,
-} from 'react-bootstrap';
+import { Button, Form, Col, Table } from 'react-bootstrap';
 import axios from 'axios';
 import { importURL } from '../data/Data';
 
@@ -12,7 +10,7 @@ function AdminAddressUpload() {
   const uploadFile = async () => {
     console.log(file);
     if (file.size > 0) {
-      const res = await axios.post(`${importURL}`, file, {
+      const res = await axios.post(`${importURL}/uploadAddresses`, file, {
         headers: {
           'Content-Type': file.type,
         },
@@ -25,8 +23,8 @@ function AdminAddressUpload() {
       <Form.Row>
         <Form.Group as={Col} controlId="uploadFile">
           <Form.Text id="passwordHelpBlock" muted>
-            You can browse or drag and drop an excel or csv file
-            to upload address data
+            You can browse or drag and drop an excel or csv file to upload
+            address data
           </Form.Text>
           <Form.File
             className="col-md-6"
@@ -37,7 +35,12 @@ function AdminAddressUpload() {
           />
         </Form.Group>
       </Form.Row>
-      <Button as="input" type="submit" value="Upload File" onClick={uploadFile} />
+      <Button
+        as="input"
+        type="submit"
+        value="Upload File"
+        onClick={uploadFile}
+      />
       <br />
       <br />
       <strong>SAMPLE EXCEL FILE FORMAT</strong>
@@ -65,7 +68,6 @@ function AdminAddressUpload() {
           </tr>
         </tbody>
       </Table>
-
     </div>
   );
 }

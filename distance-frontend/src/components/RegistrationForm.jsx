@@ -50,6 +50,7 @@ function RegistrationForm() {
     if (free.length > 0 && !paid.length > 0) {
       history.push('/freereg', free);
     } else {
+      history.push('/paidreg', data);
     }
   };
 
@@ -69,16 +70,6 @@ function RegistrationForm() {
           console.log(err);
         }
       }
-    }
-  };
-
-  const redirectToPage = (data) => {
-    const free = data.filter((st) => st.enrollmentStatus === 'free');
-    const paid = data.filter((st) => st.enrollmentStatus === 'paid');
-    if (free.length > 0 && !paid.length > 0) {
-      history.push('/freereg', free);
-    } else {
-      history.push('/paidreg', data);
     }
   };
 
