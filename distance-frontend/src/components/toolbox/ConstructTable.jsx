@@ -3,7 +3,7 @@ import React from 'react';
 import { schools } from '../../data/Data';
 
 const ConstructTable = (data) => {
-  console.log(data)
+  console.log(data);
   if (!data.options[0]) {
     console.log('HEYY!');
     return (<p>No data is found!</p>);
