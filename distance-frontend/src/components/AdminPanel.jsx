@@ -70,7 +70,6 @@ const AdminPanel = () => {
           </Container>
         </Jumbotron>
       </Route>
-
     </Router>
   );
 };

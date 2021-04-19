@@ -1,7 +1,6 @@
 import React from 'react';
 import { useGoogleLogout } from 'react-google-login';
 import { useHistory } from 'react-router-dom';
-
 import { useAuth } from './Authorization';
 
 const clientId = '199680818186-hej6rlkb9hbh1n5csgoqjhlalo2lfte0.apps.googleusercontent.com';
