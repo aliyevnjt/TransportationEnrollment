@@ -18,9 +18,7 @@ function AdminLogin() {
     history.replace(from);
     auth.signin(googleProfile);
   };
-    // const { userName, setUserName } = useState('');
-    // const { userEmail, setUserEmail } = useState('');
-    // const { userImgUrl, setUserImgUrl } = useState('');
+  // FIXME this is run twice when page loads
   console.log('LOGIN', login);
   const onSuccess = async (googleRes) => {
     const googleProfile = googleRes.profileObj;
@@ -30,13 +28,9 @@ function AdminLogin() {
     // );
     login(googleProfile);
     refreshTokenSetup(googleRes);
-    // setUserName(googleProfile.name);
-    // setUserEmail(googleProfile.email);
-    // setUserImgUrl(googleProfile.imageUrl);
 
-    // We want to use this information to log a user into our own back-end,
-    // so the next step is to send the ID token to our own API:
-    // TODO
+    // TODO  We want to use this information to log a user into our own back-end,
+    //  so the next step is to send the ID token to our own API:
     // const serverRes = await fetch('/api/googleAuth', {
     //   method: 'POST',
     //   body: JSON.stringify({
@@ -81,26 +75,6 @@ function AdminLogin() {
         Please login with your school email address to access Transport Enrollment Admin Panel.
       </h2>
       <GoogleButton onClick={() => signIn()} />
-      {/* <GoogleLogin */}
-      {/*    clientId={clientId} */}
-      {/*    buttonText="Login" */}
-      {/*    onSuccess={onSuccess} */}
-      {/*    onFailure={onFailure} */}
-      {/* /> */}
-      {/* <GoogleLogin */}
-      {/*  clientId={clientId} */}
-      {/*  render={(renderProps) => ( */}
-      {/*    <GoogleButton */}
-      {/*      onClick={renderProps.signIn} */}
-      {/*      disabled={renderProps.disabled} */}
-      {/*    > */}
-      {/*      Sign in with Google */}
-      {/*    </GoogleButton> */}
-      {/*  )} */}
-      {/*  onSuccess={onSuccess} */}
-      {/*  onFailure={onFailure} */}
-      {/*    // cookiePolicy={'single_host_origin'} */}
-      {/* /> */}
     </div>
   );
 }

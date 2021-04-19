@@ -1,6 +1,7 @@
 import React from 'react';
 import { useGoogleLogout } from 'react-google-login';
 import { useHistory } from 'react-router-dom';
+import { Nav, Navbar } from 'react-bootstrap';
 import { useAuth } from './Authorization';
 
 const clientId = '199680818186-hej6rlkb9hbh1n5csgoqjhlalo2lfte0.apps.googleusercontent.com';
@@ -58,14 +59,29 @@ function LogoutHooks() {
   //   buttonText="LogOut"
   //   onClick={() => logout()}
   // />
-    <button
-      type="button"
-      className="btn btn-danger btn-sm"
-      onClick={logout}
-    >
-      Logout
-    </button>
+    <Nav>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Brand href="/admin">
+        <img
+          src={auth.user.imageUrl}
+          width="30"
+          height="30"
+          className="d-inline-block align-top"
+          alt="React Bootstrap logo"
+        />
+        {' '}
+        Signed in as
+        {' '}
+        {auth.user.name}
+      </Navbar.Brand>
+      <button
+        type="button"
+        className="btn btn-danger btn-sm"
+        onClick={logout}
+      >
+        Logout
+      </button>
+    </Nav>
   );
 }
-
 export default LogoutHooks;

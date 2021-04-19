@@ -16,25 +16,22 @@ const AdminPanel = () => {
   return (
     <Router>
       <Route>
-        <Navbar bg="dark" variant="dark" sticky="top">
+        <Navbar bg="dark" expand="md" variant="dark" sticky="top">
           <Navbar.Brand>Transportation Admin</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto navbar-fixed-top">
-              <LinkContainer to="/admin/search">
-                <Nav.Link>Search</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/admin/settings">
-                <Nav.Link>Settings</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/admin/addressUpload">
-                <Nav.Link>Address Upload</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/admin/studentEntry">
-                <Nav.Link>Student Entry</Nav.Link>
-              </LinkContainer>
-            </Nav>
-          </Navbar.Collapse>
+          <Nav className="mr-auto navbar-fixed-top">
+            <LinkContainer to="/admin/search">
+              <Nav.Link>Search</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/admin/settings">
+              <Nav.Link>Settings</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/admin/addressUpload">
+              <Nav.Link>Address Upload</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/admin/studentEntry">
+              <Nav.Link>Student Entry</Nav.Link>
+            </LinkContainer>
+          </Nav>
           <LogoutHooks />
         </Navbar>
         <Jumbotron fluid>

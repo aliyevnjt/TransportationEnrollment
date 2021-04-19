@@ -22,16 +22,19 @@ function useProvideAuth() {
   const signout = () => {
     setUser(null);
   };
-
   return {
     user,
     signin,
     signout,
   };
 }
+// Provider component that wraps your app and makes auth object ...
+// ... available to any child component that calls useAuth().
 // eslint-disable-next-line react/prop-types
 export function ProvideAuth({ children }) {
   const auth = useProvideAuth();
+
+  console.log('ProvideAuth, children', children);
   return (
     <authContext.Provider value={auth}>
       {children}
@@ -43,6 +46,7 @@ export function ProvideAuth({ children }) {
 // page if you're not yet authenticated.
 export function PrivateRoute({ children, ...rest }) {
   const auth = useAuth();
+  console.log('PrivateRoute, rest', rest);
   return (
     <Route
       {...rest}
