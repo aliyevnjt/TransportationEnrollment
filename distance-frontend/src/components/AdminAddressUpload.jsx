@@ -1,5 +1,7 @@
 ﻿import React, { useState } from 'react';
-import { Button, Form, Col, Table } from 'react-bootstrap';
+import {
+  Button, Form, Col, Table,
+} from 'react-bootstrap';
 import axios from 'axios';
 import { importURL } from '../data/Data';
 

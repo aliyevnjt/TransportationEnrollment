@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Form, Button, Jumbotron, Col, Row } from 'react-bootstrap';
+import {
+  Container, Form, Button, Jumbotron, Col, Row,
+} from 'react-bootstrap';
 import { baseURL, locality } from '../data/Data';
 import Header from './Header';
 import Student from './Student';
@@ -22,13 +24,11 @@ function RegistrationForm() {
 
   useEffect(() => {
     // studentData state is updated with address info
-    setStudentData((current) =>
-      current.map((student) => ({
-        ...student,
-        ...addressInfo,
-        ...parentInfo,
-      }))
-    );
+    setStudentData((current) => current.map((student) => ({
+      ...student,
+      ...addressInfo,
+      ...parentInfo,
+    })));
   }, [addressInfo, parentInfo]);
 
   // logs free sample data for easy entry
@@ -75,7 +75,7 @@ function RegistrationForm() {
 
   const handleInputChange = (event) => {
     const eventCounter = parseInt(
-      event.target.parentElement.parentElement.getAttribute('counter')
+      event.target.parentElement.parentElement.getAttribute('counter'),
     );
     // console.log('eventCounter:', eventCounter);
     const allStudents = [...studentData];
@@ -111,7 +111,7 @@ function RegistrationForm() {
   return (
     <div>
       <Header />
-      <Container className='pt-3'>
+      <Container className="pt-3">
         <Jumbotron>
           <Form id="registrationForm" onSubmit={handleSubmit}>
             <Student counter={0} onChange={handleInputChange} />
@@ -143,11 +143,11 @@ function RegistrationForm() {
               </Col>
               <Col>&nbsp;</Col>
               <Col>
-                <Button as='input' value='Continue' type='submit' />
+                <Button as="input" value="Continue" type="submit" />
               </Col>
             </Form.Row>
           </Form>
-          <Row className='mt-5'>
+          <Row className="mt-5">
             <Col>
               <Button
                 as="input"

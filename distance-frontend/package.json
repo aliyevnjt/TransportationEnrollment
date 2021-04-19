@@ -9,6 +9,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "faker": "^5.4.0",
+    "gapi-script": "^1.2.0",
     "jspdf": "^2.3.1",
     "jspdf-autotable": "^3.5.14",
     "prop-types": "^15.7.2",
