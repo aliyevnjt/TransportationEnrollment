@@ -16,9 +16,20 @@ public class SchoolYear {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private int id;
+
     @NotNull(message = "School year is mandatory")
     @Size(min=1, max=50)
     private String value;
+
+    // TODO add activeInd to populate the initial values on admin settings page
+//    @Column(name="activeInd", nullable = false, columnDefinition="default 'N'")
+//    @Size(min=1, max=1)
+//    private String activeInd;
+
+    // TODO missing item from admin settings page
+//    @Column(name="regStatus", nullable = false, columnDefinition="default 'closed'")
+//    @Size(min=1, max=12)
+//    private String regStatus;
 
     @Size(min=1, max=500)
     private String message1;
@@ -69,11 +80,20 @@ public class SchoolYear {
         this.message3 = message3;
     }
 
+//    public String getActiveInd() {
+//        return activeInd;
+//    }
+//
+//    public void setActiveInd(String activeInd) {
+//        this.activeInd = activeInd;
+//    }
+
     @Override
     public String toString() {
         return "SchoolYear{" +
                 "id=" + id +
                 ", value='" + value + '\'' +
+//                ", activeInd='" + activeInd + '\'' +
                 ", message1='" + message1 + '\'' +
                 ", message2='" + message2 + '\'' +
                 ", message3='" + message3 + '\'' +

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import {
@@ -9,11 +9,18 @@ import AddressBox from './toolbox/AddressBox';
 import Dropdown from './toolbox/Dropdown';
 
 function AdminStudentEntry() {
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState({});
+  const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zip: locality.zipCode,
+    zipCode: locality.zipCode,
   });
+  useEffect(() => {
+    // inputs state is updated with address info
+    setInputs((current) => ({
+      ...current, ...addressInfo,
+    }));
+  }, [addressInfo]);
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
@@ -29,7 +36,12 @@ function AdminStudentEntry() {
     }
   };
   const handleInputChange = (event) => {
+    console.log('EVENT input:', event);
     setInputs((previous) => ({ ...previous, [event.target.id]: event.target.value }));
+  };
+  const handleAddressInfoChange = (address) => {
+    setAddressInfo((previous) => ({ ...previous, address }));
+    console.log(address);
   };
   return (
     <div>
@@ -43,10 +55,11 @@ function AdminStudentEntry() {
           onChange={handleInputChange}
           label="Enrollment Status"
           options={enrollmentStatus}
+          value=""
         />
         <AddressBox
-          addressInfo={inputs}
-          onChange={handleInputChange}
+          addressInfo={addressInfo}
+          onChange={handleAddressInfoChange}
         />
         <Button as="input" className="mr-1" type="submit" value="Save" />
       </Form>
