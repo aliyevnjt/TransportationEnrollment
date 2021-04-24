@@ -12,16 +12,6 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'airbnb',
   ],
-  parser: 'babel-eslint',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-      modules: true,
-      experimentalObjectRestSpread: true,
-    },
-    ecmaVersion: 12,
-    sourceType: 'module',
-  },
   plugins: [
     'react',
     'react-hooks',

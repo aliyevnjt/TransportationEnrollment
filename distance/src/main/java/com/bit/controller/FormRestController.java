@@ -3,6 +3,7 @@ package com.bit.controller;
 import com.bit.repo.ExcelAddressRepo;
 import com.bit.repo.GradeRepository;
 import com.bit.repo.SchoolNamesRepository;
+import com.bit.repo.SchoolYearRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class FormRestController {
     @Autowired
     private ExcelAddressRepo addressRepo;
 
+    @Autowired
+    private SchoolYearRepo schoolYearRepo;
+
     @GetMapping("/api/grades")
     public ResponseEntity getGrades(){
         return new ResponseEntity(gradeRepository.findAll(), HttpStatus.OK);
@@ -32,11 +36,17 @@ public class FormRestController {
     @GetMapping("/api/schoolNames")
     public ResponseEntity getSchoolNames(){
         return new ResponseEntity(schoolNamesRepository.findAll(), HttpStatus.OK);
-
     }
 
     @GetMapping("/api/addresses")
     public ResponseEntity getAddresses() {
         return new ResponseEntity(addressRepo.findAll(), HttpStatus.OK);
     }
+
+    @GetMapping("/api/messages")
+    public ResponseEntity getMessages() {
+        return new ResponseEntity(schoolYearRepo.findAll(), HttpStatus.OK);
+    }
+
+
 }

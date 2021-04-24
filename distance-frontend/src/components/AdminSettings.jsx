@@ -66,6 +66,16 @@ function AdminSettings() {
     console.log(message);
     handleSubmit(event);
     setSaveButton(true);
+
+    /*
+    {
+    "id": 4,
+    "value": "2040",
+    "message1": "anan guzel mi",
+    "message2": null,
+    "message3": null
+}
+     */
   };
   return (
     <>
