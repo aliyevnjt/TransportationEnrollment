@@ -47,6 +47,7 @@ const AddressBox = (props) => {
             options={address}
             placeholder="Select your address"
             selected={selections}
+            inputProps={{ autoComplete: 'off' }}
           />
         </Form.Group>
         <FormGroup
