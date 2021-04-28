@@ -8,15 +8,16 @@ import AdminSearch from './AdminSearch';
 import AdminSettings from './AdminSettings';
 import AdminAddressUpload from './AdminAddressUpload';
 import AdminStudentEntry from './AdminStudentEntry';
-import AdminLogin from './AdminLogin';
+import LogoutHooks from './LogoutHooks';
+import { useAuth } from './Authorization';
 
-function AdminPanel() {
+const AdminPanel = () => {
+  const auth = useAuth();
   return (
     <Router>
-      <Navbar bg="dark" variant="dark" sticky="top">
-        <Navbar.Brand>Transportation Admin</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+      <Route>
+        <Navbar bg="dark" expand="md" variant="dark" sticky="top">
+          <Navbar.Brand>Transportation Admin</Navbar.Brand>
           <Nav className="mr-auto navbar-fixed-top">
             <LinkContainer to="/admin/search">
               <Nav.Link>Search</Nav.Link>
@@ -31,30 +32,42 @@ function AdminPanel() {
               <Nav.Link>Student Entry</Nav.Link>
             </LinkContainer>
           </Nav>
-        </Navbar.Collapse>
-        <Navbar.Brand>
-          <img
-            // src="../../public/?"
-            src="https://www.littletonps.org/files/Images/LPS%20Logo%20-%20large%20text.jpg"
-            width="300"
-            height="65"
-            className="d-inline-block right-aligned align-top"
-            alt="Littleton Public Schools"
-          />
-        </Navbar.Brand>
-      </Navbar>
-      <Jumbotron fluid>
-        <Container>
-          <Switch>
-            <Route path="/admin" exact component={AdminLogin} />
-            <Route path="/admin/search" component={AdminSearch} />
-            <Route path="/admin/settings" component={AdminSettings} />
-            <Route path="/admin/addressUpload" component={AdminAddressUpload} />
-            <Route path="/admin/studentEntry" component={AdminStudentEntry} />
-          </Switch>
-        </Container>
-      </Jumbotron>
+          <LogoutHooks />
+        </Navbar>
+        <Jumbotron fluid>
+          <Container>
+            <Switch>
+              <Route
+                path="/admin"
+                exact
+                render={() => (
+                  <div>
+                    <h1>
+                      Welcome to
+                      <br />
+                      Transport Enrollment Admin Panel
+                    </h1>
+                    <h3>
+                      Name:
+                      {' '}
+                      {auth.user.name}
+                      <br />
+                      Email:
+                      {' '}
+                      {auth.user.email}
+                    </h3>
+                  </div>
+                )}
+              />
+              <Route path="/admin/search" component={AdminSearch} />
+              <Route path="/admin/settings" component={AdminSettings} />
+              <Route path="/admin/addressUpload" component={AdminAddressUpload} />
+              <Route path="/admin/studentEntry" component={AdminStudentEntry} />
+            </Switch>
+          </Container>
+        </Jumbotron>
+      </Route>
     </Router>
   );
-}
+};
 export default AdminPanel;

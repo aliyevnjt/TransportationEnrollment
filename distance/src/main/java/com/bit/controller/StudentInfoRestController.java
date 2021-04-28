@@ -20,7 +20,6 @@ public class StudentInfoRestController {
     @Autowired
     private DistanceCalculatorService distanceCalculatorService;
 
-
     @Autowired
     private StudentInfoWriteAndReadService studentInfoWriteAndReadService;
 

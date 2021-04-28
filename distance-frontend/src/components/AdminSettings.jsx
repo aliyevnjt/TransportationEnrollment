@@ -1,51 +1,63 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button, InputGroup, Row,
 } from 'react-bootstrap';
+import axios from 'axios';
 import InputComponent from './toolbox/InputComponent';
-import { schoolYears, registration } from '../data/Data';
+import { schoolYears, registration, baseURL } from '../data/Data';
 import Dropdown from './toolbox/Dropdown';
 
 function AdminSettings() {
+  // TODO
   // Bonus: reset to default(saved version from DB)
-  // handle click, only one at a time
-  // handle save --> post to DB
-  // initial state from DB
   // Different defaults for each year
-  //
-  const [message, setMessage] = useState({
-    open: 'earlyReg',
-    closed: 'lateReg',
-    notification: 'notification',
-  });
+
+  // FIXME DB should have more meaningfull column names rather than message 1,2,3
+  // const [message, setMessage] = useState({
+  //   open: 'earlyReg',
+  //   closed: 'lateReg',
+  //   notification: 'notification',
+  // });
   const [saveButton, setSaveButton] = useState(true);
   const [checkButtonStatus, setCheckButtonStatus] = useState(false);
-  const [adminSettings, setAdminSettings] = useState();
+  const [adminSettings, setAdminSettings] = useState({});
+  let allData;
+  let currentData;
+
+  useEffect(() => {
+    async function fetchData() {
+      // FETCH all admin settings
+      const res = await axios.get(`${baseURL}/adminSettings`);
+      allData = res.data;
+      console.log(allData);
+      currentData = allData.filter((obj) => obj.value === '2039');
+      console.log(currentData[0]);
+      setAdminSettings(currentData[0]);
+    }
+    fetchData();
+  }, []);
 
   const handleSubmit = async (event) => {
     if (event) {
-      // event.preventDefault();
-      // if (event.target.id === 'adminForm') {
-      //   console.log(addressInfo);
-      //   setInputs((current) => ({
-      //     ...current, ...addressInfo,
-      //   }));
-      //   try {
-      //     const res = await axios.post(`${baseURL}/student/request/`, inputs);
-      //     console.log(res);
-      //     setTable(constructAdminTable(res.data));
-      //     setAdminSearchData(res.data);
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
-      // }
+      event.preventDefault();
+      // FIXME this is temporary. send adminSettings only once the DB has the same values
+      const tempSettings = {
+        value: adminSettings.value,
+        message1: adminSettings.message1,
+        message2: adminSettings.message2,
+        message3: adminSettings.message3,
+      };
+      console.log('TEMP SETTINGS:', tempSettings);
+      try {
+        const res = await axios.put(`${baseURL}/updateSettings`, tempSettings);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   const handleInputChange = (event) => {
     setAdminSettings((previous) => ({ ...previous, [event.target.id]: event.target.value }));
-  };
-  const handleMessageChange = (event) => {
-    setMessage(() => ({ ...message, [event.target.id]: event.target.value }));
     setSaveButton(false);
   };
   const handleDropdownChange = (event) => {
@@ -58,15 +70,12 @@ function AdminSettings() {
   };
   const handleSave = (event) => {
     event.preventDefault();
-    // TODO AXIOS POST in handleSubmit
-    // Comparison to previous state before saving
-    // Post messages and status of the clicks and year
     console.log(event);
     console.log('===========');
-    console.log(message);
     handleSubmit(event);
     setSaveButton(true);
   };
+
   return (
     <>
       <Row>
@@ -75,6 +84,11 @@ function AdminSettings() {
           onChange={handleInputChange}
           label="Bus Registration Year"
           options={schoolYears}
+          value={
+            adminSettings.value
+              ? schoolYears.filter((obj) => obj.adminYear === adminSettings.value)[0].label
+              : ''
+          }
         />
       </Row>
       <Row>
@@ -89,18 +103,18 @@ function AdminSettings() {
         <Row>
           <InputComponent
             buttonText="Open"
-            id="open"
-            value={message.open}
-            onChange={handleMessageChange}
+            id="message1"
+            value={adminSettings.message1}
+            onChange={handleInputChange}
           />
         </Row>
         <br />
         <Row>
           <InputComponent
             buttonText="Closed"
-            id="closed"
-            value={message.closed}
-            onChange={handleMessageChange}
+            id="message2"
+            value={adminSettings.message2}
+            onChange={handleInputChange}
           />
         </Row>
         <br />
@@ -113,9 +127,9 @@ function AdminSettings() {
           />
           <InputComponent
             buttonText="Notification"
-            id="notification"
-            onChange={handleMessageChange}
-            value={message.notification}
+            id="message3"
+            onChange={handleInputChange}
+            value={adminSettings.message3}
           />
         </InputGroup.Prepend>
       </div>

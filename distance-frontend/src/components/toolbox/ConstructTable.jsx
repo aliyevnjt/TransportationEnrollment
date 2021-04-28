@@ -4,11 +4,12 @@ import { schools } from '../../data/Data';
 
 const ConstructTable = (data) => {
   console.log(data);
-  if (!data.options[0]) {
+  const { headers, options } = data;
+  if (!options[0]) {
     console.log('HEYY!');
     return <p>No data is found!</p>;
   }
-  const columnNames = data.headers;
+  const columnNames = headers;
   return (
     <Table id="adminSearch" striped bordered hover>
       <thead>
@@ -19,7 +20,7 @@ const ConstructTable = (data) => {
         </tr>
       </thead>
       <tbody>
-        {data.options.map((st) => (
+        {options.map((st) => (
           <tr key={st.fname.slice(1) + st.lname}>
             {Object.keys(columnNames).map((key) => (
               <td key={key}>
