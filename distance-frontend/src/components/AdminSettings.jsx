@@ -27,7 +27,7 @@ function AdminSettings() {
   useEffect(() => {
     async function fetchData() {
       // FETCH all admin settings
-      const res = await axios.get(`${baseURL}/messages`);
+      const res = await axios.get(`${baseURL}/adminSettings`);
       allData = res.data;
       console.log(allData);
       currentData = allData.filter((obj) => obj.value === '2039');
@@ -49,7 +49,7 @@ function AdminSettings() {
       };
       console.log('TEMP SETTINGS:', tempSettings);
       try {
-        const res = await axios.post(`${baseURL}/submitMessage`, tempSettings);
+        const res = await axios.put(`${baseURL}/updateSettings`, tempSettings);
         console.log(res);
       } catch (err) {
         console.log(err);

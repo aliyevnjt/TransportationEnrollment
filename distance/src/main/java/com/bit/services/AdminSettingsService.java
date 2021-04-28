@@ -1,14 +1,11 @@
 package com.bit.services;
 
 import com.bit.model.SchoolYear;
-import com.bit.model.StudentInfo;
 import com.bit.repo.SchoolYearRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author ykeskin
@@ -21,7 +18,7 @@ public class AdminSettingsService {
     private SchoolYearRepo schoolYearRepo;
 
     @Transactional
-    public void saveAdminSettings(SchoolYear schoolYear) {
+    public void updateAdminSettings(SchoolYear schoolYear) {
 
         SchoolYear schoolYearInfo = schoolYearRepo.findByValue(schoolYear.getValue());
         schoolYearInfo.setMessage1(schoolYear.getMessage1());

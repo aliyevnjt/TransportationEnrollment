@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class ExcelUploadService {
             XSSFWorkbook xssfWorkbook = new XSSFWorkbook(reapExcelDataFile.getInputStream());
             worksheet = xssfWorkbook.getSheetAt(0);
         } catch (IOException e) {
-
+            System.out.println("Exception at getSheet:" + e);
         }
         return worksheet;
     }
@@ -134,6 +135,7 @@ public class ExcelUploadService {
         ExampleMatcher ignoringExampleMatcher = ExampleMatcher.matchingAny()
                 .withMatcher("address", ExampleMatcher.GenericPropertyMatchers.startsWith().ignoreCase())
                 .withIgnorePaths("distanceRSS", "distanceSLS", "distanceLMS", "distanceLHS");
+        // FIXME this can throw null pointer exception
         AddresExcel addresExcel1 = excelAddressRepo.findOne(Example.of(addresExcel,ignoringExampleMatcher )).get();
     return addresExcel1;
     }

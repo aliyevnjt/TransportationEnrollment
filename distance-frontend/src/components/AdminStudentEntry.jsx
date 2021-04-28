@@ -5,15 +5,16 @@ import {
   baseURL, enrollmentStatus, locality,
 } from '../data/Data';
 import Student from './Student';
+import ParentBox from './toolbox/ParentBox';
 import AddressBox from './toolbox/AddressBox';
 import Dropdown from './toolbox/Dropdown';
 
 function AdminStudentEntry() {
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({ schoolYear: 'FY22' });
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zipCode: locality.zipCode,
+    zip: locality.zipCode,
   });
   useEffect(() => {
     // inputs state is updated with address info
@@ -24,6 +25,8 @@ function AdminStudentEntry() {
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
+      // FIXME following fields are mandatory for this method
+      // this method does not require "enrollment status"
       if (event.target.id === 'adminStudentEntry') {
         try {
           console.log(inputs);
@@ -60,6 +63,10 @@ function AdminStudentEntry() {
         <AddressBox
           addressInfo={addressInfo}
           onChange={handleAddressInfoChange}
+        />
+        <ParentBox
+          parentInfo={parentInfo}
+          onChange={handleParentInfoChange}
         />
         <Button as="input" className="mr-1" type="submit" value="Save" />
       </Form>

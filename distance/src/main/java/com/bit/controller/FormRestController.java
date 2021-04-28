@@ -43,7 +43,7 @@ public class FormRestController {
         return new ResponseEntity(addressRepo.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/api/messages")
+    @GetMapping("/api/adminSettings")
     public ResponseEntity getMessages() {
         return new ResponseEntity(schoolYearRepo.findAll(), HttpStatus.OK);
     }

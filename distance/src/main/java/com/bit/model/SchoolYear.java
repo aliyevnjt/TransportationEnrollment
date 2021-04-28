@@ -3,6 +3,7 @@ package com.bit.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 /**
  * @author ykeskin
@@ -24,12 +25,15 @@ public class SchoolYear {
     // TODO add activeInd to populate the initial values on admin settings page
 //    @Column(name="activeInd", nullable = false, columnDefinition="default 'N'")
 //    @Size(min=1, max=1)
-//    private String activeInd;
+    @Transient
+    private String activeInd;
 
     // TODO missing item from admin settings page
 //    @Column(name="regStatus", nullable = false, columnDefinition="default 'closed'")
 //    @Size(min=1, max=12)
-//    private String regStatus;
+    @Transient
+    private String regStatus;
+
 
     @Size(min=1, max=500)
     private String message1;
@@ -80,20 +84,28 @@ public class SchoolYear {
         this.message3 = message3;
     }
 
-//    public String getActiveInd() {
-//        return activeInd;
-//    }
-//
-//    public void setActiveInd(String activeInd) {
-//        this.activeInd = activeInd;
-//    }
+    // TODO should be a field in DB or a value in a config file or DynamoDB
+    public String getActiveInd() {
+        return Objects.equals(this.value, "2021") ? "Y" : "N";
+    }
 
+    public void setActiveInd(String activeInd) {
+        this.activeInd = activeInd;
+    }
+    public String getRegStatus() {
+        return "Open";
+    }
+
+    public void setRegStatus(String regStatus) {
+        this.regStatus = regStatus;
+    }
     @Override
     public String toString() {
         return "SchoolYear{" +
                 "id=" + id +
                 ", value='" + value + '\'' +
-//                ", activeInd='" + activeInd + '\'' +
+                ", activeInd='" + activeInd + '\'' +
+                ", regStatus='" + regStatus + '\'' +
                 ", message1='" + message1 + '\'' +
                 ", message2='" + message2 + '\'' +
                 ", message3='" + message3 + '\'' +

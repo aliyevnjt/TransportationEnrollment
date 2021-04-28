@@ -3,7 +3,7 @@ import {
   Button, Form, Col, Table,
 } from 'react-bootstrap';
 import axios from 'axios';
-import { importURL } from '../data/Data';
+import { baseURL } from '../data/Data';
 
 function AdminAddressUpload() {
   const [file, setFile] = useState({
@@ -11,12 +11,14 @@ function AdminAddressUpload() {
   });
   const uploadFile = async () => {
     console.log(file);
+    // const formData = new FormData();
+    // formData.append('file', file);
     if (file.size > 0) {
-      const res = await axios.post(`${importURL}/uploadAddresses`, file, {
+      const res = await axios.post(`${baseURL}/uploadAddresses`, file, {
         headers: {
           'Content-Type': file.type,
         },
-      });
+      }).catch((e) => console.log('File upload failed! ', e));
       console.log(res);
     }
   };
