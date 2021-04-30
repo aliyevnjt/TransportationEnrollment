@@ -218,7 +218,6 @@ function PaidReg(props) {
             value="Proceed to Payment"
             type="submit"
             disabled={paymentButton}
-            onClick={proceedToPayment}
           />
         </Form>
       </Row>
