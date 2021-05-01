@@ -17,7 +17,7 @@ const AddressBox = (props) => {
       // HOW MANY TIMES IS THIS CALL MADE???
       const res = await axios.get(`${baseURL}/addresses`);
       allData = res.data;
-      //console.log(allData);
+      // console.log(allData);
       setAddress(allData);
       onChange(selections);
     }
@@ -33,7 +33,9 @@ const AddressBox = (props) => {
     }
   };
   // console.log(selections);
-  // FIXME chrome aufill does not update the state
+  // FIXME chrome autofill does not update the state
+  // or if you type but does not select the existing address, same issue arises.
+  // address object creates an empty array
   // look in onInputChange of Typehead
   return (
     <div>
@@ -78,6 +80,6 @@ const AddressBox = (props) => {
 };
 AddressBox.propTypes = {
   addressInfo: PropTypes.instanceOf({}).isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 export default AddressBox;

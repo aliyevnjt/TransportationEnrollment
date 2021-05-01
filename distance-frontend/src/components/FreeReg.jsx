@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, Button, Col, Row } from 'react-bootstrap';
+import {
+  Container, Button, Col, Row
+} from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import ConstructTable from './toolbox/ConstructTable';
 import { baseURL } from '../data/Data';
-import FormGroup from './toolbox/FormGroup';
 
 function FreeReg(props) {
   const history = useHistory();
@@ -25,9 +26,9 @@ function FreeReg(props) {
       grade: 'Grade',
       enrollmentStatus: 'Status',
       distanceFromSchool: 'Distance',
-      school: 'School',
+      school: 'School'
     },
-    options: studentData,
+    options: studentData
   };
   useEffect(() => {
     setPageBody(
@@ -90,10 +91,9 @@ function FreeReg(props) {
   );
 }
 FreeReg.defaultProps = {
-  location: {},
+  location: {}
 };
 FreeReg.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  location: PropTypes.object,
+  location: PropTypes.object
 };
 export default FreeReg;
