@@ -21,6 +21,7 @@ import java.util.*;
 
 
 @Service
+@CrossOrigin(origins = "*")
 public class ExcelUploadService {
 
     @Autowired

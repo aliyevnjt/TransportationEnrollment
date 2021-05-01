@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 
 const Dropdown = (props) => {
   const {
-    id, options, onChange, value,
+    id, options, onChange, value
   } = props;
   let { label } = props;
   if (label.startsWith('*')) {
@@ -32,12 +32,11 @@ const Dropdown = (props) => {
     </Form.Group>
   );
 };
-
 Dropdown.propTypes = {
   id: PropTypes.string.isRequired,
   options: PropTypes.shape([]).isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired
 };
 export default Dropdown;

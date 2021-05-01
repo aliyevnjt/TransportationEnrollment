@@ -69,6 +69,6 @@ const Student = (props) => {
 };
 Student.propTypes = {
   counter: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 export default Student;

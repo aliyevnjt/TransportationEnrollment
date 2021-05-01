@@ -29,9 +29,7 @@ public class SchoolYear {
     private String activeInd;
 
     // TODO missing item from admin settings page
-//    @Column(name="regStatus", nullable = false, columnDefinition="default 'closed'")
-//    @Size(min=1, max=12)
-    @Transient
+    @Column(name="regStatus", nullable = false, columnDefinition="default 'closed'")
     private String regStatus;
 
 
@@ -93,7 +91,7 @@ public class SchoolYear {
         this.activeInd = activeInd;
     }
     public String getRegStatus() {
-        return "Open";
+        return regStatus;
     }
 
     public void setRegStatus(String regStatus) {

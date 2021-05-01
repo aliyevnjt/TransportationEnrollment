@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Container, Form, Button, Jumbotron, Col, Row,
+  Container, Form, Button, Jumbotron, Col, Row
 } from 'react-bootstrap';
 import { baseURL, locality } from '../data/Data';
 import Header from './Header';
@@ -13,11 +13,12 @@ import { bigSample } from '../data/BigSample';
 // import { v4 as uuidv4 } from 'uuid';
 
 function RegistrationForm() {
+  // TODO schoolYear should be populated from default admin settings value
   const [studentData, setStudentData] = useState([{ schoolYear: 'FY22' }]);
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zip: locality.zipCode,
+    zip: locality.zipCode
   });
   const [parentInfo, setParentInfo] = useState({});
   const history = useHistory();
@@ -27,7 +28,7 @@ function RegistrationForm() {
     setStudentData((current) => current.map((student) => ({
       ...student,
       ...addressInfo,
-      ...parentInfo,
+      ...parentInfo
     })));
   }, [addressInfo, parentInfo]);
 
@@ -62,7 +63,7 @@ function RegistrationForm() {
           console.log('StudentData:', studentData);
           const res = await axios.post(
             `${baseURL}/calculateFile/`,
-            studentData,
+            studentData
           );
           console.log('Request completed', res);
           redirectToPage(res.data);
@@ -75,13 +76,13 @@ function RegistrationForm() {
 
   const handleInputChange = (event) => {
     const eventCounter = parseInt(
-      event.target.parentElement.parentElement.getAttribute('counter'),
+      event.target.parentElement.parentElement.getAttribute('counter')
     );
     // console.log('eventCounter:', eventCounter);
     const allStudents = [...studentData];
     const tempStudent = {
       ...studentData[eventCounter],
-      [event.target.id]: event.target.value,
+      [event.target.id]: event.target.value
     };
     allStudents[eventCounter] = tempStudent;
 
@@ -90,7 +91,7 @@ function RegistrationForm() {
   const addSibling = () => {
     setStudentData((previous) => [
       ...previous,
-      { schoolYear: 'FY22', ...addressInfo, ...parentInfo },
+      { schoolYear: 'FY22', ...addressInfo, ...parentInfo }
     ]);
   };
   const handleAddressInfoChange = (address) => {
@@ -100,7 +101,7 @@ function RegistrationForm() {
   const handleParentInfoChange = (event) => {
     setParentInfo((previous) => ({
       ...previous,
-      [event.target.id]: event.target.value,
+      [event.target.id]: event.target.value
     }));
   };
 
@@ -108,6 +109,7 @@ function RegistrationForm() {
   // console.log('addressInfo:', addressInfo);
   // console.log('parentInfo:', parentInfo);
   // FIXME must add a unique key for all iterated elements
+  // TODO save button should be disabled until all fields are entered
   return (
     <div>
       <Header />
@@ -147,26 +149,28 @@ function RegistrationForm() {
               </Col>
             </Form.Row>
           </Form>
-          <Row className="mt-5">
-            <Col>
-              <Button
-                as="input"
-                value="Show Free Sample"
-                type="button"
-                onClick={showFreeSample}
-              />
-            </Col>
-            <Col>
-              <Button
-                as="input"
-                value="Show Paid Sample"
-                type="button"
-                onClick={showPaidSample}
-              />
-            </Col>
-          </Row>
-          {/* <button onClick={this.freeSample}>Free Sample</button> */}
-          {/* <button onClick={this.paidSample}>Paid Sample</button> */}
+          {process.env.NODE_ENV === 'development'
+            ? <Row className="mt-5 alert-danger">
+              <b>DEVELOPMENT MODE</b>
+              <Col>
+                <Button
+                  as="input"
+                  value="Show Free Sample"
+                  type="button"
+                  onClick={showFreeSample}
+                />
+              </Col>
+              <Col>
+                <Button
+                  as="input"
+                  value="Show Paid Sample"
+                  type="button"
+                  onClick={showPaidSample}
+                />
+              </Col>
+            </Row>
+            : ''
+          }
         </Jumbotron>
       </Container>
     </div>
