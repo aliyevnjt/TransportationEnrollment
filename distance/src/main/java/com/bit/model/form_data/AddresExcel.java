@@ -3,7 +3,7 @@ package com.bit.model.form_data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "addresses")
+@Table(name = "addresses", schema = "transportation")
 public class AddresExcel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,7 +12,6 @@ public class AddresExcel {
     private double distanceRSS;
     private double distanceSLS;
     private double distanceLMS;
-    private double distanceLHS;
 
     public long getId() {
         return id;
@@ -54,13 +53,6 @@ public class AddresExcel {
         this.distanceLMS = distanceLMS;
     }
 
-    public double getDistanceLHS() {
-        return distanceLHS;
-    }
-
-    public void setDistanceLHS(double distanceLHS) {
-        this.distanceLHS = distanceLHS;
-    }
 
     @Override
     public String toString() {
@@ -70,7 +62,6 @@ public class AddresExcel {
                 ", distanceRSS=" + distanceRSS +
                 ", distanceSLS=" + distanceSLS +
                 ", distanceLMS=" + distanceLMS +
-                ", distanceLHS=" + distanceLHS +
                 '}';
     }
 }

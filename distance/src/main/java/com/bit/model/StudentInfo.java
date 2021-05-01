@@ -14,7 +14,7 @@ import java.util.UUID;
 
 
 @Entity
-@Table(name = "studentinfo")
+@Table(name = "studentinfo", schema = "transportation")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class StudentInfo {
 
@@ -161,6 +161,31 @@ public class StudentInfo {
         return id;
     }
 
+    @Enumerated(EnumType.STRING)
+    private RegistrationStatus registrationStatus;
+    private UUID uniqueID;
+
+    public UUID getPaymentId() {
+        return uniqueID;
+    }
+
+    public void setPaymentId(UUID uniqueID) {
+        this.uniqueID = uniqueID;
+    }
+
+    public enum RegistrationStatus {
+        IN_PROGRESS,
+        ENROLLED
+    }
+
+    public RegistrationStatus getStatus() {
+        return registrationStatus;
+    }
+
+    public void setStatus(RegistrationStatus registrationStatus) {
+        this.registrationStatus = registrationStatus;
+    }
+
     @Override
     public String toString() {
         return "StudentInfo{" +
@@ -184,6 +209,8 @@ public class StudentInfo {
                 ", birthDate=" + birthDate +
                 ", enrollmentStatus='" + enrollmentStatus + '\'' +
                 ", formSubmitTime=" + formSubmitTime +
+                ", registrationStatus=" + registrationStatus +
+                ", uniqueID=" + uniqueID +
                 '}';
     }
 }

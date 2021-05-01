@@ -36,12 +36,10 @@ public class ExcelUploadService {
             try {
                 Row row = worksheet.getRow(i);
                 AddresExcel addresExcel = new AddresExcel();
-                addresExcel.setAddress((int) row.getCell(0).getNumericCellValue() +
-                        " " + row.getCell(1).getStringCellValue());
-                addresExcel.setDistanceLMS(row.getCell(2).getNumericCellValue());
-                addresExcel.setDistanceLHS(row.getCell(3).getNumericCellValue());
-                addresExcel.setDistanceSLS(row.getCell(4).getNumericCellValue());
-                addresExcel.setDistanceRSS(row.getCell(5).getNumericCellValue());
+                addresExcel.setAddress((row.getCell(0).getStringCellValue()));
+                addresExcel.setDistanceLMS(row.getCell(1).getNumericCellValue());
+                addresExcel.setDistanceSLS(row.getCell(2).getNumericCellValue());
+                addresExcel.setDistanceRSS(row.getCell(3).getNumericCellValue());
                 addresExcelList.add(addresExcel);
             } catch (NullPointerException e) {
                 map.put("bad_row", i);
@@ -86,18 +84,14 @@ public class ExcelUploadService {
                 Row row = worksheet.getRow(i);
                 AddresExcel addresExcel = new AddresExcel();
                 a = 1;
-                int streetNum = (int) row.getCell(0).getNumericCellValue();
+                String streetName = row.getCell(0).getStringCellValue();
+                addresExcel.setAddress(streetName);
                 a = 2;
-                String streetName = row.getCell(1).getStringCellValue();
-                addresExcel.setAddress(streetNum + " " + streetName);
+                addresExcel.setDistanceLMS(row.getCell(1).getNumericCellValue());
                 a = 3;
-                addresExcel.setDistanceLMS(row.getCell(2).getNumericCellValue());
+                addresExcel.setDistanceSLS(row.getCell(2).getNumericCellValue());
                 a = 4;
-                addresExcel.setDistanceLHS(row.getCell(3).getNumericCellValue());
-                a = 5;
-                addresExcel.setDistanceSLS(row.getCell(4).getNumericCellValue());
-                a = 6;
-                addresExcel.setDistanceRSS(row.getCell(5).getNumericCellValue());
+                addresExcel.setDistanceRSS(row.getCell(3).getNumericCellValue());
                 addresExcelList.add(addresExcel);
             } catch (NullPointerException e) {
                 badMap.put("bad_row", (i+1)+"");
@@ -149,8 +143,6 @@ public class ExcelUploadService {
             distance = addresExcel.getDistanceSLS();
         }else if(studentInfo.getSchool().equalsIgnoreCase("LMS")){
             distance = addresExcel.getDistanceLMS();
-        }else if(studentInfo.getSchool().equalsIgnoreCase("LHS")){
-            distance = addresExcel.getDistanceLHS();
         }
         return distance;
     }

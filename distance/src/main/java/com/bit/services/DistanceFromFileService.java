@@ -22,10 +22,6 @@ public class DistanceFromFileService {
         double distance = 0;
         studentInfo.forEach(a -> {
             switch (a.getSchool().toLowerCase()) {
-                case "lhs":
-                a.setDistanceFromSchool(round(excelAddressRepo.findTopDistanceByAddress(a.getAddress()).get().getDistanceLHS(), 2));
-                a.setEnrollmentStatus(getEnrollmentStatus(a));
-                break;
                 case "lms":
                 a.setDistanceFromSchool(round(excelAddressRepo.findTopDistanceByAddress(a.getAddress()).get().getDistanceLMS(), 2));
                 a.setEnrollmentStatus(getEnrollmentStatus(a));

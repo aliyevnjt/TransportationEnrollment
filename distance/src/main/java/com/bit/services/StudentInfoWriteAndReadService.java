@@ -2,13 +2,18 @@ package com.bit.services;
 
 import com.bit.model.StudentInfo;
 import com.bit.model.StudentInfoRetrieve;
+import com.bit.model.form_data.AddresExcel;
 import com.bit.repo.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class StudentInfoWriteAndReadService {
@@ -63,5 +68,22 @@ public class StudentInfoWriteAndReadService {
     @Transactional
     public void saveStudentS(List<StudentInfo> studentInfos){
         studentRepository.saveAll(studentInfos);
+    }
+
+    public List<StudentInfo> preEnrollment(List<StudentInfo> studentInfos){
+        UUID id = UUID.randomUUID();
+        studentInfos.forEach(s -> {
+            s.setStatus(StudentInfo.RegistrationStatus.IN_PROGRESS);
+            s.setPaymentId(id);
+        });
+
+        return studentInfos;
+    }
+
+    public void updateEnrollmentStatus(UUID id) {
+        //studentRepository.updateStatus(id, StudentInfo.RegistrationStatus.COMPLETED);
+        StudentInfo students = studentRepository.getOne(id);
+        students.setStatus(StudentInfo.RegistrationStatus.ENROLLED);
+        studentRepository.save(students);
     }
 }

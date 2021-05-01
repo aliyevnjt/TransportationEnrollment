@@ -4,7 +4,7 @@ package com.bit.controller;
 import com.bit.repo.ExcelAddressRepo;
 import com.bit.repo.GradeRepository;
 import com.bit.repo.SchoolNamesRepository;
-import com.bit.repo.SchoolYearRepo;
+import com.bit.repo.AdminSettingsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class FormRestController {
     private ExcelAddressRepo addressRepo;
 
     @Autowired
-    private SchoolYearRepo schoolYearRepo;
+    private AdminSettingsRepo adminSettingsRepo;
 
     @GetMapping("/api/grades")
     public ResponseEntity getGrades(){
@@ -46,7 +46,7 @@ public class FormRestController {
 
     @GetMapping("/api/adminSettings")
     public ResponseEntity getMessages() {
-        return new ResponseEntity(schoolYearRepo.findAll(), HttpStatus.OK);
+        return new ResponseEntity(adminSettingsRepo.findAll(), HttpStatus.OK);
     }
 
 

@@ -1,7 +1,7 @@
 package com.bit.services;
 
-import com.bit.model.SchoolYear;
-import com.bit.repo.SchoolYearRepo;
+import com.bit.model.AdminSettings;
+import com.bit.repo.AdminSettingsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,18 +15,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdminSettingsService {
 
     @Autowired
-    private SchoolYearRepo schoolYearRepo;
+    private AdminSettingsRepo adminSettingsRepo;
 
     @Transactional
-    public void updateAdminSettings(SchoolYear schoolYear) {
+    public void updateAdminSettings(AdminSettings adminSettings) {
 
-        SchoolYear schoolYearInfo = schoolYearRepo.findByValue(schoolYear.getValue());
-        schoolYearInfo.setRegStatus(schoolYear.getRegStatus());
-        schoolYearInfo.setMessage1(schoolYear.getMessage1());
-        schoolYearInfo.setMessage2(schoolYear.getMessage2());
-        schoolYearInfo.setMessage3(schoolYear.getMessage3());
-        System.out.println("SchoolyearInfo: " + schoolYearInfo);
+        AdminSettings adminSettingsInfo = adminSettingsRepo.findByAdminYear(adminSettings.getAdminYear());
+        adminSettingsInfo.setRegStatus(adminSettings.getRegStatus());
+        adminSettingsInfo.setOpenMessage(adminSettings.getOpenMessage());
+        adminSettingsInfo.setClosedMessage(adminSettings.getClosedMessage());
+        adminSettingsInfo.setNotification1(adminSettings.getNotification1());
+        System.out.println("SchoolyearInfo: " + adminSettingsInfo);
 
-        schoolYearRepo.save(schoolYearInfo);
+        adminSettingsRepo.save(adminSettingsInfo);
     }
 }

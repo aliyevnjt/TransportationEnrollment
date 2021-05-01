@@ -1,6 +1,6 @@
 package com.bit.repo;
 
-import com.bit.model.SchoolYear;
+import com.bit.model.AdminSettings;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  * @since 4/19/2021
  */
 @Repository
-public interface SchoolYearRepo extends JpaRepository<SchoolYear, Integer> {
-    SchoolYear findByValue(String value);
+public interface AdminSettingsRepo extends JpaRepository<AdminSettings, Integer> {
+    AdminSettings findByAdminYear(String adminYear);
 }

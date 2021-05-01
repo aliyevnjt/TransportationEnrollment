@@ -2,7 +2,7 @@ package com;
 
 import com.bit.model.form_data.AddresExcel;
 import com.bit.model.form_data.Grades;
-import com.bit.model.form_data.SchoolNames;
+import com.bit.model.form_data.Schools;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -22,8 +22,8 @@ public class DistanceApplication {
 	}
 
 	@Bean
-	public SchoolNames getSchoolNames() {
-		return new SchoolNames();
+	public Schools getSchoolNames() {
+		return new Schools();
 	}
 
 	@Bean

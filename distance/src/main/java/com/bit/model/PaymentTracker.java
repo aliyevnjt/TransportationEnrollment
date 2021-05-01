@@ -8,42 +8,28 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "paymenttracker")
+@Table(name = "paymenttracker", schema = "transportation")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PaymentTracker {
+
+    public PaymentTracker() {
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private UUID id;
+    private UUID uniqueID;
 
-    private LocalDateTime paymentSubmitTime = LocalDateTime.now();
-
-    @NotBlank(message = "Payment amount is mandatory")
-    private double paymentAmount;
-    @NotBlank(message = "School year is mandatory")
+    private LocalDateTime dateTimeProcessed;
+    private long customerId;
+    private double amountPaid;
     private String schoolYear;
+    private long confirmationNumber;
 
-    @NotBlank
-    private UUID studentId;
-
-    public UUID getId() {
-        return id;
+    public PaymentTracker(UUID uniqueID, LocalDateTime dateTimeProcessed, long customerId, double amountPaid, String schoolYear, long confirmationNumber) {
+        this.uniqueID = uniqueID;
+        this.dateTimeProcessed = dateTimeProcessed;
+        this.customerId = customerId;
+        this.amountPaid = amountPaid;
+        this.schoolYear = schoolYear;
+        this.confirmationNumber = confirmationNumber;
     }
-
-    public LocalDateTime getPaymentSubmitTime() {
-        return paymentSubmitTime;
-    }
-
-    public double getPaymentAmount() {
-        return paymentAmount;
-    }
-
-    public String getSchoolYear() {
-        return schoolYear;
-    }
-
-    public UUID getStudentId() {
-        return studentId;
-    }
-
 }
