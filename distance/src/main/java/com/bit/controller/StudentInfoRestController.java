@@ -5,6 +5,8 @@ import com.bit.services.DistanceCalculatorService;
 import com.bit.model.StudentInfo;
 import com.bit.services.DistanceFromFileService;
 import com.bit.services.StudentInfoWriteAndReadService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+
 @RestController
 @CrossOrigin(origins = "*")
 public class StudentInfoRestController {
 
+    private static final Logger logger = LoggerFactory.getLogger(StudentInfoRestController.class);
 
     @Autowired
     private DistanceCalculatorService distanceCalculatorService;
@@ -65,6 +69,17 @@ public class StudentInfoRestController {
     public ResponseEntity getCalculationFromFile(@Valid @RequestBody List<StudentInfo> studentInfo){
         distanceFromFileService.createStudents(studentInfo);
         return new ResponseEntity(distanceFromFileService.createStudents(studentInfo), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/api/payment")
+    public void getPayment(@RequestBody String object){
+        logger.info("some logs ...");
+        try{
+            logger.info(object.toString());
+        }catch (Exception e){
+            logger.info(e.getMessage());
+        }
+
     }
 
 
