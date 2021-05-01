@@ -1,13 +1,13 @@
 ﻿import React, { useState } from 'react';
 import {
-  Button, Form, Col, Table,
+  Button, Form, Col, Table
 } from 'react-bootstrap';
 import axios from 'axios';
 import { baseURL } from '../data/Data';
 
 function AdminAddressUpload() {
   const [file, setFile] = useState({
-    name: 'Select file',
+    name: 'Select file'
   });
   const uploadFile = async () => {
     console.log(file);
@@ -16,8 +16,8 @@ function AdminAddressUpload() {
     if (file.size > 0) {
       const res = await axios.post(`${baseURL}/uploadAddresses`, file, {
         headers: {
-          'Content-Type': file.type,
-        },
+          'Content-Type': file.type
+        }
       }).catch((e) => console.log('File upload failed! ', e));
       console.log(res);
     }
@@ -51,7 +51,6 @@ function AdminAddressUpload() {
       <Table id="adminSearch" striped bordered hover>
         <thead>
           <tr>
-            <th key="number">Number</th>
             <th key="address">Address</th>
             <th key="MS">Middle School</th>
             <th key="HS">High School</th>
@@ -62,8 +61,7 @@ function AdminAddressUpload() {
         </thead>
         <tbody>
           <tr>
-            <td key="6">3</td>
-            <td key="ABENAKI">ABENAKI TL</td>
+            <td key="0">3 ABENAKI TL</td>
             <td key="1">2.91</td>
             <td key="2">3.47</td>
             <td key="3">4.25</td>

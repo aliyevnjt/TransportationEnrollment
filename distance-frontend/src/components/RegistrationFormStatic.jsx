@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import {
-  Container, Form, Button, Jumbotron, Col,
+  Container, Form, Button, Jumbotron, Col
 } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
-  locality, baseURL,
+  locality, baseURL
 } from '../data/Data';
 import Header from './Header';
 import Student from './Student';
@@ -18,7 +18,7 @@ function RegistrationFormStatic() {
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zipCode: locality.zipCode,
+    zipCode: locality.zipCode
   });
   const [parentInfo, setParentInfo] = useState({});
   const history = useHistory();
@@ -29,8 +29,8 @@ function RegistrationFormStatic() {
       if (event.target.id === 'registrationForm') {
         setStudentData((current) => current.map(
           (student) => ({
-            ...student, ...addressInfo, ...parentInfo,
-          }),
+            ...student, ...addressInfo, ...parentInfo
+          })
         ));
         try {
           console.log(studentData);
@@ -41,14 +41,14 @@ function RegistrationFormStatic() {
               pathname: '/freeReg',
               search: '',
               state: { detail: res.data },
-              student: res.data,
+              student: res.data
             });
           } else {
             history({
               pathname: '/payment',
               search: '',
               state: { detail: res.data },
-              student: res.data,
+              student: res.data
             });
           }
         } catch (err) {
@@ -64,7 +64,7 @@ function RegistrationFormStatic() {
     const allStudents = [...studentData];
     const tempStudent = {
       ...studentData[eventCounter],
-      [event.target.id]: event.target.value,
+      [event.target.id]: event.target.value
     };
     allStudents[eventCounter] = tempStudent;
 
@@ -109,7 +109,7 @@ function RegistrationFormStatic() {
                   onChange={handleInputChange}
                 />
               ))
-              }
+            }
             <Form.Row className="justify-content-md-center">
               <Col>
                 <Button disabled={studentData.length > 4} as="input" value="Add Sibling" onClick={addSibling} />

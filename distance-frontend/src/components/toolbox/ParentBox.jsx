@@ -39,6 +39,6 @@ const ParentBox = (props) => {
 };
 ParentBox.propTypes = {
   parentInfo: PropTypes.instanceOf({}).isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 export default ParentBox;

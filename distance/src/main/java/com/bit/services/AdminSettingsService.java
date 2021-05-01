@@ -21,6 +21,7 @@ public class AdminSettingsService {
     public void updateAdminSettings(SchoolYear schoolYear) {
 
         SchoolYear schoolYearInfo = schoolYearRepo.findByValue(schoolYear.getValue());
+        schoolYearInfo.setRegStatus(schoolYear.getRegStatus());
         schoolYearInfo.setMessage1(schoolYear.getMessage1());
         schoolYearInfo.setMessage2(schoolYear.getMessage2());
         schoolYearInfo.setMessage3(schoolYear.getMessage3());

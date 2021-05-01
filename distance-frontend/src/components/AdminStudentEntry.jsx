@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import {Button, Form, Row} from 'react-bootstrap';
 import axios from 'axios';
 import {
-  baseURL, enrollmentStatus, locality,
+  baseURL, enrollmentStatus, locality
 } from '../data/Data';
 import Student from './Student';
 import ParentBox from './toolbox/ParentBox';
@@ -14,12 +14,46 @@ function AdminStudentEntry() {
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zip: locality.zipCode,
+    zip: locality.zipCode
   });
+  const [ errors, setErrors ] = useState({});
+  const findFormErrors = () => {
+    const { fname, lname, birthDate, school, grade, address, enrollmentStatus,
+      parentName, parentEmailAddress, parentPhoneNumber} = inputs;
+    const newErrors = {};
+    // name errors
+    if (!fname || fname === '') {
+      newErrors.fname = 'cannot be blank!';
+    } else if (fname.length > 30) {
+      newErrors.fname = 'name is too long!';
+    }
+    // name errors
+    if (!lname || lname === '') {
+      newErrors.lname = 'cannot be blank!';
+    } else if (lname.length > 30) {
+      newErrors.lname = 'name is too long!';
+    }
+    // food errors
+    if (!food || food === '') {
+      newErrors.food = 'select a food!';
+    }
+    // rating errors
+    if (!rating || rating > 5 || rating < 1) {
+      newErrors.rating = 'must assign a rating between 1 and 5!';
+    }
+    // comment errors
+    if (!comment || comment === '') {
+      newErrors.comment = 'cannot be blank!';
+    } else if (comment.length > 100) {
+      newErrors.comment = 'comment is too long!';
+    }
+
+    return newErrors;
+  };
   useEffect(() => {
     // inputs state is updated with address info
     setInputs((current) => ({
-      ...current, ...addressInfo,
+      ...current, ...addressInfo
     }));
   }, [addressInfo]);
   const handleSubmit = async (event) => {
@@ -31,6 +65,7 @@ function AdminStudentEntry() {
         try {
           console.log(inputs);
           const res = await axios.post(`${baseURL}/submit`, inputs);
+          // res.status === 202
           console.log(res);
         } catch (err) {
           console.log(err);
@@ -46,30 +81,37 @@ function AdminStudentEntry() {
     setAddressInfo((previous) => ({ ...previous, address }));
     console.log(address);
   };
+  // TODO save button should be disabled until all fields are entered
   return (
     <div>
-      <Form id="adminStudentEntry" onSubmit={handleSubmit}>
-        <Student
-          counter={0}
-          onChange={handleInputChange}
-        />
-        <Dropdown
-          id="enrollmentStatus"
-          onChange={handleInputChange}
-          label="Enrollment Status"
-          options={enrollmentStatus}
-          value=""
-        />
-        <AddressBox
-          addressInfo={addressInfo}
-          onChange={handleAddressInfoChange}
-        />
-        <ParentBox
-          parentInfo={parentInfo}
-          onChange={handleParentInfoChange}
-        />
-        <Button as="input" className="mr-1" type="submit" value="Save" />
-      </Form>
+      <Row className="mt-5 alert-danger">
+        <b>All fields are required!</b>
+      </Row>
+      <br />
+      <Row>
+        <Form id="adminStudentEntry" onSubmit={handleSubmit}>
+          <Student
+            counter={0}
+            onChange={handleInputChange}
+          />
+          <Dropdown
+            id="enrollmentStatus"
+            onChange={handleInputChange}
+            label="Enrollment Status"
+            options={enrollmentStatus}
+            value=""
+          />
+          <AddressBox
+            addressInfo={addressInfo}
+            onChange={handleAddressInfoChange}
+          />
+          <ParentBox
+            parentInfo={inputs}
+            onChange={handleInputChange}
+          />
+          <Button as="input" className="mr-1" type="submit" value="Save" />
+        </Form>
+      </Row>
     </div>
   );
 }

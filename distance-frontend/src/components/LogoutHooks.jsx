@@ -35,14 +35,14 @@ function LogoutHooks() {
     cookiePolicy: 'single_host_origin',
     onLogoutSuccess,
     onFailure,
-    isSignedIn: false,
+    isSignedIn: false
   });
   const logout = () => {
     if (window.gapi) {
       const auth2 = window.gapi.auth2.getAuthInstance();
       if (auth2 != null) {
         auth2.signOut().then(
-          auth2.disconnect().then(onLogoutSuccess),
+          auth2.disconnect().then(onLogoutSuccess)
         );
       }
     }

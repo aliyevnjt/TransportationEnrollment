@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Button, InputGroup, Row,
+  Button, InputGroup, Row
 } from 'react-bootstrap';
 import axios from 'axios';
 import InputComponent from './toolbox/InputComponent';
@@ -12,7 +12,7 @@ function AdminSettings() {
   // Bonus: reset to default(saved version from DB)
   // Different defaults for each year
 
-  // FIXME DB should have more meaningfull column names rather than message 1,2,3
+  // FIXME DB should have more meaningful column names rather than message 1,2,3
   // const [message, setMessage] = useState({
   //   open: 'earlyReg',
   //   closed: 'lateReg',
@@ -30,7 +30,7 @@ function AdminSettings() {
       const res = await axios.get(`${baseURL}/adminSettings`);
       allData = res.data;
       console.log(allData);
-      currentData = allData.filter((obj) => obj.value === '2039');
+      currentData = allData.filter((obj) => obj.activeInd === 'Y');
       console.log(currentData[0]);
       setAdminSettings(currentData[0]);
     }
@@ -45,7 +45,7 @@ function AdminSettings() {
         value: adminSettings.value,
         message1: adminSettings.message1,
         message2: adminSettings.message2,
-        message3: adminSettings.message3,
+        message3: adminSettings.message3
       };
       console.log('TEMP SETTINGS:', tempSettings);
       try {
@@ -96,6 +96,7 @@ function AdminSettings() {
           id="registrationStatus"
           onChange={handleDropdownChange}
           label="Registration Status"
+          value={adminSettings.regStatus}
           options={registration}
         />
       </Row>

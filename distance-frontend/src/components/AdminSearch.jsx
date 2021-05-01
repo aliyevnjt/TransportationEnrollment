@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Form, Row } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { CSVLink } from 'react-csv';
 import JsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import axios from 'axios';
 import {
-  headers, baseURL, locality, schoolYears, enrollmentStatus,
+  headers, baseURL, locality, enrollmentStatus
 } from '../data/Data';
 import Student from './Student';
 import constructAdminTable from './toolbox/ConstructAdminTable';
@@ -16,7 +16,7 @@ function AdminSearch() {
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zipCode: locality.zipCode,
+    zipCode: locality.zipCode
   });
   const [inputs, setInputs] = useState({});
   const [table, setTable] = useState();
@@ -25,7 +25,7 @@ function AdminSearch() {
   useEffect(() => {
     // inputs state is updated with address info
     setInputs((current) => ({
-      ...current, ...addressInfo,
+      ...current, ...addressInfo
     }));
   }, [addressInfo]);
   const handlePDFdownload = () => {
