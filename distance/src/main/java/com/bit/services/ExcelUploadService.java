@@ -23,7 +23,7 @@ import java.util.*;
 public class ExcelUploadService {
 
     @Autowired
-    ExcelAddressRepo excelAddressRepo;
+    private ExcelAddressRepo excelAddressRepo;
 
     public List<AddresExcel> writeExcelToDB(MultipartFile reapExcelDataFile) {
         List<AddresExcel> addresExcelList = new ArrayList<>();
@@ -109,7 +109,17 @@ public class ExcelUploadService {
         }
         Map<String, String> map = new HashMap<>();
         map.put("recorded_rows", addresExcelList.size()+"");
-        excelAddressRepo.saveAll(addresExcelList);
+        Set<AddresExcel> set = new HashSet<>(addresExcelList);
+        addresExcelList.clear();
+        addresExcelList.addAll(set);
+        //excelAddressRepo.saveAll(addresExcelList);
+        addresExcelList.forEach(
+                a -> {
+                    if(!excelAddressRepo.findTopAddressByAddress(a.getAddress()).isPresent()){
+                        excelAddressRepo.save(a);
+                    }
+                }
+        );
         listOfBadRows.add(map);
         if(listOfBadRows.size() > 0) {
             return new ResponseEntity(listOfBadRows, HttpStatus.BAD_REQUEST);

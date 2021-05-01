@@ -10,10 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -22,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*")
+
 public class ExcelUploadRetrieveController {
 
     @Autowired
@@ -30,7 +29,7 @@ public class ExcelUploadRetrieveController {
     @Autowired
     private DistanceCalculatorService distanceCalculatorService;
 
-    @PostMapping("/distanceLocal")
+    @PostMapping("/api/distanceLocal")
     public ResponseEntity getDistanceLocal(@Valid @RequestBody StudentInfo studentInfo){
         AddresExcel addresExcel = new AddresExcel();
         addresExcel.setAddress(studentInfo.getAddress());
@@ -39,7 +38,7 @@ public class ExcelUploadRetrieveController {
         return new ResponseEntity(distanceCalculatorService.createStudent(studentInfo, distance), HttpStatus.OK);
     }
 
-    @PostMapping("/import")
+    @PostMapping("/api/uploadAddresses")
     public ResponseEntity mapReapExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile)  {
         XSSFSheet worksheet = excelUploadService.getSheet(reapExcelDataFile);
         return excelUploadService.saveAllToAddresses(worksheet);

@@ -1,31 +1,31 @@
-import React, { Component } from "react";
-import { schoolYear as year } from "./Data";
-import "materialize-css/dist/css/materialize.min.css";
+import React from 'react';
+import {
+  Container, Col, Row, Image,
+} from 'react-bootstrap';
+import { schoolYear as year } from '../data/Data';
 
-class Header extends Component {
-  render() {
-    return (
-      <div class="container">
-        <div class="row center-align valign-wrapper">
-          <div class="col s3">
-            <img
-              class="responsive-img"
-              src="https://www.littletonps.org/files/Images/LPS%20Logo%20-%20large%20text.jpg"
-              alt=""
-            />
-          </div>
-          <div class="col s6">
-            <h4 class="indigo-text darken-4 center-align">
-              Transportation Form
-            </h4>
-          </div>
-          <div class="col s3">
-            <h6 class="teal-text darken-4 center-align">School Year: {year}</h6>
-          </div>
-        </div>
-      </div>
-    );
-  }
+function Header() {
+  return (
+    <Container className="pt-3">
+      <Row>
+        <Col xs={6} md={4}>
+          <Image src="https://www.littletonps.org/files/Images/LPS%20Logo%20-%20large%20text.jpg" thumbnail />
+        </Col>
+        <Col md={{ span: 4, offset: 4 }}>
+          <h6 className="header">
+            School Year:
+            {' '}
+            {year}
+          </h6>
+        </Col>
+      </Row>
+      <Row className="mt-1 mb-2">
+        <h4 className="mx-auto">
+          Transportation Form
+        </h4>
+      </Row>
+    </Container>
+  );
 }
 
 export default Header;
