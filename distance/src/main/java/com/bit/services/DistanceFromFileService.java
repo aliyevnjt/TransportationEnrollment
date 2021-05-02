@@ -34,6 +34,13 @@ public class DistanceFromFileService {
                 a.setDistanceFromSchool(round(excelAddressRepo.findTopDistanceByAddress(a.getAddress()).get().getDistanceSLS(), 2));
                 a.setEnrollmentStatus(getEnrollmentStatus(a));
                 break;
+                case "lhs":
+                a.setDistanceFromSchool(round(excelAddressRepo.findTopDistanceByAddress(a.getAddress()).get().getDistanceSLS(), 2));
+                a.setEnrollmentStatus("paid");
+                break;
+                default:
+                    //TODO Handle Error...
+
             };
             responseStudentInfo.add(a);
         });
