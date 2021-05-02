@@ -134,7 +134,7 @@ function PaidReg(props) {
 
   const register = async () => {
     try {
-      const res = await axios.post(`${baseURL}/enrollment/`, free);
+      const res = await axios.put(`${baseURL}/enrollment/`, free);
       setFreePageBody(
         <Container>
           <Row className="justify-content-md-center">
