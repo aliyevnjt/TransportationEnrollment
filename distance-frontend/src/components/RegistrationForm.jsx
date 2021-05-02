@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import {
-  Container, Form, Button, Jumbotron, Col, Row
-} from 'react-bootstrap';
+import { Container, Form, Button, Jumbotron, Col, Row } from 'react-bootstrap';
 import { baseURL, locality } from '../data/Data';
 import Header from './Header';
 import Student from './Student';
@@ -14,22 +12,24 @@ import { bigSample } from '../data/BigSample';
 
 function RegistrationForm() {
   // TODO schoolYear should be populated from default admin settings value
-  const [studentData, setStudentData] = useState([{ schoolYear: 'FY22' }]);
+  const [studentData, setStudentData] = useState([{ schoolYear: '2022' }]);
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zip: locality.zipCode
+    zip: locality.zipCode,
   });
   const [parentInfo, setParentInfo] = useState({});
   const history = useHistory();
 
   useEffect(() => {
     // studentData state is updated with address info
-    setStudentData((current) => current.map((student) => ({
-      ...student,
-      ...addressInfo,
-      ...parentInfo
-    })));
+    setStudentData((current) =>
+      current.map((student) => ({
+        ...student,
+        ...addressInfo,
+        ...parentInfo,
+      }))
+    );
   }, [addressInfo, parentInfo]);
 
   // logs free sample data for easy entry
@@ -62,7 +62,7 @@ function RegistrationForm() {
         try {
           console.log('StudentData:', studentData);
           const res = await axios.post(
-            `${baseURL}/calculateFile/`,
+            `${baseURL}/pre-enrollment/`,
             studentData
           );
           console.log('Request completed', res);
@@ -82,7 +82,7 @@ function RegistrationForm() {
     const allStudents = [...studentData];
     const tempStudent = {
       ...studentData[eventCounter],
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
     };
     allStudents[eventCounter] = tempStudent;
 
@@ -91,7 +91,7 @@ function RegistrationForm() {
   const addSibling = () => {
     setStudentData((previous) => [
       ...previous,
-      { schoolYear: 'FY22', ...addressInfo, ...parentInfo }
+      { schoolYear: 'FY22', ...addressInfo, ...parentInfo },
     ]);
   };
   const handleAddressInfoChange = (address) => {
@@ -101,7 +101,7 @@ function RegistrationForm() {
   const handleParentInfoChange = (event) => {
     setParentInfo((previous) => ({
       ...previous,
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
     }));
   };
 
@@ -149,8 +149,8 @@ function RegistrationForm() {
               </Col>
             </Form.Row>
           </Form>
-          {process.env.NODE_ENV === 'development'
-            ? <Row className="mt-5 alert-danger">
+          {process.env.NODE_ENV === 'development' ? (
+            <Row className="mt-5 alert-danger">
               <b>DEVELOPMENT MODE</b>
               <Col>
                 <Button
@@ -169,8 +169,9 @@ function RegistrationForm() {
                 />
               </Col>
             </Row>
-            : ''
-          }
+          ) : (
+            ''
+          )}
         </Jumbotron>
       </Container>
     </div>

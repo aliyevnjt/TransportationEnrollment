@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import {
-  Container, Button, Col, Row
-} from 'react-bootstrap';
+import { Container, Button, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Header from './Header';
@@ -16,7 +14,7 @@ function FreeReg(props) {
   console.log(location.state);
   if (location.state === undefined) {
     history.push('/');
-    return (<div />);
+    return <div />;
   }
   const studentData = location.state;
   const data = {
@@ -26,9 +24,9 @@ function FreeReg(props) {
       grade: 'Grade',
       enrollmentStatus: 'Status',
       distanceFromSchool: 'Distance',
-      school: 'School'
+      school: 'School',
     },
-    options: studentData
+    options: studentData,
   };
   useEffect(() => {
     setPageBody(
@@ -61,7 +59,7 @@ function FreeReg(props) {
 
   const register = async () => {
     try {
-      const res = await axios.post(`${baseURL}/submitAll/`, studentData);
+      const res = await axios.post(`${baseURL}/enrollment/`, studentData);
       setPageBody(
         <Container>
           <Row className="justify-content-md-center">
@@ -91,9 +89,9 @@ function FreeReg(props) {
   );
 }
 FreeReg.defaultProps = {
-  location: {}
+  location: {},
 };
 FreeReg.propTypes = {
-  location: PropTypes.object
+  location: PropTypes.object,
 };
 export default FreeReg;
