@@ -11,7 +11,7 @@ const grades = [
   { label: '9', value: '9', level: 'LHS' },
   { label: '10', value: '10', level: 'LHS' },
   { label: '11', value: '11', level: 'LHS' },
-  { label: '12', value: '12', level: 'LHS' }
+  { label: '12', value: '12', level: 'LHS' },
 ];
 
 const headers = [
@@ -30,23 +30,23 @@ const headers = [
   { label: 'Zip Code', key: 'zip' },
   { label: 'Parent Name', key: 'parentName' },
   { label: 'Parent Email Address', key: 'parentEmailAddress' },
-  { label: 'Parent Phone Number', key: 'parentPhoneNumber' }
+  { label: 'Parent Phone Number', key: 'parentPhoneNumber' },
   // { label: 'Homeless', key: 'homeless' },
   // { label: 'Id', key: 'id' },
   // { label: 'Unit', key: 'unit' },
 ];
 
-const baseURL = 'http://localhost:8080/api';
-// const baseURL = '/api';
+//const baseURL = 'http://localhost:8080/api';
+const baseURL = '/api';
 
-const importURL = 'http://localhost:8080/api';
-// const importURL = '/api';
+//const importURL = 'http://localhost:8080/api';
+const importURL = '/api';
 
 const schools = [
   { label: 'LITTLETON HIGH SCHOOL', value: 'LHS' },
   { label: 'LITTLETON MIDDLE SCHOOL', value: 'LMS' },
   { label: 'RUSSELL STREET SCHOOL', value: 'RSS' },
-  { label: 'SHAKER LANE SCHOOL', value: 'SLS' }
+  { label: 'SHAKER LANE SCHOOL', value: 'SLS' },
 ];
 
 const cities = [{ label: 'Littleton', value: 'Littleton' }];
@@ -55,30 +55,30 @@ const states = [{ label: 'Massachussets', value: 'MA' }];
 const locality = {
   city: 'Littleton',
   state: 'Massachussets',
-  zipCode: '01460'
+  zipCode: '01460',
 };
 
 const keys = {
   publishableKey:
-    'pk_test_51I5QOxJuvhMix0vIzNnxK95fD4KadqVex6UylU7RG0jUUYQW3hpWF2rOjUonbpceQwtM7RGZ4xSrDvL5BY07a1R300DBtO4EeD'
+    'pk_test_51I5QOxJuvhMix0vIzNnxK95fD4KadqVex6UylU7RG0jUUYQW3hpWF2rOjUonbpceQwtM7RGZ4xSrDvL5BY07a1R300DBtO4EeD',
 };
 
 // FIXME too many conversions. this info must be in the schoolYear table
 // we'll enable other years later. super admin can create a new year with add button
 const schoolYears = [
-  { label: 'School Year 2021-2022', value: 'FY22', adminYear: '2021' }
+  { label: 'School Year 2021-2022', value: 'FY22', adminYear: '2021' },
   // { label: 'School Year 2022-2023', value: 'FY23', adminYear: '2022' },
   // { label: 'School Year 2023-2024', value: 'FY24', adminYear: '2023' },
   // { label: 'School Year 2024-2025', value: 'FY25', adminYear: '2024' }
 ];
 const registration = [
   { label: 'Open', value: 'open' },
-  { label: 'Closed', value: 'closed' }
+  { label: 'Closed', value: 'closed' },
 ];
 
 const enrollmentStatus = [
   { label: 'free', value: 'free' },
-  { label: 'paid', value: 'paid' }
+  { label: 'paid', value: 'paid' },
 ];
 
 const usa = [
@@ -132,7 +132,7 @@ const usa = [
   { value: 'WA', label: 'Washington' },
   { value: 'WV', label: 'West Virginia' },
   { value: 'WI', label: 'Wisconsin' },
-  { value: 'WY', label: 'Wyoming' }
+  { value: 'WY', label: 'Wyoming' },
 ];
 
 // TODO not needed. Should be populated from default admin settings value
@@ -152,5 +152,5 @@ export {
   headers,
   registration,
   locality,
-  enrollmentStatus
+  enrollmentStatus,
 };
