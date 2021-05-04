@@ -8,9 +8,9 @@ import ConstructTable from './toolbox/ConstructTable';
 import { baseURL } from '../data/Data';
 
 function FreeReg(props) {
+  const { adminYear, location } = props;
   const history = useHistory();
   const [pageBody, setPageBody] = useState();
-  const { location } = props;
   console.log(location.state);
   if (location.state === undefined) {
     history.push('/');
@@ -24,9 +24,9 @@ function FreeReg(props) {
       grade: 'Grade',
       enrollmentStatus: 'Status',
       distanceFromSchool: 'Distance',
-      school: 'School',
+      school: 'School'
     },
-    options: studentData,
+    options: studentData
   };
   useEffect(() => {
     setPageBody(
@@ -83,15 +83,16 @@ function FreeReg(props) {
   };
   return (
     <div>
-      <Header />
+      <Header adminYear={adminYear} />
       {pageBody}
     </div>
   );
 }
 FreeReg.defaultProps = {
-  location: {},
+  location: {}
 };
 FreeReg.propTypes = {
   location: PropTypes.object,
+  adminYear: PropTypes.string.isRequired
 };
 export default FreeReg;

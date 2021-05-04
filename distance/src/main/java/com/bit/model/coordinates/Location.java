@@ -1,22 +1,10 @@
 package com.bit.model.coordinates;
 
+import lombok.Data;
+
+@Data
 public class Location {
     private String x;
     private String y;
 
-    public String getX() {
-        return x;
-    }
-
-    public String getY() {
-        return y;
-    }
-
-    @Override
-    public String toString() {
-        return "Location{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
-    }
 }

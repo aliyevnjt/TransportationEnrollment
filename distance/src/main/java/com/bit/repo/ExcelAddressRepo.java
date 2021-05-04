@@ -1,15 +1,16 @@
 package com.bit.repo;
 
-import com.bit.model.form_data.AddresExcel;
+import com.bit.model.form_data.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface ExcelAddressRepo extends JpaRepository<AddresExcel, Long> {
+@Repository
+public interface ExcelAddressRepo extends JpaRepository<Address, Long> {
 
-    Optional<AddresExcel> findTopDistanceByAddress(String address);
+    Optional<Address> findTopDistanceByAddress(String address);
 
-    Optional<AddresExcel> findTopAddressByAddress(String address);
+    Optional<Address> findTopAddressByAddress(String address);
 
 }

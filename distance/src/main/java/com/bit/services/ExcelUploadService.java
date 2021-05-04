@@ -1,7 +1,7 @@
 package com.bit.services;
 
 import com.bit.model.StudentInfo;
-import com.bit.model.form_data.AddresExcel;
+import com.bit.model.form_data.Address;
 import com.bit.repo.ExcelAddressRepo;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -27,15 +27,15 @@ public class ExcelUploadService {
     @Autowired
     private ExcelAddressRepo excelAddressRepo;
 
-    public List<AddresExcel> writeExcelToDB(MultipartFile reapExcelDataFile) {
-        List<AddresExcel> addresExcelList = new ArrayList<>();
+    public List<Address> writeExcelToDB(MultipartFile reapExcelDataFile) {
+        List<Address> addresExcelList = new ArrayList<>();
         List<Map<String, Integer>> badLine = new ArrayList<>();
         XSSFSheet worksheet = getSheet(reapExcelDataFile);
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Map<String, Integer> map = new HashMap<>();
             try {
                 Row row = worksheet.getRow(i);
-                AddresExcel addresExcel = new AddresExcel();
+                Address addresExcel = new Address();
                 addresExcel.setAddress((row.getCell(0).getStringCellValue()));
                 addresExcel.setDistanceLMS(row.getCell(1).getNumericCellValue());
                 addresExcel.setDistanceSLS(row.getCell(2).getNumericCellValue());
@@ -69,30 +69,30 @@ public class ExcelUploadService {
     }
 
     @Transactional
-    public void saveToAddresses(List<AddresExcel> list){
+    public void saveToAddresses(List<Address> list){
         list.forEach(s -> excelAddressRepo.save(s));
     }
 
     @Transactional
     public ResponseEntity saveAllToAddresses(XSSFSheet worksheet){
-        List<AddresExcel> addresExcelList = new ArrayList<>();
+        List<Address> addressExcelList = new ArrayList<>();
         List<Map<String, String>> listOfBadRows = new ArrayList<>();
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Map<String, String> badMap = new HashMap<>();
             int a = 0;
             try {
                 Row row = worksheet.getRow(i);
-                AddresExcel addresExcel = new AddresExcel();
+                Address address = new Address();
                 a = 1;
                 String streetName = row.getCell(0).getStringCellValue();
-                addresExcel.setAddress(streetName);
+                address.setAddress(streetName);
                 a = 2;
-                addresExcel.setDistanceLMS(row.getCell(1).getNumericCellValue());
+                address.setDistanceLMS(row.getCell(1).getNumericCellValue());
                 a = 3;
-                addresExcel.setDistanceSLS(row.getCell(2).getNumericCellValue());
+                address.setDistanceSLS(row.getCell(2).getNumericCellValue());
                 a = 4;
-                addresExcel.setDistanceRSS(row.getCell(3).getNumericCellValue());
-                addresExcelList.add(addresExcel);
+                address.setDistanceRSS(row.getCell(3).getNumericCellValue());
+                addressExcelList.add(address);
             } catch (NullPointerException e) {
                 badMap.put("bad_row", (i+1)+"");
                 badMap.put("bad_column", worksheet.getRow(0).getCell(a-1).getStringCellValue());
@@ -104,12 +104,12 @@ public class ExcelUploadService {
             }
         }
         Map<String, String> map = new HashMap<>();
-        map.put("recorded_rows", addresExcelList.size()+"");
-        Set<AddresExcel> set = new HashSet<>(addresExcelList);
-        addresExcelList.clear();
-        addresExcelList.addAll(set);
+        map.put("recorded_rows", addressExcelList.size()+"");
+        Set<Address> set = new HashSet<>(addressExcelList);
+        addressExcelList.clear();
+        addressExcelList.addAll(set);
         //excelAddressRepo.saveAll(addresExcelList);
-        addresExcelList.forEach(
+        addressExcelList.forEach(
                 a -> {
                     if(!excelAddressRepo.findTopAddressByAddress(a.getAddress()).isPresent()){
                         excelAddressRepo.save(a);
@@ -126,16 +126,15 @@ public class ExcelUploadService {
     }
 
     @Transactional
-    public AddresExcel findOneAddress(AddresExcel addresExcel){
+    public Address findOneAddress(Address addressExcel){
         ExampleMatcher ignoringExampleMatcher = ExampleMatcher.matchingAny()
                 .withMatcher("address", ExampleMatcher.GenericPropertyMatchers.startsWith().ignoreCase())
                 .withIgnorePaths("distanceRSS", "distanceSLS", "distanceLMS", "distanceLHS");
         // FIXME this can throw null pointer exception
-        AddresExcel addresExcel1 = excelAddressRepo.findOne(Example.of(addresExcel,ignoringExampleMatcher )).get();
-    return addresExcel1;
+    return excelAddressRepo.findOne(Example.of(addressExcel,ignoringExampleMatcher )).get();
     }
 
-    public double getDistanceFromAddresses(StudentInfo studentInfo, AddresExcel addresExcel){
+    public double getDistanceFromAddresses(StudentInfo studentInfo, Address addresExcel){
         double distance = 0;
         if(studentInfo.getSchool().equalsIgnoreCase("RSS")){
             distance = addresExcel.getDistanceRSS();

@@ -9,6 +9,7 @@ const Student = (props) => {
   const { counter, onChange } = props;
   const [gradeOptions, setGradeOptions] = useState(grades);
 
+  // FIXME there is a bug when you do back and forth between school and grade dropdowns
   const handleSchoolDropdown = (event) => {
     const newGradeOptions = grades.filter((g) => g.level === event.target.value);
     setGradeOptions(newGradeOptions);
@@ -21,7 +22,7 @@ const Student = (props) => {
           id="fname"
           type="text"
           onChange={onChange}
-          label="* First Name"
+          label="First Name"
           placeholder="enter first name"
           required
         />
@@ -35,7 +36,7 @@ const Student = (props) => {
           id="lname"
           type="text"
           onChange={onChange}
-          label="* Last Name"
+          label="Last Name"
           placeholder="enter last name"
           required
         />
@@ -43,7 +44,7 @@ const Student = (props) => {
           id="birthDate"
           type="text"
           onChange={onChange}
-          label="* Date of Birth"
+          label="Date of Birth"
           placeholder="mm/dd/yyyy"
           required
         />
@@ -52,7 +53,7 @@ const Student = (props) => {
         <Dropdown
           id="school"
           onChange={handleSchoolDropdown}
-          label="* School"
+          label="School"
           required
           options={schools}
         />

@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-  Container, Col, Row, Image,
+  Container, Col, Row, Image
 } from 'react-bootstrap';
-import { schoolYear as year } from '../data/Data';
+import PropTypes from 'prop-types';
 
-function Header() {
+function Header(props) {
+  const {adminYear} = props;
   return (
     <Container className="pt-3">
       <Row>
@@ -15,7 +16,7 @@ function Header() {
           <h6 className="header">
             School Year:
             {' '}
-            {year}
+            {adminYear}-{parseInt(adminYear) + 1}
           </h6>
         </Col>
       </Row>
@@ -27,5 +28,7 @@ function Header() {
     </Container>
   );
 }
-
+Header.propTypes = {
+  adminYear: PropTypes.string.isRequired
+};
 export default Header;

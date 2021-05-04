@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, Button, Col, Row, Alert, Form } from 'react-bootstrap';
+import { Container, Button, Col, Row, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import Header from './Header';
 import ConstructTable from './toolbox/ConstructTable';
@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 // data comes back including the free student data.
 // Update free student State after submitting the data.
 function PaidReg(props) {
-  const { location } = props;
+  const { adminYear, location } = props;
   const maxFee = 675;
   let total = 0;
   const [cartTotal, setCartTotal] = useState(0.0);
@@ -32,22 +32,22 @@ function PaidReg(props) {
     due: 'Due',
     enrollmentStatus: 'Status',
     distanceFromSchool: 'Distance',
-    school: 'School',
+    school: 'School'
   };
   const freeData =
     free.length > 0
       ? {
-          headers,
-          options: free,
-        }
+        headers,
+        options: free
+      }
       : '';
 
   const paidData =
     paid.length > 0
       ? {
-          headers,
-          options: paid,
-        }
+        headers,
+        options: paid
+      }
       : '';
 
   // TODO how is this possible?
@@ -157,6 +157,8 @@ function PaidReg(props) {
     }
   };
   let sampleData = '';
+  // TODO all of these values must be in config
+  // it is not secure to include this info in html. We can find a different company and ask the schools to use that instead.
   //  let uniqueID = paid[0].paymentId;
   const returnURL = 'test.flowlyst.io';
   const cancelButtonURL = 'test.flowlyst.io';
@@ -202,7 +204,7 @@ function PaidReg(props) {
 
   return (
     <div>
-      <Header />
+      <Header adminYear={adminYear} />
       {freePageBody}
       {freeData && paidData ? (
         <Row className="justify-content-md-center">
@@ -222,7 +224,7 @@ function PaidReg(props) {
           <form
             action="https://paymentsuat.unibank.com/RemoteTransaction/RTI.aspx"
             method="post"
-            onsubmit="try {return window.confirm('This form may not function properly due to certain security constraints.\nContinue?');} catch (e) {return false;}">
+            onSubmit="try {return window.confirm('This form may not function properly due to certain security constraints.\nContinue?');} catch (e) {return false;}">
             <input type="hidden" name="xmlCartData" value={xmlData} />
             <input type="hidden" name="RTIType" value="xmlPost" />
             <Button
@@ -242,5 +244,6 @@ function PaidReg(props) {
 }
 PaidReg.propTypes = {
   location: PropTypes.instanceOf({}).isRequired,
+  adminYear: PropTypes.string.isRequired
 };
 export default PaidReg;

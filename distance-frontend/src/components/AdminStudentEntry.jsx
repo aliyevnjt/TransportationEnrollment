@@ -10,7 +10,8 @@ import AddressBox from './toolbox/AddressBox';
 import Dropdown from './toolbox/Dropdown';
 
 function AdminStudentEntry() {
-  const [inputs, setInputs] = useState({ schoolYear: 'FY22' });
+  // FIXME adminYear must be fetched from settings. Find a way to share the state.
+  const [inputs, setInputs] = useState({ adminYear: '2021'});
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,

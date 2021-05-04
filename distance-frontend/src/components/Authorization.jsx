@@ -15,7 +15,7 @@ function useProvideAuth() {
     setUser({
       name: googleProfile.name,
       email: googleProfile.email,
-      imageUrl: googleProfile.imageUrl,
+      imageUrl: googleProfile.imageUrl
     });
   };
 
@@ -25,7 +25,7 @@ function useProvideAuth() {
   return {
     user,
     signin,
-    signout,
+    signout
   };
 }
 // Provider component that wraps your app and makes auth object ...
@@ -56,7 +56,7 @@ export function PrivateRoute({ children, ...rest }) {
         <Redirect
           to={{
             pathname: '/login',
-            state: { from: location },
+            state: { from: location }
           }}
         />
       ))}

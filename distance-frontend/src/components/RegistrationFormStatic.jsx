@@ -13,8 +13,8 @@ import AddressBoxStatic from './toolbox/AddressBoxStatic';
 import ParentBox from './toolbox/ParentBox';
 
 function RegistrationFormStatic() {
-  const schoolYear = { schoolYear: 'FY22' };
-  const [studentData, setStudentData] = useState([schoolYear]);
+  const adminYear = { adminYear: 'FY22' };
+  const [studentData, setStudentData] = useState([adminYear]);
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
@@ -34,7 +34,7 @@ function RegistrationFormStatic() {
         ));
         try {
           console.log(studentData);
-          const res = await axios.post(`${baseURL}/student/`, studentData);
+          const res = await axios.get(`${baseURL}/student/`, studentData);
           console.log(res);
           if (res.data.enrollmentStatus === 'free') {
             studentData({
@@ -71,7 +71,7 @@ function RegistrationFormStatic() {
     setStudentData(() => allStudents);
   };
   const addSibling = () => {
-    setStudentData((previous) => [...previous, schoolYear]);
+    setStudentData((previous) => [...previous, adminYear]);
   };
   const handleAddressInfoChange = (event) => {
     setAddressInfo((previous) => ({ ...previous, [event.target.id]: event.target.value }));

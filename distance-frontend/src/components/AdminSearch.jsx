@@ -13,6 +13,9 @@ import AddressBox from './toolbox/AddressBox';
 import Dropdown from './toolbox/Dropdown';
 
 function AdminSearch() {
+  // TODO how does it work if students have registrations for multiple years
+  // do we keep adding to student_info or create student_info_2022 ...
+
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
@@ -39,7 +42,7 @@ function AdminSearch() {
       if (event.target.id === 'adminForm') {
         console.log('inputs', inputs);
         try {
-          const res = await axios.post(`${baseURL}/student/request/`, inputs);
+          const res = await axios.post(`${baseURL}/studentSearch`, inputs);
           setTable(constructAdminTable(res.data));
           setAdminSearchData(res.data);
         } catch (err) {

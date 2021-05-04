@@ -25,7 +25,7 @@ public class AdminSettingsService {
         adminSettingsInfo.setOpenMessage(adminSettings.getOpenMessage());
         adminSettingsInfo.setClosedMessage(adminSettings.getClosedMessage());
         adminSettingsInfo.setNotification1(adminSettings.getNotification1());
-        System.out.println("SchoolyearInfo: " + adminSettingsInfo);
+        System.out.println("adminSettingsInfo: " + adminSettingsInfo);
 
         adminSettingsRepo.save(adminSettingsInfo);
     }
