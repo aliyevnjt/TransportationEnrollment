@@ -8,9 +8,11 @@ import FormGroup from './FormGroup';
 const Student = (props) => {
   const { counter, onChange } = props;
   const [gradeOptions, setGradeOptions] = useState(grades);
-  
+
   const handleSchoolDropdown = (event) => {
-    const newGradeOptions = grades.filter((g) => g.level === event.target.value);
+    const newGradeOptions = grades.filter(
+      (g) => g.level === event.target.value
+    );
     setGradeOptions(newGradeOptions);
     onChange(event);
   };
@@ -21,29 +23,29 @@ const Student = (props) => {
           id="fname"
           type="text"
           onChange={onChange}
-          label="* First Name"
-          placeholder="enter first name"
+          label="Student First Name"
+          placeholder=""
           required
         />
         <FormGroup
           id="mName"
           type="text"
           onChange={onChange}
-          label="Middle Name"
+          label="Student Middle Name (Optional)"
         />
         <FormGroup
           id="lname"
           type="text"
           onChange={onChange}
-          label="* Last Name"
-          placeholder="enter last name"
+          label="Student Last Name"
+          placeholder=""
           required
         />
         <FormGroup
           id="birthDate"
           type="text"
           onChange={onChange}
-          label="* Date of Birth"
+          label="Student Date of Birth"
           placeholder="mm/dd/yyyy"
           required
         />
@@ -52,7 +54,7 @@ const Student = (props) => {
         <Dropdown
           id="school"
           onChange={handleSchoolDropdown}
-          label="* School"
+          label="School"
           required
           options={schools}
         />
@@ -64,7 +66,6 @@ const Student = (props) => {
           options={gradeOptions}
         />
       </Form.Row>
-      
     </div>
   );
 };

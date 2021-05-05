@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Form, Button, Jumbotron, Col, Row } from 'react-bootstrap';
+import {
+  Container,
+  Form,
+  Button,
+  Jumbotron,
+  Col,
+  Row,
+  Card,
+} from 'react-bootstrap';
 import { baseURL, locality } from '../data/Data';
 import Header from './Header';
 import Student from './Student';
@@ -126,17 +134,22 @@ function RegistrationForm() {
               onChange={handleParentInfoChange}
             />
             {studentData.slice(1).map((student, index) => (
-              <Student
-                key={student}
-                counter={index + 1}
-                studentData={student}
-                onChange={handleInputChange}
-              />
+              <Card className="bg-light">
+                <Card.Header>Sibling {index + 1} </Card.Header>
+                <Card.Body>
+                  <Student
+                    key={student}
+                    counter={index + 1}
+                    studentData={student}
+                    onChange={handleInputChange}
+                  />
+                </Card.Body>
+              </Card>
             ))}
             <Form.Row className="justify-content-md-center">
               <Col>
                 <Button
-                  disabled={studentData.length > 4}
+                  disabled={studentData.length > 5}
                   as="input"
                   value="Add Sibling"
                   type="button"
