@@ -31,10 +31,16 @@ const headers = [
   { label: 'Parent Name', key: 'parentName' },
   { label: 'Parent Email Address', key: 'parentEmailAddress' },
   { label: 'Parent Phone Number', key: 'parentPhoneNumber' }
+  // { label: 'Homeless', key: 'homeless' },
+  // { label: 'Id', key: 'id' },
+  // { label: 'Unit', key: 'unit' },
 ];
 
 const baseURL = 'http://localhost:8080/api';
 // const baseURL = '/api';
+
+const importURL = 'http://localhost:8080/api';
+// const importURL = '/api';
 
 const schools = [
   { label: 'LITTLETON HIGH SCHOOL', value: 'LHS' },
@@ -129,15 +135,20 @@ const usa = [
   { value: 'WY', label: 'Wyoming' }
 ];
 
+// TODO not needed. Should be populated from default admin settings value
+const schoolYear = '2021-2022';
+
 export {
   grades,
   schools,
   keys,
   usa,
+  schoolYear,
   cities,
   states,
   schoolYears,
   baseURL,
+  importURL,
   headers,
   registration,
   locality,
