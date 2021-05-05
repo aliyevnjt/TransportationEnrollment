@@ -33,8 +33,8 @@ const headers = [
   { label: 'Parent Phone Number', key: 'parentPhoneNumber' }
 ];
 
-// const baseURL = 'http://localhost:8080/api';
-const baseURL = '/api';
+const baseURL = 'http://localhost:8080/api';
+// const baseURL = '/api';
 
 const schools = [
   { label: 'LITTLETON HIGH SCHOOL', value: 'LHS' },

@@ -20,6 +20,7 @@ function RegistrationForm(props) {
     zip: locality.zipCode
   });
   const [parentInfo, setParentInfo] = useState({});
+  const [validated, setValidated] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -59,7 +60,8 @@ function RegistrationForm(props) {
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
-      if (event.target.id === 'registrationForm') {
+      const form = event.currentTarget;
+      if (form.checkValidity() && event.target.id === 'registrationForm') {
         try {
           console.log('StudentData:', studentData);
           const res = await axios.post(
@@ -69,9 +71,10 @@ function RegistrationForm(props) {
           console.log('Request completed', res);
           redirectToPage(res.data);
         } catch (err) {
-          console.log(err);
+          console.log('pre-enrollment API errored.', err);
         }
       }
+      setValidated(true);
     }
   };
 
@@ -120,7 +123,7 @@ function RegistrationForm(props) {
       <Header adminYear={adminYear} />
       <Container className="pt-3">
         <Jumbotron>
-          <Form id="registrationForm" onSubmit={handleSubmit}>
+          <Form noValidate validated={validated} id="registrationForm" onSubmit={handleSubmit}>
             <Student counter={0} onChange={handleInputChange} />
             <AddressBox
               addressInfo={addressInfo}

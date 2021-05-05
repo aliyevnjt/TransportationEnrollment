@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { Form } from 'react-bootstrap';
@@ -7,6 +7,7 @@ import { baseURL } from '../../data/Data';
 import FormGroup from './FormGroup';
 
 const AddressBox = (props) => {
+  const ref = useRef();
   const { addressInfo, onChange } = props;
   const [selections, setSelections] = useState([]);
   const [address, setAddress] = useState([]);
@@ -32,11 +33,12 @@ const AddressBox = (props) => {
       onChange(event[0].address);
     }
   };
-  // console.log(selections);
-  // FIXME chrome autofill does not update the state
-  // or if you type but does not select the existing address, same issue arises.
-  // address object creates an empty array
-  // look in onInputChange of Typehead
+  const validateAddress = (event) => {
+    console.log('BLUR', event);
+    if (!address.find(item => item.address === event.target.value)) {
+      ref.current.clear();
+    }
+  };
   return (
     <div>
       <Form.Row>
@@ -48,9 +50,13 @@ const AddressBox = (props) => {
             onChange={handleAddressChange}
             options={address}
             placeholder="Select your address"
-            selected={selections}
-            inputProps={{ autoComplete: 'off' }}
+            defaultValue={selections}
+            inputProps={{ required: true, autoComplete: 'harezmi' }}
+            clearButton
+            ref={ref}
+            onBlur={validateAddress}
           />
+          <Form.Control.Feedback type="invalid">Please, choose a valid address from the list.</Form.Control.Feedback>
         </Form.Group>
         <FormGroup
           id="city"
@@ -78,8 +84,12 @@ const AddressBox = (props) => {
     </div>
   );
 };
+AddressBox.defaultProps = {
+  required: true
+};
 AddressBox.propTypes = {
   addressInfo: PropTypes.instanceOf({}).isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  required: PropTypes.bool
 };
 export default AddressBox;
