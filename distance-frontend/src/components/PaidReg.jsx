@@ -79,8 +79,6 @@ function PaidReg(props) {
 
   useEffect(() => {
     calculateFee();
-    console.log('free', free);
-    console.log('freeData', freeData);
     if (freeData) {
       setFreePageBody(
         <div id="freeTable">
@@ -171,7 +169,7 @@ function PaidReg(props) {
   console.log('Total:', cartTotal);
 
   let xmlData = `<?xml version='1.0' encoding='UTF-8' ?><!DOCTYPE cXML SYSTEM 'http://xml.cxml.org/schemas/cXML/1.2.014/cXML.dtd'><cXML xml:lang='en-us'><cart><transaction lineNum='1' txID='18397'><qty>1</qty><amount>${cartTotal}</amount><accessKey>df18ee0f-8d9a-45aa-a29e-d487c21de374</accessKey><customerID>1463</customerID><C130771>${
-    paid[0].paymentId
+    paid[0].uniqueID
   }</C130771><C130772>${
     paid[0].address
   }</C130772><C130773>${sampleData}</C130773><C130774>${
