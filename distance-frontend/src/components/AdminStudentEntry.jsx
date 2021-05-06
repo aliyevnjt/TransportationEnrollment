@@ -4,7 +4,7 @@ import axios from 'axios';
 import {
   baseURL, enrollmentStatus, locality
 } from '../data/Data';
-import Student from './Student';
+import Student from './toolbox/Student';
 import ParentBox from './toolbox/ParentBox';
 import AddressBox from './toolbox/AddressBox';
 import Dropdown from './toolbox/Dropdown';

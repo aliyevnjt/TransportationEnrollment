@@ -4,14 +4,14 @@ import { schools } from '../../data/Data';
 
 const ConstructTable = (data) => {
   console.log(data);
-  const { headers, options } = data;
+  const { headers, options, id } = data;
   if (!options[0]) {
     console.log('HEYY!');
     return <p>No data is found!</p>;
   }
   const columnNames = headers;
   return (
-    <Table id="adminSearch" striped bordered hover>
+    <Table id={id} striped bordered hover>
       <thead>
         <tr>
           {Object.values(columnNames).map((value) => (
@@ -24,8 +24,7 @@ const ConstructTable = (data) => {
           <tr key={st.fname.slice(1) + st.lname}>
             {Object.keys(columnNames).map((key) => (
               <td key={key}>
-                {key !== 'school'
-                  ? st[key]
+                {key !== 'school' ? st[key]
                   : schools.filter((sch) => sch.value === st.school)[0].label}
               </td>
             ))}

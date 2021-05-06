@@ -8,7 +8,7 @@ import { schoolYears, registration, baseURL } from '../data/Data';
 import Dropdown from './toolbox/Dropdown';
 
 function AdminSettings() {
-  // TODO
+  // FIXME initial values do not populate for year and regStatus
   // Bonus: reset to default(saved version from DB)
 
   const [saveButton, setSaveButton] = useState(true);

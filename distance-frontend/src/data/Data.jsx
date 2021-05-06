@@ -137,8 +137,10 @@ const usa = [
 
 // TODO not needed. Should be populated from default admin settings value
 const schoolYear = '2021-2022';
+const adminYear = '2021';
 
 export {
+  adminYear,
   grades,
   schools,
   keys,

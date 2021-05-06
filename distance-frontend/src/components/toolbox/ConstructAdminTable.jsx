@@ -14,7 +14,7 @@ const constructAdminTable = (data) => {
     enrollmentStatus: 'Status',
     distanceFromSchool: 'Distance',
     address: 'Address',
-    school: 'School',
+    school: 'School'
   };
   return (
     <Table id="adminSearch" striped bordered hover>
@@ -36,7 +36,7 @@ const constructAdminTable = (data) => {
               ))}
             </tr>
           ))
-            }
+        }
       </tbody>
     </Table>
   );

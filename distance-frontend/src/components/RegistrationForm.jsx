@@ -8,18 +8,17 @@ import {
   Jumbotron,
   Col,
   Row,
-  Card,
+  Card
 } from 'react-bootstrap';
-import { baseURL, locality } from '../data/Data';
+import { baseURL, locality, adminYear } from '../data/Data';
 import Header from './Header';
-import Student from './Student';
+import Student from './toolbox/Student';
 import ParentBox from './toolbox/ParentBox';
 import AddressBox from './toolbox/AddressBox';
 import { bigSample } from '../data/BigSample';
 import PropTypes from 'prop-types';
 
-function RegistrationForm(props) {
-  const {adminYear} = props;
+function RegistrationForm() {
   // TODO find a way to add adminYear right here. It is undefined in the beginning ???
   const [studentData, setStudentData] = useState([{}]);
   const [addressInfo, setAddressInfo] = useState({

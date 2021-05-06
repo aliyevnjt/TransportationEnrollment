@@ -8,7 +8,7 @@ import {
   locality, baseURL
 } from '../data/Data';
 import Header from './Header';
-import Student from './Student';
+import Student from './toolbox/Student';
 import AddressBoxStatic from './toolbox/AddressBoxStatic';
 import ParentBox from './toolbox/ParentBox';
 
