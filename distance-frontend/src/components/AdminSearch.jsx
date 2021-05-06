@@ -1,24 +1,36 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { CSVLink } from 'react-csv';
 import JsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import axios from 'axios';
-import { headers, baseURL, locality } from '../data/Data';
+import {
+  headers, baseURL, locality, enrollmentStatus
+} from '../data/Data';
 import Student from './Student';
 import constructAdminTable from './toolbox/ConstructAdminTable';
 import AddressBox from './toolbox/AddressBox';
+import Dropdown from './toolbox/Dropdown';
 
 function AdminSearch() {
+  // TODO how does it work if students have registrations for multiple years
+  // do we keep adding to student_info or create student_info_2022 ...
+
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zipCode: locality.zipCode,
+    zipCode: locality.zipCode
   });
   const [inputs, setInputs] = useState({});
   const [table, setTable] = useState();
   const [adminSearchData, setAdminSearchData] = useState([{}]);
 
+  useEffect(() => {
+    // inputs state is updated with address info
+    setInputs((current) => ({
+      ...current, ...addressInfo
+    }));
+  }, [addressInfo]);
   const handlePDFdownload = () => {
     const doc = new JsPDF();
     autoTable(doc, { html: '#adminSearch' });
@@ -28,13 +40,9 @@ function AdminSearch() {
     if (event) {
       event.preventDefault();
       if (event.target.id === 'adminForm') {
-        console.log(addressInfo);
-        setInputs((current) => ({
-          ...current, ...addressInfo,
-        }));
+        console.log('inputs', inputs);
         try {
-          const res = await axios.post(`${baseURL}/student/request/`, inputs);
-          console.log(res);
+          const res = await axios.post(`${baseURL}/studentSearch`, inputs);
           setTable(constructAdminTable(res.data));
           setAdminSearchData(res.data);
         } catch (err) {
@@ -50,6 +58,7 @@ function AdminSearch() {
     setAddressInfo((previous) => ({ ...previous, address }));
     console.log(address);
   };
+  // console.log('adminSearchData', adminSearchData);
   return (
     <div>
       <Form id="adminForm" onSubmit={handleSubmit}>
@@ -57,12 +66,26 @@ function AdminSearch() {
           counter={0}
           onChange={handleInputChange}
         />
+        <Dropdown
+          id="enrollmentStatus"
+          onChange={handleInputChange}
+          label="Enrollment Status"
+          options={enrollmentStatus}
+        />
         <AddressBox
           addressInfo={addressInfo}
           onChange={handleAddressInfoChange}
         />
 
         <Button as="input" className="mr-1" type="submit" value="Search" />
+
+        <Button
+          as="input"
+          onClick={handlePDFdownload}
+          className="ml-3"
+          type="submit"
+          value="Download as PDF"
+        />
         <CSVLink
           data={adminSearchData}
           headers={headers}
@@ -71,13 +94,6 @@ function AdminSearch() {
         >
           Download as CSV
         </CSVLink>
-        <Button
-          as="input"
-          onClick={handlePDFdownload}
-          className="ml-3"
-          type="submit"
-          value="Download as PDF"
-        />
       </Form>
       <br />
       {table}

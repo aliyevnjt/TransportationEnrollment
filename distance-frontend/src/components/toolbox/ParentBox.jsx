@@ -14,7 +14,7 @@ const ParentBox = (props) => {
           type="text"
           value={parentInfo.parentName}
           onChange={onChange}
-          label="* Parent Full Name"
+          label="Parent Full Name"
           required
         />
         <FormGroup
@@ -22,15 +22,18 @@ const ParentBox = (props) => {
           type="email"
           value={parentInfo.parentEmailAddress}
           onChange={onChange}
-          label="* Parent Email"
+          label="Parent Email"
           required
         />
+        {/* TODO add phone number check and format it properly
+        http://catamphetamine.github.io/react-phone-number-input
+        */}
         <FormGroup
           id="parentPhoneNumber"
           type="tel"
           value={parentInfo.parentPhoneNumber}
           onChange={onChange}
-          label="* Parent Phone"
+          label="Parent Phone"
           required
         />
       </Form.Row>
@@ -39,6 +42,6 @@ const ParentBox = (props) => {
 };
 ParentBox.propTypes = {
   parentInfo: PropTypes.instanceOf({}).isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 export default ParentBox;

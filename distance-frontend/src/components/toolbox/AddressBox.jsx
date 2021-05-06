@@ -1,34 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { appUrl } from '../../data/Data';
+import { baseURL } from '../../data/Data';
 import FormGroup from './FormGroup';
 
 const AddressBox = (props) => {
+  const ref = useRef();
   const { addressInfo, onChange } = props;
   const [selections, setSelections] = useState([]);
   const [address, setAddress] = useState([]);
+  let allData;
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get(`${appUrl.baseline}/addresses`);
-      setAddress(res.data);
+      // HOW MANY TIMES IS THIS CALL MADE???
+      const res = await axios.get(`${baseURL}/addresses`);
+      allData = res.data;
+      // console.log(allData);
+      setAddress(allData);
       onChange(selections);
     }
     fetchData();
   }, []);
+
   const handleAddressChange = (event) => {
-    // console.log(event);
+    console.log('Handle Add Change', event);
     setSelections(event);
     if (event[0]) {
       console.log(event);
       onChange(event[0].address);
     }
   };
-  // console.log(selections);
-  // FIXME disabled attributes are not working properly
+  const validateAddress = (event) => {
+    console.log('BLUR', event);
+    if (!address.find(item => item.address === event.target.value)) {
+      ref.current.clear();
+    }
+  };
   return (
     <div>
       <Form.Row>
@@ -39,9 +49,14 @@ const AddressBox = (props) => {
             labelKey="address"
             onChange={handleAddressChange}
             options={address}
-            placeholder="Enter your address"
-            selected={selections}
+            placeholder="Select your address"
+            defaultValue={selections}
+            inputProps={{ required: true, autoComplete: 'harezmi' }}
+            clearButton
+            ref={ref}
+            onBlur={validateAddress}
           />
+          <Form.Control.Feedback type="invalid">Please, choose a valid address from the list.</Form.Control.Feedback>
         </Form.Group>
         <FormGroup
           id="city"
@@ -60,17 +75,21 @@ const AddressBox = (props) => {
         <FormGroup
           id="zip"
           type="text"
-          value={addressInfo.zipCode}
+          value={addressInfo.zip}
           label="Zip"
-          placeholder={addressInfo.zipCode}
+          placeholder={addressInfo.zip}
           disabled={true}
         />
       </Form.Row>
     </div>
   );
 };
+AddressBox.defaultProps = {
+  required: true
+};
 AddressBox.propTypes = {
   addressInfo: PropTypes.instanceOf({}).isRequired,
   onChange: PropTypes.func.isRequired,
+  required: PropTypes.bool
 };
 export default AddressBox;

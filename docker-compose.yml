@@ -15,9 +15,9 @@ services:
     depends_on: 
       - db # This service depends on mysql. Start that first.
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=1234
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/transportationenrollment
+      - SPRING_DATASOURCE_USERNAME=$pg_user
+      - SPRING_DATASOURCE_PASSWORD=$pg_pwd
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
   # Frontend Service 
@@ -41,10 +41,10 @@ services:
       - "5432:5432"
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=$pg_user
+      - POSTGRES_PASSWORD=$pg_pwd
     volumes:
-      - data:/var/lib/postgresql/data
+      - /var/lib/postgresql/data:/var/lib/postgresql/data
 
 volumes:
   data:

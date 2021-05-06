@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const FormGroup = (props) => {
   const {
-    id, onChange, label, type, placeholder, disabled,
+    id, onChange, label, type, placeholder, disabled, required
   } = props;
   return (
     <Form.Group
@@ -19,7 +19,9 @@ const FormGroup = (props) => {
         type={type}
         placeholder={placeholder}
         disabled={disabled}
+        required={required}
       />
+      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
     </Form.Group>
   );
 };
@@ -27,6 +29,9 @@ const FormGroup = (props) => {
 FormGroup.defaultProps = {
   type: '',
   disabled: false,
+  required: true,
+  onChange: {},
+  placeholder: ''
 };
 FormGroup.propTypes = {
   id: PropTypes.string.isRequired,
@@ -35,5 +40,6 @@ FormGroup.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
+  required: PropTypes.bool
 };
 export default FormGroup;

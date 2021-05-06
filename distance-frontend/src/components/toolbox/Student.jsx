@@ -8,7 +8,7 @@ import FormGroup from './FormGroup';
 const Student = (props) => {
   const { counter, onChange } = props;
   const [gradeOptions, setGradeOptions] = useState(grades);
-  
+
   const handleSchoolDropdown = (event) => {
     const newGradeOptions = grades.filter((g) => g.level === event.target.value);
     setGradeOptions(newGradeOptions);
@@ -64,7 +64,7 @@ const Student = (props) => {
           options={gradeOptions}
         />
       </Form.Row>
-      
+
     </div>
   );
 };

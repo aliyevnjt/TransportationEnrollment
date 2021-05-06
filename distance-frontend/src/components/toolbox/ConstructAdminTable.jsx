@@ -31,7 +31,7 @@ const constructAdminTable = (data) => {
             <tr key={st.id}>
               { Object.keys(columnNames).map((key) => (
                 <td key={key}>
-                  { key !== 'school' ? st[key] : (schools.filter((sch) => sch.value === data[0].school)[0]).label }
+                  { key !== 'school' ? st[key] : (schools.filter((sch) => sch.value === st.school)[0]).label }
                 </td>
               ))}
             </tr>
