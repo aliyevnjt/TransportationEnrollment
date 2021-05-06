@@ -55,7 +55,7 @@ function AdminLogin() {
     clientId,
     cookiePolicy: 'single_host_origin',
     isSignedIn: true,
-    accessType: 'offline',
+    accessType: 'offline'
     // responseType: 'code',
     // prompt: 'consent',
   });

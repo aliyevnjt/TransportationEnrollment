@@ -1,9 +1,10 @@
 import React from 'react';
-import { Container, Col, Row, Image } from 'react-bootstrap';
+import {
+  Container, Col, Row, Image, Alert
+} from 'react-bootstrap';
 import { schoolYear as year } from '../data/Data';
 import './toolbox/littleton.css';
 import logo from '../data/Littleton/logo.png';
-import { Alert } from 'react-bootstrap';
 
 function Header() {
   return (
@@ -12,8 +13,12 @@ function Header() {
         <Col xs={6} md={4}>
           <Image src={logo} rounded className="logo" />
         </Col>
-        <Col md={{ span: 4, offset: 4 }} className="my-auto">
-          <h5 className="header text-white">School Year: {year}</h5>
+        <Col md={{ span: 4, offset: 4 }}>
+          <h6 className="header">
+            School Year:
+            {' '}
+            {year}
+          </h6>
         </Col>
       </Row>
       <Row className="mt-1 mb-2 mt-5">

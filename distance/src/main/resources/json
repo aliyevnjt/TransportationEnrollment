@@ -13,11 +13,9 @@
         "parentName": "P",
         "parentEmailAddress": "p@d.c",
         "parentPhoneNumber": "1",
-        "unit": "",
-        "homeless": false,
         "mName": "",
         "enrollmentStatus": "free",
-        "formSubmitTime": "2021-01-10T10:46:17.871"
+        "createDate": "2021-01-10T10:46:17.871"
     },
     {
         "id": null,
@@ -33,10 +31,8 @@
         "parentName": "P",
         "parentEmailAddress": "p@d.c",
         "parentPhoneNumber": "1",
-        "unit": "",
-        "homeless": false,
         "mName": "",
         "enrollmentStatus": "free",
-        "formSubmitTime": "2021-01-10T10:46:17.872"
+        "createDate": "2021-01-10T10:46:17.872"
     }
 ]

@@ -16,26 +16,28 @@ import Student from './Student';
 import ParentBox from './toolbox/ParentBox';
 import AddressBox from './toolbox/AddressBox';
 import { bigSample } from '../data/BigSample';
-// import { v4 as uuidv4 } from 'uuid';
+import PropTypes from 'prop-types';
 
-function RegistrationForm() {
-  // TODO schoolYear should be populated from default admin settings value
-  const [studentData, setStudentData] = useState([{ schoolYear: '2022' }]);
+function RegistrationForm(props) {
+  const {adminYear} = props;
+  // TODO find a way to add adminYear right here. It is undefined in the beginning ???
+  const [studentData, setStudentData] = useState([{}]);
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zip: locality.zipCode,
+    zip: locality.zipCode
   });
   const [parentInfo, setParentInfo] = useState({});
+  const [validated, setValidated] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
-    // studentData state is updated with address info
+    // studentData state is updated with address and parent info
     setStudentData((current) =>
       current.map((student) => ({
         ...student,
         ...addressInfo,
-        ...parentInfo,
+        ...parentInfo
       }))
     );
   }, [addressInfo, parentInfo]);
@@ -66,7 +68,8 @@ function RegistrationForm() {
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
-      if (event.target.id === 'registrationForm') {
+      const form = event.currentTarget;
+      if (form.checkValidity() && event.target.id === 'registrationForm') {
         try {
           console.log('StudentData:', studentData);
           const res = await axios.post(
@@ -76,9 +79,10 @@ function RegistrationForm() {
           console.log('Request completed', res);
           redirectToPage(res.data);
         } catch (err) {
-          console.log(err);
+          console.log('pre-enrollment API errored.', err);
         }
       }
+      setValidated(true);
     }
   };
 
@@ -87,10 +91,14 @@ function RegistrationForm() {
       event.target.parentElement.parentElement.getAttribute('counter')
     );
     // console.log('eventCounter:', eventCounter);
+    // TODO remove if this value can be populated in the beginning
+    if (!studentData[0].adminYear) {
+      studentData[0].adminYear = adminYear;
+    }
     const allStudents = [...studentData];
     const tempStudent = {
       ...studentData[eventCounter],
-      [event.target.id]: event.target.value,
+      [event.target.id]: event.target.value
     };
     allStudents[eventCounter] = tempStudent;
 
@@ -99,7 +107,7 @@ function RegistrationForm() {
   const addSibling = () => {
     setStudentData((previous) => [
       ...previous,
-      { schoolYear: 'FY22', ...addressInfo, ...parentInfo },
+      { adminYear: adminYear, ...addressInfo, ...parentInfo }
     ]);
   };
   const handleAddressInfoChange = (address) => {
@@ -109,7 +117,7 @@ function RegistrationForm() {
   const handleParentInfoChange = (event) => {
     setParentInfo((previous) => ({
       ...previous,
-      [event.target.id]: event.target.value,
+      [event.target.id]: event.target.value
     }));
   };
 
@@ -120,10 +128,10 @@ function RegistrationForm() {
   // TODO save button should be disabled until all fields are entered
   return (
     <div>
-      <Header />
+      <Header adminYear={adminYear} />
       <Container className="pt-3">
         <Jumbotron>
-          <Form id="registrationForm" onSubmit={handleSubmit}>
+          <Form noValidate validated={validated} id="registrationForm" onSubmit={handleSubmit}>
             <Student counter={0} onChange={handleInputChange} />
             <AddressBox
               addressInfo={addressInfo}
@@ -190,5 +198,7 @@ function RegistrationForm() {
     </div>
   );
 }
-
+RegistrationForm.propTypes = {
+  adminYear: PropTypes.string.isRequired
+};
 export default RegistrationForm;

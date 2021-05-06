@@ -10,10 +10,9 @@ const Student = (props) => {
   const [gradeOptions, setGradeOptions] = useState(grades);
   const schoolLabel = `School (${schoolYear})`;
 
+  // FIXME there is a bug when you do back and forth between school and grade dropdowns
   const handleSchoolDropdown = (event) => {
-    const newGradeOptions = grades.filter(
-      (g) => g.level === event.target.value
-    );
+    const newGradeOptions = grades.filter((g) => g.level === event.target.value);
     setGradeOptions(newGradeOptions);
     onChange(event);
   };
@@ -26,13 +25,13 @@ const Student = (props) => {
           onChange={onChange}
           label="Student First Name"
           placeholder=""
-          required
         />
         <FormGroup
           id="mName"
           type="text"
           onChange={onChange}
-          label="Student Middle Name"
+          label="Student Middle Name (optional)"
+          required={false}
         />
         <FormGroup
           id="lname"
@@ -40,7 +39,6 @@ const Student = (props) => {
           onChange={onChange}
           label="Student Last Name"
           placeholder=""
-          required
         />
         <FormGroup
           id="birthDate"
@@ -48,7 +46,6 @@ const Student = (props) => {
           onChange={onChange}
           label="Student Date of Birth"
           placeholder="mm/dd/yyyy"
-          required
         />
       </Form.Row>
       <Form.Row counter={counter}>
@@ -56,14 +53,12 @@ const Student = (props) => {
           id="school"
           onChange={handleSchoolDropdown}
           label={schoolLabel}
-          required
           options={schools}
         />
         <Dropdown
           id="grade"
           onChange={onChange}
           label={'Grade (' + schoolYear + ')'}
-          required
           options={gradeOptions}
         />
       </Form.Row>
@@ -72,6 +67,6 @@ const Student = (props) => {
 };
 Student.propTypes = {
   counter: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 export default Student;

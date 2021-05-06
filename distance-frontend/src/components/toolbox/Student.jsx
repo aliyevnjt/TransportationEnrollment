@@ -10,9 +10,7 @@ const Student = (props) => {
   const [gradeOptions, setGradeOptions] = useState(grades);
 
   const handleSchoolDropdown = (event) => {
-    const newGradeOptions = grades.filter(
-      (g) => g.level === event.target.value
-    );
+    const newGradeOptions = grades.filter((g) => g.level === event.target.value);
     setGradeOptions(newGradeOptions);
     onChange(event);
   };
@@ -23,29 +21,29 @@ const Student = (props) => {
           id="fname"
           type="text"
           onChange={onChange}
-          label="Student First Name"
-          placeholder=""
+          label="* First Name"
+          placeholder="enter first name"
           required
         />
         <FormGroup
           id="mName"
           type="text"
           onChange={onChange}
-          label="Student Middle Name (Optional)"
+          label="Middle Name"
         />
         <FormGroup
           id="lname"
           type="text"
           onChange={onChange}
-          label="Student Last Name"
-          placeholder=""
+          label="* Last Name"
+          placeholder="enter last name"
           required
         />
         <FormGroup
           id="birthDate"
           type="text"
           onChange={onChange}
-          label="Student Date of Birth"
+          label="* Date of Birth"
           placeholder="mm/dd/yyyy"
           required
         />
@@ -54,7 +52,7 @@ const Student = (props) => {
         <Dropdown
           id="school"
           onChange={handleSchoolDropdown}
-          label="School"
+          label="* School"
           required
           options={schools}
         />
@@ -66,6 +64,7 @@ const Student = (props) => {
           options={gradeOptions}
         />
       </Form.Row>
+
     </div>
   );
 };

@@ -31,7 +31,7 @@ public class StudentInfoRestController {
     @Autowired
     private DistanceFromFileService distanceFromFileService;
 
-    @PostMapping("/api/student")
+    @GetMapping("/api/student")
     public ResponseEntity getDistance(@Valid @RequestBody StudentInfo studentInfo){
         return new ResponseEntity(distanceCalculatorService.createStudent(studentInfo, null), HttpStatus.CREATED);
     }
@@ -54,7 +54,7 @@ public class StudentInfoRestController {
     }
 
 
-    @PostMapping("/api/student/request")
+    @PostMapping("/api/studentSearch")
     public List<StudentInfo> getStudentInfo(@Valid @RequestBody StudentInfoRetrieve studentInfoRetrieve){
         return studentInfoWriteAndReadService.retrieveMatchingStudents(studentInfoRetrieve);
     }

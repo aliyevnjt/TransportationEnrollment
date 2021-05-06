@@ -44,10 +44,7 @@ public class FormRestController {
         return new ResponseEntity(addressRepo.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/api/adminSettings")
-    public ResponseEntity getMessages() {
-        return new ResponseEntity(adminSettingsRepo.findAll(), HttpStatus.OK);
-    }
+
 
 
 }
