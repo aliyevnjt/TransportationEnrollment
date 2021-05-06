@@ -19,7 +19,7 @@ public class StudentInfo {
 
     public enum RegistrationStatus {
         IN_PROGRESS,
-        ENROLLED
+        REGISTERED
     }
     @Enumerated(EnumType.STRING)
     private RegistrationStatus registrationStatus;

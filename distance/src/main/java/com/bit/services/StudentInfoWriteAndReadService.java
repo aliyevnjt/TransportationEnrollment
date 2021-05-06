@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static com.bit.model.StudentInfo.RegistrationStatus.ENROLLED;
+import static com.bit.model.StudentInfo.RegistrationStatus.REGISTERED;
 import static com.bit.model.StudentInfo.RegistrationStatus.IN_PROGRESS;
 
 @Service
@@ -82,7 +82,7 @@ public class StudentInfoWriteAndReadService {
     public void updateEnrollmentStatus(UUID id) {
         //studentRepository.updateStatus(id, StudentInfo.RegistrationStatus.COMPLETED);
         StudentInfo students = studentRepository.getOne(id);
-        students.setRegistrationStatus(ENROLLED);
+        students.setRegistrationStatus(REGISTERED);
         studentRepository.save(students);
     }
 }

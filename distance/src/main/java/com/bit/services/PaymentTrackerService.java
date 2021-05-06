@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static com.bit.model.StudentInfo.RegistrationStatus.ENROLLED;
+import static com.bit.model.StudentInfo.RegistrationStatus.REGISTERED;
 
 @Service
 public class PaymentTrackerService {
@@ -56,7 +56,7 @@ public class PaymentTrackerService {
         long confirmationNumber = Long.parseLong(paymentInfo.get("ConfirmationNumber"));
         long customerID = Long.parseLong(paymentInfo.get("CustomerID"));
         List<StudentInfo> stds = studentRepository.findByUniqueID(uniqueID);
-        stds.forEach(s -> s.setRegistrationStatus(ENROLLED));
+        stds.forEach(s -> s.setRegistrationStatus(REGISTERED));
         studentRepository.saveAll(stds);
         return new PaymentTracker(uniqueID, processedDate, customerID, amountPaid, "2021", confirmationNumber);
     }
