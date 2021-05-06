@@ -4,14 +4,12 @@ import { Form } from 'react-bootstrap';
 
 const Dropdown = (props) => {
   const {
-    id, options, onChange, value, required
+    id, options, onChange, value, required, defaultVal
   } = props;
   let { label } = props;
-  if (label.startsWith('*')) {
-    label = label.substr(2);
-  }
   // console.log('getRegistrationYear:', value);
   // console.log('DROPDOWN component is loaded', value);
+  // FIXME look into defaultValue in options
   return (
     <Form.Group>
       <Form.Label>
@@ -23,7 +21,7 @@ const Dropdown = (props) => {
         required={required}
         onChange={onChange}
       >
-        <option value="">{label}</option>
+        <option value="">{defaultVal}</option>
         {
           options.map((o) => (
             <option key={o.label} defaultValue={value === o.label} value={o.value}>{o.label}</option>
@@ -47,6 +45,7 @@ Dropdown.propTypes = {
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  defaultVal: PropTypes.string
 };
 export default Dropdown;

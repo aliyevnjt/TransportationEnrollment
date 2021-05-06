@@ -4,14 +4,15 @@ import { Container, Button, Col, Row, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import Header from './Header';
 import ConstructTable from './toolbox/ConstructTable';
-import { baseURL } from '../data/Data';
+import { baseURL, adminYear } from '../data/Data';
 import PropTypes from 'prop-types';
+import UniPayFeeSchedule from './UniPayFeeSchedule';
 
 // FIXME - When you refresh the page all student
 // data comes back including the free student data.
 // Update free student State after submitting the data.
 function PaidReg(props) {
-  const { adminYear, location } = props;
+  const { location } = props;
   const maxFee = 675;
   let total = 0;
   const [cartTotal, setCartTotal] = useState(0.0);
@@ -38,7 +39,8 @@ function PaidReg(props) {
     free.length > 0
       ? {
         headers,
-        options: free
+        options: free,
+        id: 'freeStudents'
       }
       : '';
 
@@ -46,7 +48,8 @@ function PaidReg(props) {
     paid.length > 0
       ? {
         headers,
-        options: paid
+        options: paid,
+        id: 'paidStudents'
       }
       : '';
 
@@ -59,14 +62,14 @@ function PaidReg(props) {
   const calculateFee = () => {
     studentData.forEach((element) => {
       if (element.enrollmentStatus === 'free') {
-        element.due = 0;
+        element.due = '$0';
       } else if (element.enrollmentStatus === 'paid') {
-        if (cartTotal < maxFee) {
-          element.due = 225;
+        if (total < maxFee) {
+          element.due = '$225';
           total += 225;
           setCartTotal(total);
         } else {
-          element.due = 0;
+          element.due = '$0';
         }
       }
       console.log('after calc', this);
@@ -86,7 +89,7 @@ function PaidReg(props) {
           </Container>
           <Container>
             <Row className="justify-content-md-center">
-              <Col xs lg="7">
+              <Col xs lg="9">
                 <Alert variant="success">
                   <p>
                     The above listed student/s are eligible for free
@@ -111,14 +114,15 @@ function PaidReg(props) {
       setFreePageBody(<div />);
     }
     if (paidData) {
+      console.log(UniPayFeeSchedule);
       setPageBody(
         <Container className="mt-5" fluid="sm">
           {ConstructTable(paidData)}
           <Row className="justify-content-md-center">
-            <Col xs lg="7">
+            <Col xs lg="9">
               <p>
                 The above listed student/s are eligible for paid school
-                transportation. Please click Proceed to Payment button below to
+                transportation. Please click Proceed to Payment Button below to
                 pay the registration fee. Students are not registered until you
                 complete payment.
               </p>
@@ -220,22 +224,27 @@ function PaidReg(props) {
       )}
       {pageBody}
       {paidData ? (
-        <Row className="justify-content-md-center">
-          <form
-            action="https://paymentsuat.unibank.com/RemoteTransaction/RTI.aspx"
-            method="post"
-            onSubmit="try {return window.confirm('This form may not function properly due to certain security constraints.\nContinue?');} catch (e) {return false;}">
-            <input type="hidden" name="xmlCartData" value={xmlData} />
-            <input type="hidden" name="RTIType" value="xmlPost" />
-            <Button
-              as="input"
-              value="Proceed to Payment"
-              type="submit"
-              name="submit"
-              disabled={freeData ? paymentButton : false}
-            />
-          </form>
-        </Row>
+        <div>
+          <Row className="justify-content-md-center">
+            <form
+              action="https://paymentsuat.unibank.com/RemoteTransaction/RTI.aspx"
+              method="post"
+              onSubmit="try {return window.confirm('This form may not function properly due to certain security constraints.\nContinue?');} catch (e) {return false;}">
+              <input type="hidden" name="xmlCartData" value={xmlData} />
+              <input type="hidden" name="RTIType" value="xmlPost" />
+              <Button
+                as="input"
+                value="Proceed to Payment"
+                type="submit"
+                name="submit"
+                disabled={freeData ? paymentButton : false}
+              />
+            </form>
+          </Row>
+          <Row className="justify-content-md-center mt-5">
+            <UniPayFeeSchedule />
+          </Row>
+        </div>
       ) : (
         ''
       )}

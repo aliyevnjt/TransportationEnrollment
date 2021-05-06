@@ -7,7 +7,7 @@ import axios from 'axios';
 import {
   headers, baseURL, locality, enrollmentStatus
 } from '../data/Data';
-import Student from './Student';
+import Student from './toolbox/Student';
 import constructAdminTable from './toolbox/ConstructAdminTable';
 import AddressBox from './toolbox/AddressBox';
 import Dropdown from './toolbox/Dropdown';
@@ -15,11 +15,13 @@ import Dropdown from './toolbox/Dropdown';
 function AdminSearch() {
   // TODO how does it work if students have registrations for multiple years
   // do we keep adding to student_info or create student_info_2022 ...
+  // FIXME cannot search with address and/or other fields
+  // FIXME zipCode
 
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zipCode: locality.zipCode
+    zip: locality.zipCode
   });
   const [inputs, setInputs] = useState({});
   const [table, setTable] = useState();
@@ -61,7 +63,7 @@ function AdminSearch() {
   // console.log('adminSearchData', adminSearchData);
   return (
     <div>
-      <Form id="adminForm" onSubmit={handleSubmit}>
+      <Form noValidate id="adminForm" onSubmit={handleSubmit}>
         <Student
           counter={0}
           onChange={handleInputChange}
