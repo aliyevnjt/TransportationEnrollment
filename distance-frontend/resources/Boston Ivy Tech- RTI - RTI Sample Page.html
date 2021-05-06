@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0094)https://adminuat.unibank.com/UniAdmin/edittransaction.aspx?CustomerID=1463&TransactionID=18397 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Boston Ivy Tech- RTI - RTI Sample Page</title>
+    <!-- Ignore this fixform function -->
+    <script type="text/javascript">
+        function fixform() {
+            if (opener.document.getElementById("aspnetForm").target != "_blank") return;
+            opener.document.getElementById("aspnetForm").target = "";
+            opener.document.getElementById("aspnetForm").action = opener.location.href;
+        }
+    </script>
+    <!-- end ignore -->
+    <style type="text/css">
+    body
+    {
+	    margin:10px 10px 10px 10px;
+	    font-family:Verdana, Arial, Helvetica, sans-serif;
+	    font-size:12px;
+	    color:#2A2A2A;
+	    text-align: center;
+    }
+    th
+    {
+        background-color: #dddddd;
+        padding:10px;
+        border: 1px solid #333333;
+    }
+    td
+    {
+        padding: 10px;
+        border: 1px solid #bbbbbb;
+    }
+    
+    </style>
+<script src="chrome-extension://mooikfkahbdckldjjndioackbalphokd/assets/prompt.js"></script></head>
+<body onload="fixform()">
+    <h4>Remote Transaction Interface (RTI)
+        </h4>
+        Bus Fees
+        <br>
+  <br>
+    <div><form action="https://paymentsuat.unibank.com/RemoteTransaction/RTI.aspx" method="post">
+
+        <!-- 
+        *******************************************************************************************************************
+            RTI 2.0 XML Quicklook
+
+        Using standard xml doctypes, transactions can be submitted through XML that follows this structure.
+
+        All transaction info is in one root <cart> element.
+        Each <transaction> in the 'cart' must have two attributes - the lineNum and the txID.
+        lineNum must be sequential, starting at 1, for each different transation in the 'cart'.
+        txID must match the TransactionID in the RTI system for the customer the transaction type is held under.
+        Other required elements are qty (Quantity), amount, accessKey, and customerID (of the RTI customer for the txID).
+        Any required custom fields for this transaction must also be in the <transaction> as elements.
+
+        ***!
+        Custom fields must be within the specified length range at the transaction level. Values submitted outside of
+        this range will cause an error with the transaction
+        !***
+
+        ***!
+        If using RTI Aliasing, UseUnipayAlias node must exist and its text must be 'true'.  All of the Aliased Custom fields
+        must use the alias specified on the transaction.
+        !***
+
+        There are optional additional fields. <allowModify> is specified inside of each transaction, optionally.
+        Other options apply to the whole 'cart', and are specified outside of any <transaction> elements.
+        e.g. <returnButtonText> & <returnButtonURL>
+
+        The form input name for the XML data must be 'xmlCartData' with its value being a string containing all of the XML.
+
+        
+        *******************************************************************************************************************
+        -->
+
+
+        <input type="hidden" name="xmlCartData" value="&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39; ?&gt;&lt;!DOCTYPE cXML SYSTEM &#39;http://xml.cxml.org/schemas/cXML/1.2.014/cXML.dtd&#39;&gt;&lt;cXML xml:lang=&#39;en-us&#39;&gt;&lt;cart&gt;&lt;transaction lineNum=&#39;1&#39; txID=&#39;18397&#39;&gt;&lt;qty&gt;1&lt;/qty&gt;&lt;amount&gt;25.43&lt;/amount&gt;&lt;accessKey&gt;df18ee0f-8d9a-45aa-a29e-d487c21de374&lt;/accessKey&gt;&lt;customerID&gt;1463&lt;/customerID&gt;&lt;C130771&gt;Provide Data&lt;/C130771&gt;&lt;C130772&gt;Provide Data&lt;/C130772&gt;&lt;C130773&gt;Provide Data&lt;/C130773&gt;&lt;C130774&gt;Provide Data&lt;/C130774&gt;&lt;C130775&gt;Provide Data&lt;/C130775&gt;&lt;C130776&gt;Provide Data&lt;/C130776&gt;&lt;C130777&gt;Provide Data&lt;/C130777&gt;&lt;C130778&gt;Provide Data&lt;/C130778&gt;&lt;C130779&gt;Provide Data&lt;/C130779&gt;&lt;C130780&gt;Provide Data&lt;/C130780&gt;&lt;C130781&gt;Provide Data&lt;/C130781&gt;&lt;C130782&gt;Provide Data&lt;/C130782&gt;&lt;C130783&gt;Provide Data&lt;/C130783&gt;&lt;C130784&gt;Provide Data&lt;/C130784&gt;&lt;C130785&gt;Provide Data&lt;/C130785&gt;&lt;C130786&gt;Provide Data&lt;/C130786&gt;&lt;C130787&gt;Provide Data&lt;/C130787&gt;&lt;C130788&gt;Provide Data&lt;/C130788&gt;&lt;C130789&gt;Provide Data&lt;/C130789&gt;&lt;C130790&gt;Provide Data&lt;/C130790&gt;&lt;C130791&gt;Provide Data&lt;/C130791&gt;&lt;C130792&gt;Provide Data&lt;/C130792&gt;&lt;C130793&gt;Provide Data&lt;/C130793&gt;&lt;C130794&gt;Provide Data&lt;/C130794&gt;&lt;postBackURL&gt;&lt;/postBackURL&gt;&lt;allowModify&gt;1&lt;/allowModify&gt;&lt;/transaction&gt;&lt;returnURL&gt;http://www.google.com&lt;/returnURL&gt;&lt;returnButtonText&gt;Return Text&lt;/returnButtonText&gt;&lt;showCancelButton&gt;true&lt;/showCancelButton&gt;&lt;cancelButtonURL&gt;http://www.google.com&lt;/cancelButtonURL&gt;&lt;cancelButtonText&gt;Cancel Text&lt;/cancelButtonText&gt;&lt;forceTimeoutTimeFrame&gt;0&lt;/forceTimeoutTimeFrame&gt;&lt;forceTimeoutRedirectURL&gt;http://www.google.com&lt;/forceTimeoutRedirectURL&gt;&lt;/cart&gt;&lt;/cXML&gt;">
+        <br>
+        <textarea style="width: 75%; height: 350px;">&lt;?xml version='1.0' encoding='UTF-8' ?&gt;
+&lt;!DOCTYPE cXML SYSTEM 'http://xml.cxml.org/schemas/cXML/1.2.014/cXML.dtd'&gt;
+&lt;cXML xml:lang='en-us'&gt;
+	&lt;cart&gt;
+		&lt;transaction lineNum='1' txID='18397'&gt;
+			&lt;qty&gt;1&lt;/qty&gt;
+			&lt;amount&gt;25.43&lt;/amount&gt;
+			&lt;accessKey&gt;df18ee0f-8d9a-45aa-a29e-d487c21de374&lt;/accessKey&gt;
+			&lt;customerID&gt;1463&lt;/customerID&gt;
+			&lt;C130771&gt;Provide Data&lt;/C130771&gt;
+			&lt;C130772&gt;Provide Data&lt;/C130772&gt;
+			&lt;C130773&gt;Provide Data&lt;/C130773&gt;
+			&lt;C130774&gt;Provide Data&lt;/C130774&gt;
+			&lt;C130775&gt;Provide Data&lt;/C130775&gt;
+			&lt;C130776&gt;Provide Data&lt;/C130776&gt;
+			&lt;C130777&gt;Provide Data&lt;/C130777&gt;
+			&lt;C130778&gt;Provide Data&lt;/C130778&gt;
+			&lt;C130779&gt;Provide Data&lt;/C130779&gt;
+			&lt;C130780&gt;Provide Data&lt;/C130780&gt;
+			&lt;C130781&gt;Provide Data&lt;/C130781&gt;
+			&lt;C130782&gt;Provide Data&lt;/C130782&gt;
+			&lt;C130783&gt;Provide Data&lt;/C130783&gt;
+			&lt;C130784&gt;Provide Data&lt;/C130784&gt;
+			&lt;C130785&gt;Provide Data&lt;/C130785&gt;
+			&lt;C130786&gt;Provide Data&lt;/C130786&gt;
+			&lt;C130787&gt;Provide Data&lt;/C130787&gt;
+			&lt;C130788&gt;Provide Data&lt;/C130788&gt;
+			&lt;C130789&gt;Provide Data&lt;/C130789&gt;
+			&lt;C130790&gt;Provide Data&lt;/C130790&gt;
+			&lt;C130791&gt;Provide Data&lt;/C130791&gt;
+			&lt;C130792&gt;Provide Data&lt;/C130792&gt;
+			&lt;C130793&gt;Provide Data&lt;/C130793&gt;
+			&lt;C130794&gt;Provide Data&lt;/C130794&gt;
+			&lt;postBackURL&gt;&lt;/postBackURL&gt;
+			&lt;allowModify&gt;1&lt;/allowModify&gt;
+		&lt;/transaction&gt;
+		&lt;returnURL&gt;http://www.google.com&lt;/returnURL&gt;
+		&lt;returnButtonText&gt;Return Text&lt;/returnButtonText&gt;
+		&lt;showCancelButton&gt;true&lt;/showCancelButton&gt;
+		&lt;cancelButtonURL&gt;http://www.google.com&lt;/cancelButtonURL&gt;
+		&lt;cancelButtonText&gt;Cancel Text&lt;/cancelButtonText&gt;
+		&lt;forceTimeoutTimeFrame&gt;0&lt;/forceTimeoutTimeFrame&gt;
+		&lt;forceTimeoutRedirectURL&gt;http://www.google.com&lt;/forceTimeoutRedirectURL&gt;
+	&lt;/cart&gt;
+&lt;/cXML&gt;
+</textarea>
+        <br>
+        
+
+        <!--
+        ****************************************************************
+        RTIType is a required form input. The value must be 'xmlPost'
+        if this is an xml post.  The other option is 'formPost' if posting
+        a form.  See the Form RTI Posting documentation for further
+        information on the Form Post RTI method.
+        ****************************************************************
+        -->
+        <input type="hidden" name="RTIType" value="xmlPost">
+        <input type="submit" name="submit" value="PostData">
+    </form></div>
+
+<div id="ext_session_alive_reload_prompt" style="display: none;"><div><div>To Keep Your Session Active<br>page will reload in <span id="session_live_reloader_countdown">30</span> seconds<br><a id="ext_session_alive_reload_rule_id" href="chrome-extension://lhobbakbeomfcgjallalccfhfcgleinm/settings.html" target="_rule_settings">Edit Rule<br></a></div><div><button type="button" id="ext_session_alive_reload_cancel">Wait 1 minute</button></div></div></div></body></html>

@@ -1,8 +1,10 @@
 import React from 'react';
 import {
-  Container, Col, Row, Image,
+  Container, Col, Row, Image, Alert
 } from 'react-bootstrap';
 import { schoolYear as year } from '../data/Data';
+import './toolbox/littleton.css';
+import logo from '../data/Littleton/logo.png';
 
 function Header() {
   return (
