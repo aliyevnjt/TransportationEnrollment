@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Nav, Navbar, Container, Jumbotron,
+  Nav, Navbar, Container, Jumbotron
 } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -50,7 +50,7 @@ const AdminPanel = () => {
                     <h3>
                       Name:
                       {' '}
-                      {auth.user.name}
+                      {auth.user.firstName} {auth.user.lastName}
                       <br />
                       Email:
                       {' '}

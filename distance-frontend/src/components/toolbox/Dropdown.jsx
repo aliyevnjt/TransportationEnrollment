@@ -37,7 +37,6 @@ const Dropdown = (props) => {
 
 Dropdown.defaultProps = {
   required: true
-
 };
 Dropdown.propTypes = {
   id: PropTypes.string.isRequired,

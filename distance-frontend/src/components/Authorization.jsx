@@ -11,12 +11,8 @@ export const useAuth = () => useContext(authContext);
 function useProvideAuth() {
   const [user, setUser] = useState(null);
 
-  const signin = (googleProfile) => {
-    setUser({
-      name: googleProfile.name,
-      email: googleProfile.email,
-      imageUrl: googleProfile.imageUrl
-    });
+  const signin = (userData) => {
+    setUser(userData);
   };
 
   const signout = () => {

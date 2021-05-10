@@ -6,7 +6,7 @@ import { schools, grades, schoolYear } from '../../data/Data';
 import FormGroup from './FormGroup';
 
 const Student = (props) => {
-  const { counter, onChange } = props;
+  const { counter, onChange, hasDOB } = props;
   const [gradeOptions, setGradeOptions] = useState(grades);
   const schoolLabel = `School (${schoolYear})`;
 
@@ -40,13 +40,16 @@ const Student = (props) => {
           label="Student Last Name"
           placeholder=""
         />
-        <FormGroup
-          id="birthDate"
-          type="text"
-          onChange={onChange}
-          label="Student Date of Birth"
-          placeholder="mm/dd/yyyy"
-        />
+        {hasDOB
+          ? <FormGroup
+            id="birthDate"
+            type="text"
+            onChange={onChange}
+            label="Student Date of Birth"
+            placeholder="mm/dd/yyyy"
+          />
+          : <></>
+        }
       </Form.Row>
       <Form.Row counter={counter}>
         <Dropdown
@@ -67,8 +70,12 @@ const Student = (props) => {
     </div>
   );
 };
+Student.defaultProps = {
+  hasDOB: true
+};
 Student.propTypes = {
   counter: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  hasDOB: PropTypes.bool
 };
 export default Student;

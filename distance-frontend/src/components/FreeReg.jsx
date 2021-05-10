@@ -4,7 +4,7 @@ import { Container, Button, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import ConstructTable from './toolbox/ConstructTable';
+import constructTable from './toolbox/ConstructTable';
 import { baseURL, adminYear } from '../data/Data';
 
 function FreeReg(props) {
@@ -32,7 +32,7 @@ function FreeReg(props) {
     setPageBody(
       <div>
         <Container className="pt-3 " fluid="sm">
-          {ConstructTable(data)}
+          {constructTable(data)}
         </Container>
 
         <Container>
