@@ -10,7 +10,7 @@ import {
   Row,
   Card
 } from 'react-bootstrap';
-import { baseURL, locality, adminYear } from '../data/Data';
+import { locality, adminYear } from '../data/Data';
 import Header from './Header';
 import Student from './toolbox/Student';
 import ParentBox from './toolbox/ParentBox';
@@ -29,6 +29,7 @@ function RegistrationForm() {
   const [parentInfo, setParentInfo] = useState({});
   const [validated, setValidated] = useState(false);
   const history = useHistory();
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     // studentData state is updated with address and parent info

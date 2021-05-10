@@ -5,7 +5,7 @@ import JsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import axios from 'axios';
 import {
-  headers, baseURL, locality, enrollmentStatus
+  headers, locality, enrollmentStatus
 } from '../data/Data';
 import Student from './toolbox/Student';
 import constructTable from './toolbox/ConstructTable';
@@ -16,6 +16,7 @@ function AdminSearch() {
   // TODO how does it work if students have registrations for multiple years
   // do we keep adding to student_info or create student_info_2022 ...
   // FIXME cannot search with address and/or other fields
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,

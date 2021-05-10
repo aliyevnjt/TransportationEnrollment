@@ -5,12 +5,12 @@ import GoogleButton from 'react-google-button';
 import { useAuth } from './Authorization';
 import { refreshTokenSetup } from './toolbox/RefreshToken';
 import axios from 'axios';
-import {baseURL} from '../data/Data';
 
 function AdminLogin() {
   const history = useHistory();
   const location = useLocation();
   const auth = useAuth();
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   // TODO see if you can do this in down stream
   const { from } = location.state || { from: { pathname: '/' } };

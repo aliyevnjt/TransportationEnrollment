@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {Button, Form, Row} from 'react-bootstrap';
 import axios from 'axios';
-import {
-  baseURL, enrollmentStatus, locality
-} from '../data/Data';
+import { enrollmentStatus, locality } from '../data/Data';
 import Student from './toolbox/Student';
 import ParentBox from './toolbox/ParentBox';
 import AddressBox from './toolbox/AddressBox';
@@ -18,6 +16,7 @@ function AdminStudentEntry() {
     zip: locality.zipCode
   });
   const [validated, setValidated] = useState(false);
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     // inputs state is updated with address info

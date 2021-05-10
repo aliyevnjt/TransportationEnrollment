@@ -36,9 +36,6 @@ const headers = [
   // { label: 'Unit', key: 'unit' },
 ];
 
-const baseURL = 'http://localhost:8080/api';
-// const baseURL = '/api';
-
 const schools = [
   { label: 'LITTLETON HIGH SCHOOL', value: 'LHS' },
   { label: 'LITTLETON MIDDLE SCHOOL', value: 'LMS' },
@@ -146,7 +143,6 @@ export {
   cities,
   states,
   schoolYears,
-  baseURL,
   headers,
   registration,
   locality,

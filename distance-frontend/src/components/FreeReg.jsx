@@ -5,9 +5,10 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import constructTable from './toolbox/ConstructTable';
-import { baseURL, adminYear } from '../data/Data';
+import { adminYear } from '../data/Data';
 
 function FreeReg(props) {
+  const baseURL = process.env.REACT_APP_BASE_URL;
   const { location } = props;
   const history = useHistory();
   const [pageBody, setPageBody] = useState();

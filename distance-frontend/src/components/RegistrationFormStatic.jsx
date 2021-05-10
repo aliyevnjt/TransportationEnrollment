@@ -4,9 +4,7 @@ import {
 } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import {
-  locality, baseURL
-} from '../data/Data';
+import { locality } from '../data/Data';
 import Header from './Header';
 import Student from './toolbox/Student';
 import AddressBoxStatic from './toolbox/AddressBoxStatic';
@@ -22,6 +20,7 @@ function RegistrationFormStatic() {
   });
   const [parentInfo, setParentInfo] = useState({});
   const history = useHistory();
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   const handleSubmit = async (event) => {
     if (event) {

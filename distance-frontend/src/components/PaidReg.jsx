@@ -4,7 +4,7 @@ import { Container, Button, Col, Row, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import Header from './Header';
 import constructTable from './toolbox/ConstructTable';
-import { baseURL, adminYear } from '../data/Data';
+import { adminYear } from '../data/Data';
 import PropTypes from 'prop-types';
 import UniPayFeeSchedule from './UniPayFeeSchedule';
 
@@ -12,6 +12,7 @@ import UniPayFeeSchedule from './UniPayFeeSchedule';
 // data comes back including the free student data.
 // Update free student State after submitting the data.
 function PaidReg(props) {
+  const baseURL = process.env.REACT_APP_BASE_URL;
   const { location } = props;
   const maxFee = 675;
   let total = 0;
