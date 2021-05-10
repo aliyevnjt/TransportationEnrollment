@@ -7,20 +7,37 @@ import axios from 'axios';
 import {
   headers, baseURL, locality, enrollmentStatus
 } from '../data/Data';
-import Student from './Student';
-import constructAdminTable from './toolbox/ConstructAdminTable';
+import Student from './toolbox/Student';
+import constructTable from './toolbox/ConstructTable';
 import AddressBox from './toolbox/AddressBox';
 import Dropdown from './toolbox/Dropdown';
 
 function AdminSearch() {
+  // TODO how does it work if students have registrations for multiple years
+  // do we keep adding to student_info or create student_info_2022 ...
+  // FIXME cannot search with address and/or other fields
+
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zipCode: locality.zipCode
+    zip: locality.zipCode
   });
   const [inputs, setInputs] = useState({});
   const [table, setTable] = useState();
   const [adminSearchData, setAdminSearchData] = useState([{}]);
+  const data = {
+    id: 'adminSearch',
+    headers: {
+      fname: 'First Name',
+      lname: 'Last Name',
+      grade: 'Grade',
+      enrollmentStatus: 'Status',
+      distanceFromSchool: 'Distance',
+      address: 'Address',
+      school: 'School'
+    },
+    options: ''
+  };
 
   useEffect(() => {
     // inputs state is updated with address info
@@ -39,8 +56,9 @@ function AdminSearch() {
       if (event.target.id === 'adminForm') {
         console.log('inputs', inputs);
         try {
-          const res = await axios.post(`${baseURL}/student/request/`, inputs);
-          setTable(constructAdminTable(res.data));
+          const res = await axios.post(`${baseURL}/studentSearch`, inputs);
+          data.options = res.data;
+          setTable(constructTable(data));
           setAdminSearchData(res.data);
         } catch (err) {
           console.log(err);
@@ -58,10 +76,11 @@ function AdminSearch() {
   // console.log('adminSearchData', adminSearchData);
   return (
     <div>
-      <Form id="adminForm" onSubmit={handleSubmit}>
+      <Form noValidate id="adminForm" onSubmit={handleSubmit}>
         <Student
           counter={0}
           onChange={handleInputChange}
+          hasDOB={false}
         />
         <Dropdown
           id="enrollmentStatus"

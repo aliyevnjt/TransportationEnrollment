@@ -6,10 +6,7 @@ import com.bit.services.AdminSettingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -19,7 +16,7 @@ import javax.validation.Valid;
  */
 @RestController
 @CrossOrigin(origins = "*")
-public class SchoolYearRestController {
+public class AdminSettingsRestController {
 
     @Autowired
     private AdminSettingsRepo adminSettingsRepo;
@@ -27,12 +24,16 @@ public class SchoolYearRestController {
     @Autowired
     private AdminSettingsService adminSettingsService;
 
-    // TODO save only in the specified school year row
-    // do not create new id or new row
+    @GetMapping("/api/adminSettings")
+    public ResponseEntity getMessages() {
+        return new ResponseEntity(adminSettingsRepo.findAll(), HttpStatus.OK);
+    }
+
     @PutMapping("/api/updateSettings")
     public ResponseEntity updateSettings(@Valid @RequestBody AdminSettings adminSettings) {
         adminSettingsService.updateAdminSettings(adminSettings);
         return new ResponseEntity(adminSettings, HttpStatus.CREATED);
     }
+
 
 }

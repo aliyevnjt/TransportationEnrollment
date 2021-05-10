@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static com.bit.model.StudentInfo.RegistrationStatus.REGISTERED;
+
 @Service
 public class PaymentTrackerService {
 
@@ -50,13 +52,13 @@ public class PaymentTrackerService {
         Map<String, String> paymentInfo = splitQuery(url);
         UUID uniqueID = UUID.fromString(paymentInfo.get("UniqueID"));
         double amountPaid = Double.parseDouble(paymentInfo.get("AmountPaid"));
-        LocalDateTime dateTimeProcessed = parseDateTime(paymentInfo.get("Date/TimeProcessed"));
+        LocalDateTime processedDate = parseDateTime(paymentInfo.get("Date/TimeProcessed"));
         long confirmationNumber = Long.parseLong(paymentInfo.get("ConfirmationNumber"));
         long customerID = Long.parseLong(paymentInfo.get("CustomerID"));
-        List<StudentInfo> stds = studentRepository.findByuniqueID(uniqueID);
-        stds.forEach(s -> s.setStatus(StudentInfo.RegistrationStatus.ENROLLED));
+        List<StudentInfo> stds = studentRepository.findByUniqueID(uniqueID);
+        stds.forEach(s -> s.setRegistrationStatus(REGISTERED));
         studentRepository.saveAll(stds);
-        return new PaymentTracker(uniqueID, dateTimeProcessed, customerID, amountPaid, "2021", confirmationNumber);
+        return new PaymentTracker(uniqueID, processedDate, customerID, amountPaid, "2021", confirmationNumber);
     }
 
     private static LocalDateTime parseDateTime(String dateTime){

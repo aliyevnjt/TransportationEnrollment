@@ -14,7 +14,7 @@ const AddressBoxStatic = (props) => {
           type="text"
           value={addressInfo.address}
           onChange={onChange}
-          label="* Address"
+          label="Address"
           placeholder="1234 Main St"
           required
         />
@@ -46,6 +46,6 @@ const AddressBoxStatic = (props) => {
 };
 AddressBoxStatic.propTypes = {
   addressInfo: PropTypes.instanceOf({}).isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 export default AddressBoxStatic;

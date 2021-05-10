@@ -1,6 +1,6 @@
 services:
   app:
-    image: 'distance-spring-boot:latest'
+    image: 'distance:latest'
     build:
       context: .
     container_name: app

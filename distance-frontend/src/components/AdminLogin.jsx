@@ -4,8 +4,8 @@ import { useGoogleLogin } from 'react-google-login';
 import GoogleButton from 'react-google-button';
 import { useAuth } from './Authorization';
 import { refreshTokenSetup } from './toolbox/RefreshToken';
-
-const clientId = '199680818186-hej6rlkb9hbh1n5csgoqjhlalo2lfte0.apps.googleusercontent.com';
+import axios from 'axios';
+import {baseURL} from '../data/Data';
 
 function AdminLogin() {
   const history = useHistory();
@@ -21,41 +21,43 @@ function AdminLogin() {
   // FIXME this is run twice when page loads
   console.log('LOGIN', login);
   const onSuccess = async (googleRes) => {
-    const googleProfile = googleRes.profileObj;
-    console.log('Login Success: currentUser:', googleProfile);
-    // alert(
-    //   `Logged in successfully welcome ${googleProfile.name} \nSee console for full profile object.`,
-    // );
-    login(googleProfile);
-    refreshTokenSetup(googleRes);
-
     // TODO  We want to use this information to log a user into our own back-end,
     //  so the next step is to send the ID token to our own API:
-    // const serverRes = await fetch('/api/googleAuth', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     token: googleRes.tokenId,
-    //   }),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
-    // const data = await serverRes.json();
-    // store returned user somehow
+    console.log(googleRes.tokenId);
+    const serverRes = await axios.post(`${baseURL}/googleAuth`, {
+      tokenId: googleRes.tokenId,
+      clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID
+    });
+
+    console.log('serverRes:', serverRes);
+    if (serverRes.data) {
+      console.log('Login Success: googleRes:', googleRes);
+      // alert(
+      //   `Logged in successfully welcome ${googleProfile.name} \nSee console for full profile object.`,
+      // );
+      const userData = serverRes.data;
+      userData.imageUrl = googleRes.profileObj.imageUrl;
+      console.log('Login Success: currentUser:', userData);
+      login(userData);
+      refreshTokenSetup(googleRes);
+    } else {
+      alert('Failed to login. Please check with admin.');
+      history.push('/login');
+    }
+
   };
 
   const onFailure = (res) => {
     console.log('Login failed: res:', res);
-    // alert("Failed to login. Please check with admin.");
+    alert('Failed to login. Please check with admin.');
   };
-  console.log('CLIENT ID:', clientId);
   const { signIn } = useGoogleLogin({
     onSuccess,
     onFailure,
-    clientId,
+    clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
     cookiePolicy: 'single_host_origin',
     isSignedIn: true,
-    accessType: 'offline',
+    accessType: 'offline'
     // responseType: 'code',
     // prompt: 'consent',
   });

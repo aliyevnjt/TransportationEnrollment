@@ -1,6 +1,6 @@
 package com;
 
-import com.bit.model.form_data.AddresExcel;
+import com.bit.model.form_data.Address;
 import com.bit.model.form_data.Grades;
 import com.bit.model.form_data.Schools;
 import org.springframework.boot.SpringApplication;
@@ -27,10 +27,7 @@ public class DistanceApplication {
 	}
 
 	@Bean
-	public AddresExcel getAddres(){
-		return new AddresExcel();
-	}
-
+	public Address getAddress(){ return new Address(); }
 
 	public static void main(String[] args) {
 		SpringApplication.run(DistanceApplication.class, args);

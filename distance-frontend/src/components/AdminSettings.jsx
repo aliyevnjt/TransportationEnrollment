@@ -8,16 +8,9 @@ import { schoolYears, registration, baseURL } from '../data/Data';
 import Dropdown from './toolbox/Dropdown';
 
 function AdminSettings() {
-  // TODO
+  // FIXME initial values do not populate for year and regStatus
   // Bonus: reset to default(saved version from DB)
-  // Different defaults for each year
 
-  // FIXME DB should have more meaningful column names rather than message 1,2,3
-  // const [message, setMessage] = useState({
-  //   open: 'earlyReg',
-  //   closed: 'lateReg',
-  //   notification: 'notification',
-  // });
   const [saveButton, setSaveButton] = useState(true);
   const [checkButtonStatus, setCheckButtonStatus] = useState(false);
   const [adminSettings, setAdminSettings] = useState({});
@@ -40,16 +33,9 @@ function AdminSettings() {
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
-      // FIXME this is temporary. send adminSettings only once the DB has the same values
-      const tempSettings = {
-        value: adminSettings.value,
-        message1: adminSettings.message1,
-        message2: adminSettings.message2,
-        message3: adminSettings.message3
-      };
-      console.log('TEMP SETTINGS:', tempSettings);
+      // TODO check the response and add a message as "successfully saved!"
       try {
-        const res = await axios.put(`${baseURL}/updateSettings`, tempSettings);
+        const res = await axios.put(`${baseURL}/updateSettings`, adminSettings);
         console.log(res);
       } catch (err) {
         console.log(err);
@@ -57,6 +43,7 @@ function AdminSettings() {
     }
   };
   const handleInputChange = (event) => {
+    console.log(event);
     setAdminSettings((previous) => ({ ...previous, [event.target.id]: event.target.value }));
     setSaveButton(false);
   };
@@ -64,6 +51,9 @@ function AdminSettings() {
     handleInputChange(event);
     setSaveButton(false);
   };
+    // FIXME saveButton's state must be tied to checkButtonStatus
+    // when the notification is checked, DB must be updated so next time its state can be populated correctly
+    // must be shown on the registration page if checked
   const handleCheckButton = () => {
     setCheckButtonStatus(!checkButtonStatus);
     setSaveButton(false);
@@ -80,20 +70,20 @@ function AdminSettings() {
     <>
       <Row>
         <Dropdown
-          id="schoolYear"
+          id="adminYear"
           onChange={handleInputChange}
           label="Bus Registration Year"
           options={schoolYears}
           value={
-            adminSettings.value
-              ? schoolYears.filter((obj) => obj.adminYear === adminSettings.value)[0].label
+            adminSettings.adminYear
+              ? schoolYears.filter((obj) => obj.adminYear === adminSettings.adminYear)[0].label
               : ''
           }
         />
       </Row>
       <Row>
         <Dropdown
-          id="registrationStatus"
+          id="regStatus"
           onChange={handleDropdownChange}
           label="Registration Status"
           value={adminSettings.regStatus}
@@ -104,8 +94,8 @@ function AdminSettings() {
         <Row>
           <InputComponent
             buttonText="Open"
-            id="message1"
-            value={adminSettings.message1}
+            id="openMessage"
+            value={adminSettings.openMessage}
             onChange={handleInputChange}
           />
         </Row>
@@ -113,8 +103,8 @@ function AdminSettings() {
         <Row>
           <InputComponent
             buttonText="Closed"
-            id="message2"
-            value={adminSettings.message2}
+            id="closedMessage"
+            value={adminSettings.closedMessage}
             onChange={handleInputChange}
           />
         </Row>
@@ -128,9 +118,9 @@ function AdminSettings() {
           />
           <InputComponent
             buttonText="Notification"
-            id="message3"
+            id="notification1"
             onChange={handleInputChange}
-            value={adminSettings.message3}
+            value={adminSettings.notification1}
           />
         </InputGroup.Prepend>
       </div>

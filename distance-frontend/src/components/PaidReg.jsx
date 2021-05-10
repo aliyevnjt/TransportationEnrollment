@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, Button, Col, Row, Alert, Form } from 'react-bootstrap';
+import { Container, Button, Col, Row, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import Header from './Header';
-import ConstructTable from './toolbox/ConstructTable';
-import { baseURL } from '../data/Data';
+import constructTable from './toolbox/ConstructTable';
+import { baseURL, adminYear } from '../data/Data';
 import PropTypes from 'prop-types';
+import UniPayFeeSchedule from './UniPayFeeSchedule';
 
 // FIXME - When you refresh the page all student
 // data comes back including the free student data.
@@ -32,22 +33,24 @@ function PaidReg(props) {
     due: 'Due',
     enrollmentStatus: 'Status',
     distanceFromSchool: 'Distance',
-    school: 'School',
+    school: 'School'
   };
   const freeData =
     free.length > 0
       ? {
-          headers,
-          options: free,
-        }
+        headers,
+        options: free,
+        id: 'freeStudents'
+      }
       : '';
 
   const paidData =
     paid.length > 0
       ? {
-          headers,
-          options: paid,
-        }
+        headers,
+        options: paid,
+        id: 'paidStudents'
+      }
       : '';
 
   // TODO how is this possible?
@@ -59,14 +62,14 @@ function PaidReg(props) {
   const calculateFee = () => {
     studentData.forEach((element) => {
       if (element.enrollmentStatus === 'free') {
-        element.due = 0;
+        element.due = '$0';
       } else if (element.enrollmentStatus === 'paid') {
-        if (cartTotal < maxFee) {
-          element.due = 225;
+        if (total < maxFee) {
+          element.due = '$225';
           total += 225;
           setCartTotal(total);
         } else {
-          element.due = 0;
+          element.due = '$0';
         }
       }
       console.log('after calc', this);
@@ -76,17 +79,15 @@ function PaidReg(props) {
 
   useEffect(() => {
     calculateFee();
-    console.log('free', free);
-    console.log('freeData', freeData);
     if (freeData) {
       setFreePageBody(
         <div id="freeTable">
           <Container className="pt-3 " fluid="sm">
-            {ConstructTable(freeData)}
+            {constructTable(freeData)}
           </Container>
           <Container>
             <Row className="justify-content-md-center">
-              <Col xs lg="7">
+              <Col xs lg="9">
                 <Alert variant="success">
                   <p>
                     The above listed student/s are eligible for free
@@ -111,14 +112,15 @@ function PaidReg(props) {
       setFreePageBody(<div />);
     }
     if (paidData) {
+      console.log(UniPayFeeSchedule);
       setPageBody(
         <Container className="mt-5" fluid="sm">
-          {ConstructTable(paidData)}
+          {constructTable(paidData)}
           <Row className="justify-content-md-center">
-            <Col xs lg="7">
+            <Col xs lg="9">
               <p>
                 The above listed student/s are eligible for paid school
-                transportation. Please click Proceed to Payment button below to
+                transportation. Please click Proceed to Payment Button below to
                 pay the registration fee. Students are not registered until you
                 complete payment.
               </p>
@@ -157,6 +159,8 @@ function PaidReg(props) {
     }
   };
   let sampleData = '';
+  // TODO all of these values must be in config
+  // it is not secure to include this info in html. We can find a different company and ask the schools to use that instead.
   //  let uniqueID = paid[0].paymentId;
   const returnURL = 'test.flowlyst.io';
   const cancelButtonURL = 'test.flowlyst.io';
@@ -165,7 +169,7 @@ function PaidReg(props) {
   console.log('Total:', cartTotal);
 
   let xmlData = `<?xml version='1.0' encoding='UTF-8' ?><!DOCTYPE cXML SYSTEM 'http://xml.cxml.org/schemas/cXML/1.2.014/cXML.dtd'><cXML xml:lang='en-us'><cart><transaction lineNum='1' txID='18397'><qty>1</qty><amount>${cartTotal}</amount><accessKey>df18ee0f-8d9a-45aa-a29e-d487c21de374</accessKey><customerID>1463</customerID><C130771>${
-    paid[0].paymentId
+    paid[0].uniqueID
   }</C130771><C130772>${
     paid[0].address
   }</C130772><C130773>${sampleData}</C130773><C130774>${
@@ -202,7 +206,7 @@ function PaidReg(props) {
 
   return (
     <div>
-      <Header />
+      <Header adminYear={adminYear} />
       {freePageBody}
       {freeData && paidData ? (
         <Row className="justify-content-md-center">
@@ -218,22 +222,27 @@ function PaidReg(props) {
       )}
       {pageBody}
       {paidData ? (
-        <Row className="justify-content-md-center">
-          <form
-            action="https://paymentsuat.unibank.com/RemoteTransaction/RTI.aspx"
-            method="post"
-            onsubmit="try {return window.confirm('This form may not function properly due to certain security constraints.\nContinue?');} catch (e) {return false;}">
-            <input type="hidden" name="xmlCartData" value={xmlData} />
-            <input type="hidden" name="RTIType" value="xmlPost" />
-            <Button
-              as="input"
-              value="Proceed to Payment"
-              type="submit"
-              name="submit"
-              disabled={freeData ? paymentButton : false}
-            />
-          </form>
-        </Row>
+        <div>
+          <Row className="justify-content-md-center">
+            <form
+              action="https://paymentsuat.unibank.com/RemoteTransaction/RTI.aspx"
+              method="post"
+              onSubmit="try {return window.confirm('This form may not function properly due to certain security constraints.\nContinue?');} catch (e) {return false;}">
+              <input type="hidden" name="xmlCartData" value={xmlData} />
+              <input type="hidden" name="RTIType" value="xmlPost" />
+              <Button
+                as="input"
+                value="Proceed to Payment"
+                type="submit"
+                name="submit"
+                disabled={freeData ? paymentButton : false}
+              />
+            </form>
+          </Row>
+          <Row className="justify-content-md-center mt-5">
+            <UniPayFeeSchedule />
+          </Row>
+        </div>
       ) : (
         ''
       )}
@@ -242,5 +251,6 @@ function PaidReg(props) {
 }
 PaidReg.propTypes = {
   location: PropTypes.instanceOf({}).isRequired,
+  adminYear: PropTypes.string.isRequired
 };
 export default PaidReg;
