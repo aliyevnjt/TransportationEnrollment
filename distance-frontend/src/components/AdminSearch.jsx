@@ -89,11 +89,6 @@ function AdminSearch() {
           label="Enrollment Status"
           options={enrollmentStatus}
         />
-        <AddressBox
-          addressInfo={addressInfo}
-          onChange={handleAddressInfoChange}
-        />
-
         <Button as="input" className="mr-1" type="submit" value="Search" />
 
         <Button

@@ -83,7 +83,7 @@ public class StudentInfo {
     private String adminYear;
 
     @NotNull(message = "Birth Date is mandatory")
-    @JsonFormat(pattern = "M/d/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     private String enrollmentStatus;

@@ -15,7 +15,7 @@ const FormGroup = (props) => {
         disabled={disabled}
         required={required}
       />
-      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      <Form.Control.Feedback type="invalid">This field is mandatory.</Form.Control.Feedback>
     </Form.Group>
   );
 };
@@ -25,7 +25,7 @@ FormGroup.defaultProps = {
   disabled: false,
   required: true,
   onChange: {},
-  placeholder: '',
+  placeholder: ''
 };
 FormGroup.propTypes = {
   id: PropTypes.string.isRequired,
@@ -34,6 +34,6 @@ FormGroup.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
-  required: PropTypes.bool,
+  required: PropTypes.bool
 };
 export default FormGroup;

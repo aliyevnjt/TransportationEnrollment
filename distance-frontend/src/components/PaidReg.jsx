@@ -203,7 +203,6 @@ function PaidReg(props) {
 
   // TODO - https://stackoverflow.com/questions/168455/how-do-you-post-to-an-iframe
   // TODO - Embed unibank site into iframe
-  // TODO - convert json to xml in the format below
 
   return (
     <div>

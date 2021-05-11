@@ -55,6 +55,7 @@ function AdminStudentEntry() {
     console.log(address);
   };
   // TODO save button should be disabled until all fields are entered
+  // TODO add paymentType if paid add options ==> Check, Cash, Money Order
   return (
     <div>
       <Row>

@@ -1,3 +1,4 @@
+// FIXME get it from DB
 const grades = [
   { label: 'K', value: 'K', level: 'SLS' },
   { label: '1', value: '1', level: 'SLS' },
@@ -14,6 +15,7 @@ const grades = [
   { label: '12', value: '12', level: 'LHS' }
 ];
 
+// FIXME get it from DB
 const headers = [
   { label: 'First Name', key: 'fname' },
   { label: 'Last Name', key: 'mName' },
@@ -35,7 +37,7 @@ const headers = [
   // { label: 'Id', key: 'id' },
   // { label: 'Unit', key: 'unit' },
 ];
-
+// FIXME get it from DB
 const schools = [
   { label: 'LITTLETON HIGH SCHOOL', value: 'LHS' },
   { label: 'LITTLETON MIDDLE SCHOOL', value: 'LMS' },
@@ -65,11 +67,12 @@ const schoolYears = [
   // { label: 'School Year 2023-2024', value: 'FY24', adminYear: '2023' },
   // { label: 'School Year 2024-2025', value: 'FY25', adminYear: '2024' }
 ];
+// FIXME get it from DB
 const registration = [
   { label: 'Open', value: 'Open' },
   { label: 'Closed', value: 'Closed' }
 ];
-
+// FIXME get it from DB
 const enrollmentStatus = [
   { label: 'free', value: 'free' },
   { label: 'paid', value: 'paid' }

@@ -43,10 +43,9 @@ const Student = (props) => {
         {hasDOB
           ? <FormGroup
             id="birthDate"
-            type="text"
+            type="date"
             onChange={onChange}
             label="Student Date of Birth"
-            placeholder="mm/dd/yyyy"
           />
           : <></>
         }
