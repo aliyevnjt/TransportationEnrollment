@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { Container, Button, Col, Row, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import Header from './Header';
-import ConstructTable from './toolbox/ConstructTable';
-import { baseURL, adminYear } from '../data/Data';
+import constructTable from './toolbox/ConstructTable';
+import { adminYear } from '../data/Data';
 import PropTypes from 'prop-types';
 import UniPayFeeSchedule from './UniPayFeeSchedule';
 
@@ -12,6 +12,7 @@ import UniPayFeeSchedule from './UniPayFeeSchedule';
 // data comes back including the free student data.
 // Update free student State after submitting the data.
 function PaidReg(props) {
+  const baseURL = process.env.REACT_APP_BASE_URL;
   const { location } = props;
   const maxFee = 675;
   let total = 0;
@@ -83,7 +84,7 @@ function PaidReg(props) {
       setFreePageBody(
         <div id="freeTable">
           <Container className="pt-3 " fluid="sm">
-            {ConstructTable(freeData)}
+            {constructTable(freeData)}
           </Container>
           <Container>
             <Row className="justify-content-md-center">
@@ -115,7 +116,7 @@ function PaidReg(props) {
       console.log(UniPayFeeSchedule);
       setPageBody(
         <Container className="mt-5" fluid="sm">
-          {ConstructTable(paidData)}
+          {constructTable(paidData)}
           <Row className="justify-content-md-center">
             <Col xs lg="9">
               <p>

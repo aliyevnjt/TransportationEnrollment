@@ -4,10 +4,11 @@ import { Container, Button, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import ConstructTable from './toolbox/ConstructTable';
-import { baseURL, adminYear } from '../data/Data';
+import constructTable from './toolbox/ConstructTable';
+import { adminYear } from '../data/Data';
 
 function FreeReg(props) {
+  const baseURL = process.env.REACT_APP_BASE_URL;
   const { location } = props;
   const history = useHistory();
   const [pageBody, setPageBody] = useState();
@@ -32,7 +33,7 @@ function FreeReg(props) {
     setPageBody(
       <div>
         <Container className="pt-3 " fluid="sm">
-          {ConstructTable(data)}
+          {constructTable(data)}
         </Container>
 
         <Container>

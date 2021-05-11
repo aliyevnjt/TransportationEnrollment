@@ -3,10 +3,10 @@ import axios from 'axios';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { baseURL } from '../../data/Data';
 import FormGroup from './FormGroup';
 
 const AddressBox = (props) => {
+  const baseURL = process.env.REACT_APP_BASE_URL;
   const ref = useRef();
   const { addressInfo, onChange } = props;
   const [selections, setSelections] = useState([]);

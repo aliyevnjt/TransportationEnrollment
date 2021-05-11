@@ -70,9 +70,9 @@ function LogoutHooks() {
           alt="React Bootstrap logo"
         />
         {' '}
-        Signed in as
+        {auth.user.roleType}
         {' '}
-        {auth.user.name}
+        {auth.user.firstName}
       </Navbar.Brand>
       <button
         type="button"

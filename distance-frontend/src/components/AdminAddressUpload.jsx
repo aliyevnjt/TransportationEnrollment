@@ -3,12 +3,12 @@ import {
   Button, Form, Col, Table
 } from 'react-bootstrap';
 import axios from 'axios';
-import { baseURL } from '../data/Data';
 
 function AdminAddressUpload() {
   const [file, setFile] = useState({
     name: 'Select file'
   });
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   // FIXME if you browse for a file but not select it and click somewhere else, app crashes
   const uploadFile = async () => {

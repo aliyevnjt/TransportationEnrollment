@@ -14,7 +14,7 @@ public interface StudentRepository extends JpaRepository<StudentInfo, UUID> {
 //    void updateStatus(@Param(value = "id") UUID id, @Param(value = "registration_status") StudentInfo.RegistrationStatus registration_status);
 
     List<StudentInfo> findByUniqueID(UUID uniqueID);
-    List<StudentInfo> findByfname(String fname);
+    List<StudentInfo> findByFname(String fname);
 
 
 }

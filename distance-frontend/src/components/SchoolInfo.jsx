@@ -1,11 +1,11 @@
 import axios from 'axios';
-import {baseURL} from '../data/Data';
 
 // const authContext = createContext();
 // // FIXME must use this downstream but causes circular dependency
 // const useAuthAdminSettings = () => useContext(authContext);
 
 const getSchoolInfo = async () => {
+  const baseURL = process.env.REACT_APP_BASE_URL;
   // FETCH all admin settings to get current year
   const res = await axios.get(`${baseURL}/adminSettings`);
   const currentData = res.data.filter((obj) => obj.activeInd === 'Y');

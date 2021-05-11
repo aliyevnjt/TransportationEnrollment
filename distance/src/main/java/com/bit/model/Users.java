@@ -2,6 +2,7 @@ package com.bit.model;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -56,12 +57,14 @@ public class Users {
     private String activeInd;
 
     @Transient
-    @Setter(AccessLevel.NONE)
+    @Enumerated(EnumType.STRING)
+    @Getter(AccessLevel.NONE)
     private RoleType roleType;
 
-    public void setRoleType() {
-        this.roleType = RoleType.getRoleType(roleCode);
+    public String getRoleType() {
+        return RoleType.getRoleType(this.roleCode).name();
     }
+
 
     @Min(1)
     @Max(9)

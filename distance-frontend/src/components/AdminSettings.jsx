@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios';
 import InputComponent from './toolbox/InputComponent';
-import { schoolYears, registration, baseURL } from '../data/Data';
+import { schoolYears, registration } from '../data/Data';
 import Dropdown from './toolbox/Dropdown';
 
 function AdminSettings() {
@@ -14,6 +14,7 @@ function AdminSettings() {
   const [saveButton, setSaveButton] = useState(true);
   const [checkButtonStatus, setCheckButtonStatus] = useState(false);
   const [adminSettings, setAdminSettings] = useState({});
+  const baseURL = process.env.REACT_APP_BASE_URL;
   let allData;
   let currentData;
 
