@@ -16,7 +16,7 @@ const Dropdown = (props) => {
         {options.map((o) => (
           <option
             key={o.label}
-            defaultValue={value === o.label}
+            selected={value === o.label}
             value={o.value}>
             {o.label}
           </option>

@@ -9,7 +9,6 @@ import {
 } from '../data/Data';
 import Student from './toolbox/Student';
 import constructTable from './toolbox/ConstructTable';
-import AddressBox from './toolbox/AddressBox';
 import Dropdown from './toolbox/Dropdown';
 
 function AdminSearch() {

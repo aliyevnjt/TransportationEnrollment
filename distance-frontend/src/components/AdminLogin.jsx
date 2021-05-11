@@ -13,7 +13,7 @@ function AdminLogin() {
   const baseURL = process.env.REACT_APP_BASE_URL;
 
   // TODO see if you can do this in down stream
-  const { from } = location.state || { from: { pathname: '/' } };
+  const { from } = location.state || { from: { pathname: '/admin' } };
   const login = (googleProfile) => {
     history.replace(from);
     auth.signin(googleProfile);

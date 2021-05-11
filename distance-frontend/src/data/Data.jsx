@@ -17,13 +17,13 @@ const grades = [
 
 // FIXME get it from DB
 const headers = [
+  { label: 'Admin Year', key: 'adminYear' },
   { label: 'First Name', key: 'fname' },
   { label: 'Last Name', key: 'mName' },
   { label: 'Last Name', key: 'lname' },
   { label: 'Birth Date', key: 'birthDate' },
   { label: 'Grade', key: 'grade' },
   { label: 'School', key: 'school' },
-  { label: 'Admin Year', key: 'adminYear' },
   { label: 'Distance From School', key: 'distanceFromSchool' },
   { label: 'Enrollment Status', key: 'enrollmentStatus' },
   { label: 'Address', key: 'address' },
@@ -32,7 +32,10 @@ const headers = [
   { label: 'Zip Code', key: 'zip' },
   { label: 'Parent Name', key: 'parentName' },
   { label: 'Parent Email Address', key: 'parentEmailAddress' },
-  { label: 'Parent Phone Number', key: 'parentPhoneNumber' }
+  { label: 'Parent Phone Number', key: 'parentPhoneNumber' },
+  { label: 'Create Date', key: 'createDate' },
+  { label: 'Unique ID', key: 'uniqueID' },
+  { label: 'Registration Status', key: 'registrationStatus' }
   // { label: 'Homeless', key: 'homeless' },
   // { label: 'Id', key: 'id' },
   // { label: 'Unit', key: 'unit' },
