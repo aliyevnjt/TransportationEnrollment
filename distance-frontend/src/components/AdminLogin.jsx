@@ -4,7 +4,9 @@ import { useGoogleLogin } from 'react-google-login';
 import GoogleButton from 'react-google-button';
 import { useAuth } from './Authorization';
 import { refreshTokenSetup } from './toolbox/RefreshToken';
+import Header from './Header';
 import axios from 'axios';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 function AdminLogin() {
   const history = useHistory();
@@ -26,7 +28,7 @@ function AdminLogin() {
     console.log(googleRes.tokenId);
     const serverRes = await axios.post(`${baseURL}/googleAuth`, {
       tokenId: googleRes.tokenId,
-      clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID
+      clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
     });
 
     console.log('serverRes:', serverRes);
@@ -44,7 +46,6 @@ function AdminLogin() {
       alert('Failed to login. Please check with admin.');
       history.push('/login');
     }
-
   };
 
   const onFailure = (res) => {
@@ -57,26 +58,30 @@ function AdminLogin() {
     clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
     cookiePolicy: 'single_host_origin',
     isSignedIn: true,
-    accessType: 'offline'
+    accessType: 'offline',
     // responseType: 'code',
     // prompt: 'consent',
   });
   return (
     <div>
-      <img
-        src="https://www.littletonps.org/files/Images/LPS%20Logo%20-%20large%20text.jpg"
-        width="300"
-        height="65"
-        className="d-inline-block right-aligned align-top"
-        alt="Littleton Public Schools"
-      />
-      <h1>
-        Welcome to Littleton Public Schools
-      </h1>
-      <h2>
-        Please login with your school email address to access Transport Enrollment Admin Panel.
-      </h2>
-      <GoogleButton onClick={() => signIn()} />
+      <Header page="admin" />
+
+      <Row className="justify-content-md-center">
+        <Col lg="5" md="7" sm="8" xs="12">
+          <Card className="text-center" style={{ margin: 'auto' }}>
+            <Card.Header as="h4"> Admin Login</Card.Header>
+            <Card.Body>
+              <h5>
+                Please login with your school email address to access Transport
+                Enrollment Admin Panel.
+              </h5>
+              <Row className="justify-content-md-center mt-3">
+                <GoogleButton onClick={() => signIn()} />
+              </Row>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 }

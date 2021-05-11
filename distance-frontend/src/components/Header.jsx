@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Col, Row, Image, Alert } from 'react-bootstrap';
 import { schoolYear as year } from '../data/Data';
 import './toolbox/littleton.css';
 import logo from '../data/Littleton/logo.png';
 
-function Header() {
+function Header(props) {
+  const { page } = props;
+  const [helpMessage, setHelpMessage] = useState(
+    <div>
+      <Alert variant="info">
+        If you experience any issues registering your child/ren, please email us
+        at{' '}
+        <a href="mailto: busregistration@littletonps.org">
+          busregistration@littletonps.org
+        </a>
+        . Thank you for using our new automated registration system.
+      </Alert>
+    </div>
+  );
+  useEffect(() => {
+    if (page === 'admin') {
+      setHelpMessage(<div />);
+    }
+  }, []);
+
   // TODO populate alert message from adminSettings
   return (
     <Container className="pt-3">
@@ -19,14 +38,7 @@ function Header() {
       <Row className="mt-1 mb-2 mt-5">
         <h4 className="mx-auto">School Bus Registration Form</h4>
       </Row>
-      <Alert variant="info">
-                If you experience any issues registering your child/ren, please email us
-                at{' '}
-        <a href="mailto: busregistration@littletonps.org">
-                    busregistration@littletonps.org
-        </a>
-                . Thank you for using our new automated registration system.
-      </Alert>
+      {helpMessage}
     </Container>
   );
 }
