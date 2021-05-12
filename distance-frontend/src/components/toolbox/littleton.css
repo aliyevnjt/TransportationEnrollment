@@ -6,3 +6,12 @@
   height: 100%;
   width: 100%;
 }
+
+.logo-small {
+  height: 25%;
+  width: 25%;
+}
+
+.app-bg-color-grey {
+  background-color: #e9ecef;
+}

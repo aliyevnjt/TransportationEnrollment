@@ -8,7 +8,7 @@ import {
   Jumbotron,
   Col,
   Row,
-  Card
+  Card,
 } from 'react-bootstrap';
 import { locality, adminYear } from '../data/Data';
 import Header from './Header';
@@ -17,6 +17,7 @@ import ParentBox from './toolbox/ParentBox';
 import AddressBox from './toolbox/AddressBox';
 import { bigSample } from '../data/BigSample';
 import PropTypes from 'prop-types';
+import MessageBox from './toolbox/MessageBox';
 
 function RegistrationForm() {
   // TODO find a way to add adminYear right here. It is undefined in the beginning ???
@@ -24,12 +25,13 @@ function RegistrationForm() {
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zip: locality.zipCode
+    zip: locality.zipCode,
   });
   const [parentInfo, setParentInfo] = useState({});
   const [validated, setValidated] = useState(false);
   const history = useHistory();
   const baseURL = process.env.REACT_APP_BASE_URL;
+  const [msg, setMsg] = useState(<></>);
 
   useEffect(() => {
     // studentData state is updated with address and parent info
@@ -37,7 +39,7 @@ function RegistrationForm() {
       current.map((student) => ({
         ...student,
         ...addressInfo,
-        ...parentInfo
+        ...parentInfo,
       }))
     );
   }, [addressInfo, parentInfo]);
@@ -79,7 +81,11 @@ function RegistrationForm() {
           console.log('Request completed', res);
           redirectToPage(res.data);
         } catch (err) {
-          console.log('pre-enrollment API errored.', err);
+          const message =
+            'Please check all fields. If you still have problems, ' +
+            'please contact school business office.';
+          console.log('pre-enrollment API error', err);
+          setMsg(<MessageBox message={message} show={true} />);
         }
       }
       setValidated(true);
@@ -98,7 +104,7 @@ function RegistrationForm() {
     const allStudents = [...studentData];
     const tempStudent = {
       ...studentData[eventCounter],
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
     };
     allStudents[eventCounter] = tempStudent;
 
@@ -107,7 +113,7 @@ function RegistrationForm() {
   const addSibling = () => {
     setStudentData((previous) => [
       ...previous,
-      { adminYear: adminYear, ...addressInfo, ...parentInfo }
+      { adminYear: adminYear, ...addressInfo, ...parentInfo },
     ]);
   };
   const handleAddressInfoChange = (address) => {
@@ -117,7 +123,7 @@ function RegistrationForm() {
   const handleParentInfoChange = (event) => {
     setParentInfo((previous) => ({
       ...previous,
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
     }));
   };
 
@@ -129,9 +135,14 @@ function RegistrationForm() {
   return (
     <div>
       <Header adminYear={adminYear} />
+      {msg}
       <Container className="pt-3">
         <Jumbotron>
-          <Form noValidate validated={validated} id="registrationForm" onSubmit={handleSubmit}>
+          <Form
+            noValidate
+            validated={validated}
+            id="registrationForm"
+            onSubmit={handleSubmit}>
             <Student counter={0} onChange={handleInputChange} />
             <AddressBox
               addressInfo={addressInfo}
@@ -142,17 +153,17 @@ function RegistrationForm() {
               onChange={handleParentInfoChange}
             />
             {studentData.slice(1).map((student, index) => (
-              <Card className="bg-light">
-                <Card.Header>Sibling {index + 1} </Card.Header>
-                <Card.Body>
-                  <Student
-                    key={student}
-                    counter={index + 1}
-                    studentData={student}
-                    onChange={handleInputChange}
-                  />
-                </Card.Body>
-              </Card>
+              // <Card className="bg-light">
+              //   <Card.Header>Sibling {index + 1} </Card.Header>
+              //   <Card.Body>
+              <Student
+                key={student}
+                counter={index + 1}
+                studentData={student}
+                onChange={handleInputChange}
+              />
+              //   </Card.Body>
+              // </Card>
             ))}
             <Form.Row className="justify-content-md-center">
               <Col>
@@ -199,6 +210,6 @@ function RegistrationForm() {
   );
 }
 RegistrationForm.propTypes = {
-  adminYear: PropTypes.string.isRequired
+  adminYear: PropTypes.string,
 };
 export default RegistrationForm;

@@ -16,7 +16,7 @@ const Dropdown = (props) => {
         {options.map((o) => (
           <option
             key={o.label}
-            selected={value === o.label}
+            defaultValue={value === o.label}
             value={o.value}>
             {o.label}
           </option>
@@ -30,15 +30,15 @@ const Dropdown = (props) => {
 };
 
 Dropdown.defaultProps = {
-  required: true
+  required: true,
 };
 Dropdown.propTypes = {
   id: PropTypes.string.isRequired,
-  options: PropTypes.shape([]).isRequired,
+  options: PropTypes.array.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   required: PropTypes.bool,
-  defaultVal: PropTypes.string
+  defaultVal: PropTypes.string,
 };
 export default Dropdown;
