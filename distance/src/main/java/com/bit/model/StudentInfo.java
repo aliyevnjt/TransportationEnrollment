@@ -92,4 +92,13 @@ public class StudentInfo {
 
     private UUID uniqueID;
 
+    public enum PaymentType {
+        UNIBANK,
+        CHECK,
+        CASH,
+        MONEY_ORDER
+    }
+    @Enumerated(EnumType.STRING)
+    private PaymentType paymentType;
+
 }

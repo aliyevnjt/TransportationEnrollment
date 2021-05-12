@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.bit.model.StudentInfo.RegistrationStatus.REGISTERED;
+import static com.bit.model.StudentInfo.PaymentType.UNIBANK;
 
 @Service
 public class PaymentTrackerService {
@@ -56,7 +57,10 @@ public class PaymentTrackerService {
         long confirmationNumber = Long.parseLong(paymentInfo.get("ConfirmationNumber"));
         long customerID = Long.parseLong(paymentInfo.get("CustomerID"));
         List<StudentInfo> stds = studentRepository.findByUniqueID(uniqueID);
-        stds.forEach(s -> s.setRegistrationStatus(REGISTERED));
+        stds.forEach(s -> {
+            s.setRegistrationStatus(REGISTERED);
+            s.setPaymentType(UNIBANK);
+        });
         studentRepository.saveAll(stds);
         return new PaymentTracker(uniqueID, processedDate, customerID, amountPaid, "2021", confirmationNumber);
     }

@@ -41,4 +41,12 @@ public class AdminSettings {
     @Size(min=1, max=500)
     private String notification2;
 
+    private boolean notification1Status;
+
+    private boolean notification2Status;
+
+    private double busFee;
+
+    private double busFeeFamilyMax;
+
 }

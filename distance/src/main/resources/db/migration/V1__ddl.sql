@@ -89,11 +89,11 @@ INSERT INTO transportation.users(id, admin_year, active_ind, role_code, district
                                  first_name, last_name, email, school, create_date, update_date)
 VALUES (1, '2021', 'Y', 1, 'Flowlyst', 'Yavuz', 'Keskin',
         'keskinyavuz@gmail.com', 'Flowlyst', '2021-05-02', CURRENT_DATE),
-       (2, '2021', 'Y', 1, 'Flowlyst', 'Nicat', 'Aliyev',
-        'aliyevnicat@gmail.com@gmail.com', 'Flowlyst', '2021-05-02', CURRENT_DATE),
+       (2, '2021', 'Y', 1, 'Flowlyst', 'Nijat', 'Aliyev',
+        'aliyevnicat@gmail.com', 'Flowlyst', '2021-05-02', CURRENT_DATE),
        (3, '2021', 'Y', 1, 'Flowlyst', 'Aziz', 'Agayev',
-        'Aziz@agayevconsulting.com', 'Flowlyst', '2021-05-02', CURRENT_DATE),
-        (4, '2021', 'Y', 2, 'Littleton', 'Steve', 'Mark',
+        'aziz@agayevconsulting.com', 'Flowlyst', '2021-05-02', CURRENT_DATE),
+        (4, '2021', 'Y', 2, 'Littleton', 'Steven', 'Mark',
     'smark@littletonps.org', 'LHS', '2021-05-02', CURRENT_DATE),
        (5, '2021', 'Y', 2, 'Littleton', 'Robin', 'Healy',
         'rhealy@littletonps.org', 'LHS', '2021-05-02', CURRENT_DATE);
