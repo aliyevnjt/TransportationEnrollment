@@ -2,6 +2,17 @@ version: '3.7'
 
 # Define services
 services:
+  # Payment Service
+  payment-server:
+    # Configuration for building the docker image for the backend service
+    image: 'payment-service:latest'
+    build:
+      context: payment-service
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    restart: always
+  
   # App backend service
   app-server:
     # Configuration for building the docker image for the backend service
@@ -10,7 +21,7 @@ services:
       context: distance
       dockerfile: Dockerfile
     ports:
-      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+      - "8086:8086" # Forward the exposed port 8080 on the container to port 8080 on the host machine
     restart: always
     depends_on: 
       - db # This service depends on mysql. Start that first.
