@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button, InputGroup, Row
-} from 'react-bootstrap';
+import { Button, InputGroup, Row } from 'react-bootstrap';
 import axios from 'axios';
 import InputComponent from './toolbox/InputComponent';
 import { schoolYears, registration } from '../data/Data';
@@ -45,16 +43,19 @@ function AdminSettings() {
   };
   const handleInputChange = (event) => {
     console.log(event);
-    setAdminSettings((previous) => ({ ...previous, [event.target.id]: event.target.value }));
+    setAdminSettings((previous) => ({
+      ...previous,
+      [event.target.id]: event.target.value,
+    }));
     setSaveButton(false);
   };
   const handleDropdownChange = (event) => {
     handleInputChange(event);
     setSaveButton(false);
   };
-    // FIXME saveButton's state must be tied to checkButtonStatus
-    // when the notification is checked, DB must be updated so next time its state can be populated correctly
-    // must be shown on the registration page if checked
+  // FIXME saveButton's state must be tied to checkButtonStatus
+  // when the notification is checked, DB must be updated so next time its state can be populated correctly
+  // must be shown on the registration page if checked
   const handleCheckButton = () => {
     setCheckButtonStatus(!checkButtonStatus);
     setSaveButton(false);
@@ -77,7 +78,9 @@ function AdminSettings() {
           options={schoolYears}
           value={
             adminSettings.adminYear
-              ? schoolYears.filter((obj) => obj.adminYear === adminSettings.adminYear)[0].label
+              ? schoolYears.filter(
+                  (obj) => obj.adminYear === adminSettings.adminYear
+                )[0].label
               : ''
           }
         />
@@ -112,13 +115,13 @@ function AdminSettings() {
         <br />
         <InputGroup.Prepend>
           <InputGroup.Checkbox
-            name="notification"
+            name="notification1"
             aria-label="Checkbox for following text input"
             checked={checkButtonStatus}
             onClick={handleCheckButton}
           />
           <InputComponent
-            buttonText="Notification"
+            buttonText="Notification 1"
             id="notification1"
             onChange={handleInputChange}
             value={adminSettings.notification1}
