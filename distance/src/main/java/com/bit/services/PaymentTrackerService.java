@@ -66,7 +66,7 @@ public class PaymentTrackerService {
     }
 
     private static LocalDateTime parseDateTime(String dateTime){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy h:m:s a", Locale.ENGLISH);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm:ss a", Locale.US);
         return LocalDateTime.parse(dateTime, formatter);
     }
 }
