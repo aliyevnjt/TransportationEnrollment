@@ -21,9 +21,9 @@ function AdminSettings() {
       // FETCH all admin settings
       const res = await axios.get(`${baseURL}/adminSettings`);
       allData = res.data;
-      console.log(allData);
+      console.log('All Data:', allData);
       currentData = allData.filter((obj) => obj.activeInd === 'Y');
-      console.log(currentData[0]);
+      console.log('Current Data:', currentData[0]);
       setAdminSettings(currentData[0]);
     }
     fetchData();
@@ -42,7 +42,7 @@ function AdminSettings() {
     }
   };
   const handleInputChange = (event) => {
-    console.log(event);
+    //  console.log(event);
     setAdminSettings((previous) => ({
       ...previous,
       [event.target.id]: event.target.value,
@@ -76,7 +76,7 @@ function AdminSettings() {
           onChange={handleInputChange}
           label="Bus Registration Year"
           options={schoolYears}
-          value={
+          defaultVal={
             adminSettings.adminYear
               ? schoolYears.filter(
                   (obj) => obj.adminYear === adminSettings.adminYear
@@ -90,7 +90,7 @@ function AdminSettings() {
           id="regStatus"
           onChange={handleDropdownChange}
           label="Registration Status"
-          value={adminSettings.regStatus}
+          defaultVal={adminSettings.regStatus}
           options={registration}
         />
       </Row>
