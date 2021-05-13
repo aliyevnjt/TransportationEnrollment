@@ -1,6 +1,8 @@
 package com.bit.paymentservice.controllers;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +19,14 @@ import java.util.List;
 @RestController
 public class PaymentServiceController {
 
+    private static final Logger logger = LoggerFactory.getLogger(PaymentServiceController.class);
 
     @Autowired
     private RestTemplate restTemplate;
 
     @PostMapping("/api/payment")
     public String getDistance(@Valid @RequestBody String paymentInfo){
-        return restTemplate.postForObject("http://localhost:8086/api/payment", paymentInfo, String.class);
+        logger.info("Payment sent to app server" + paymentInfo);
+        return restTemplate.postForObject("http://app-server:8086/api/payment", paymentInfo, String.class);
     }
 }

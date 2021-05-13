@@ -5,7 +5,7 @@ services:
   # Payment Service
   payment-server:
     # Configuration for building the docker image for the backend service
-    image: 'payment-service:latest'
+    image: 'payment-service:1.0.0'
     build:
       context: payment-service
       dockerfile: Dockerfile
@@ -16,7 +16,7 @@ services:
   # App backend service
   app-server:
     # Configuration for building the docker image for the backend service
-    image: 'distance-spring-boot:latest'
+    image: 'distance-server:1.0.0'
     build:
       context: distance
       dockerfile: Dockerfile
@@ -33,7 +33,7 @@ services:
 
   # Frontend Service 
   app-client:
-    image: 'distance-ui:latest'
+    image: 'distance-ui:1.0.0'
     build:
       context: distance-frontend
       dockerfile: Dockerfile
@@ -56,7 +56,3 @@ services:
       - POSTGRES_PASSWORD=$pg_pwd
     volumes:
       - /var/lib/postgresql/data:/var/lib/postgresql/data
-
-volumes:
-  data:
-    external: true

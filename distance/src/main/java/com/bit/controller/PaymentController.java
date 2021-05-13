@@ -6,6 +6,8 @@ import com.bit.model.StudentInfo;
 import com.bit.repo.PaymentTrackerRepo;
 import com.bit.services.PaymentTrackerService;
 import com.bit.services.StripeClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -37,6 +39,7 @@ public class PaymentController {
 //        return stripeClient.chargeCreditCard(token, amount);
 //    }
 
+    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
     @Autowired
     private PaymentTrackerService paymentTrackerService;
 
@@ -54,7 +57,7 @@ public class PaymentController {
 
         }
         PaymentTracker paymentTracker = paymentTrackerService.setPaymentInfo(url);
-
+        logger.info("Payment received: "  + paymentTracker.getUniqueID());
         return new ResponseEntity(paymentTrackerRepo.save(paymentTracker), HttpStatus.CREATED);
     }
 
