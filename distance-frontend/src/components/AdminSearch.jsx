@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import { CSVLink } from 'react-csv';
 import JsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import axios from 'axios';
 import {
-  headers, locality, enrollmentStatus
+  headers, locality, enrollmentStatus, paymentType
 } from '../data/Data';
 import Student from './toolbox/Student';
 import constructTable from './toolbox/ConstructTable';
@@ -16,6 +16,7 @@ function AdminSearch() {
   // do we keep adding to student_info or create student_info_2022 ...
   // FIXME cannot search with address and/or other fields
   const baseURL = process.env.REACT_APP_BASE_URL;
+  const [paymentDisabled, setPaymentDisabled] = useState(true);
 
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
@@ -54,24 +55,29 @@ function AdminSearch() {
     if (event) {
       event.preventDefault();
       if (event.target.id === 'adminForm') {
-        console.log('inputs', inputs);
+        // console.log('inputs', inputs);
         try {
           const res = await axios.post(`${baseURL}/studentSearch`, inputs);
           data.options = res.data;
           setTable(constructTable(data));
           setAdminSearchData(res.data);
         } catch (err) {
-          console.log(err);
+          // console.log(err);
         }
       }
     }
   };
   const handleInputChange = (event) => {
+    if (event.target.id === 'enrollmentStatus' &&  event.target.value === "paid"){
+      setPaymentDisabled(false);
+    } else {
+      setPaymentDisabled(true)
+    };
     setInputs((previous) => ({ ...previous, [event.target.id]: event.target.value }));
   };
   const handleAddressInfoChange = (address) => {
     setAddressInfo((previous) => ({ ...previous, address }));
-    console.log(address);
+    // console.log(address);
   };
   // console.log('adminSearchData', adminSearchData);
   return (
@@ -82,12 +88,31 @@ function AdminSearch() {
           onChange={handleInputChange}
           hasDOB={false}
         />
-        <Dropdown
-          id="enrollmentStatus"
-          onChange={handleInputChange}
-          label="Enrollment Status"
-          options={enrollmentStatus}
-        />
+        <Card>
+          <Card.Body className="app-bg-color-grey">
+            <Row className="justify-content-md-left">
+              <Col lg="5" md="7" sm="8" xs="12">
+                <Dropdown
+                  id="enrollmentStatus"
+                  onChange={handleInputChange}
+                  label="Enrollment Status"
+                  options={enrollmentStatus}
+                  defaultVal="Select Status"
+                />
+            </Col>
+            <Col lg="5" md="7" sm="8" xs="12">
+              <Dropdown
+                id="paymentType"
+                onChange={handleInputChange}
+                disabled={paymentDisabled}
+                label="Payment Type"
+                options={paymentType.filter(type=>type.label !== 'Unibank')}
+                defaultVal="Select Payment"
+              />
+              </Col>
+            </Row>
+            </Card.Body>
+          </Card>
         <Button as="input" className="mr-1" type="submit" value="Search" />
 
         <Button

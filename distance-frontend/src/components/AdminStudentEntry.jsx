@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {Button, Form, Row} from 'react-bootstrap';
+import {Button, Form, Row, Card, Col} from 'react-bootstrap';
 import axios from 'axios';
-import { enrollmentStatus, locality } from '../data/Data';
+import { enrollmentStatus, locality, paymentType } from '../data/Data';
 import Student from './toolbox/Student';
 import ParentBox from './toolbox/ParentBox';
 import AddressBox from './toolbox/AddressBox';
@@ -9,7 +9,8 @@ import Dropdown from './toolbox/Dropdown';
 
 function AdminStudentEntry() {
   // FIXME adminYear must be fetched from settings. Find a way to share the state.
-  const [inputs, setInputs] = useState({ adminYear: '2021'});
+  const [inputs, setInputs] = useState({ adminYear: '2021', registrationStatus:'REGISTERED'});
+  const [paymentDisabled, setPaymentDisabled] = useState(true);
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
@@ -34,10 +35,10 @@ function AdminStudentEntry() {
       } else {
         if (event.target.id === 'adminStudentEntry') {
           try {
-            console.log(inputs);
+            // console.log(inputs);
             const res = await axios.post(`${baseURL}/submit`, inputs);
             // res.status === 202
-            console.log(res);
+            // console.log(res);
           } catch (err) {
             console.log(err);
           }
@@ -47,12 +48,15 @@ function AdminStudentEntry() {
     }
   };
   const handleInputChange = (event) => {
-    console.log('EVENT input:', event);
+    if (event.target.id === 'enrollmentStatus'){
+      event.target.value === "paid" ? setPaymentDisabled(false) : setPaymentDisabled(true)
+    } 
+    // console.log('EVENT input:', event);
     setInputs((previous) => ({ ...previous, [event.target.id]: event.target.value }));
   };
   const handleAddressInfoChange = (address) => {
     setAddressInfo((previous) => ({ ...previous, address }));
-    console.log(address);
+    // console.log(address);
   };
   // TODO save button should be disabled until all fields are entered
   // TODO add paymentType if paid add options ==> Check, Cash, Money Order
@@ -64,13 +68,31 @@ function AdminStudentEntry() {
             counter={0}
             onChange={handleInputChange}
           />
-          <Dropdown
-            id="enrollmentStatus"
-            onChange={handleInputChange}
-            label="Enrollment Status"
-            options={enrollmentStatus}
-            value=""
-          />
+          <Card>
+          <Card.Body className="app-bg-color-grey">
+            <Row className="justify-content-md-left">
+              <Col lg="5" md="7" sm="8" xs="12">
+                <Dropdown
+                  id="enrollmentStatus"
+                  onChange={handleInputChange}
+                  label="Enrollment Status"
+                  options={enrollmentStatus}
+                  defaultVal="Select Status"
+                />
+            </Col>
+            <Col lg="5" md="7" sm="8" xs="12">
+              <Dropdown
+                id="paymentType"
+                onChange={handleInputChange}
+                disabled={paymentDisabled}
+                label="Payment Type"
+                options={paymentType.filter(type=>type.label !== 'Unibank')}
+                defaultVal="Select Payment"
+              />
+              </Col>
+            </Row>
+            </Card.Body>
+          </Card>
           <AddressBox
             addressInfo={addressInfo}
             onChange={handleAddressInfoChange}

@@ -30,7 +30,7 @@ function useProvideAuth() {
 export function ProvideAuth({ children }) {
   const auth = useProvideAuth();
 
-  console.log('ProvideAuth, children', children);
+  // console.log('ProvideAuth, children', children);
   return (
     <authContext.Provider value={auth}>
       {children}
@@ -42,7 +42,7 @@ export function ProvideAuth({ children }) {
 // page if you're not yet authenticated.
 export function PrivateRoute({ children, ...rest }) {
   const auth = useAuth();
-  console.log('PrivateRoute, rest', rest);
+  // console.log('PrivateRoute, rest', rest);
   return (
     <Route
       {...rest}

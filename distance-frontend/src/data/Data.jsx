@@ -48,6 +48,13 @@ const schools = [
   { label: 'SHAKER LANE SCHOOL', value: 'SLS' },
 ];
 
+const paymentType = [
+  { label: 'Cash', value: 'CASH' },
+  { label: 'Check', value: 'CHECK' },
+  { label: 'Money Order', value: 'MONEY_ORDER' },
+  { label: 'Unibank', value: 'UNIBANK' },
+];
+
 const cities = [{ label: 'Littleton', value: 'Littleton' }];
 const states = [{ label: 'Massachussets', value: 'MA' }];
 
@@ -65,8 +72,7 @@ const keys = {
 // FIXME too many conversions. this info must be in the schoolYear table
 // we'll enable other years later. super admin can create a new year with add button
 const schoolYears = [
-  { label: 'School Year 2020-2021', value: 'FY21', adminYear: '2021' },
-  { label: 'School Year 2021-2022', value: 'FY22', adminYear: '2022' },
+  { label: 'School Year 2021-2022', value: 'FY22', adminYear: '2021' },
   // { label: 'School Year 2022-2023', value: 'FY23', adminYear: '2022' },
   // { label: 'School Year 2023-2024', value: 'FY24', adminYear: '2023' },
   // { label: 'School Year 2024-2025', value: 'FY25', adminYear: '2024' }
@@ -78,8 +84,8 @@ const registration = [
 ];
 // FIXME get it from DB
 const enrollmentStatus = [
-  { label: 'free', value: 'free' },
-  { label: 'paid', value: 'paid' },
+  { label: 'Free', value: 'free' },
+  { label: 'Paid', value: 'paid' },
 ];
 
 const usa = [
@@ -154,4 +160,5 @@ export {
   registration,
   locality,
   enrollmentStatus,
+  paymentType
 };
