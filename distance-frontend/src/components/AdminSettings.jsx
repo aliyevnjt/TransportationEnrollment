@@ -10,12 +10,14 @@ function AdminSettings() {
   // Bonus: reset to default(saved version from DB)
 
   const [saveButton, setSaveButton] = useState(true);
-  const [checkButtonStatus, setCheckButtonStatus] = useState(false);
+  // const [checkButtonStatus, setCheckButtonStatus] = useState([false,false]);
+  const [checkButtonStatus1, setCheckButtonStatus1] = useState(false);
+  const [checkButtonStatus2, setCheckButtonStatus2] = useState(false);
   const [adminSettings, setAdminSettings] = useState({});
   const baseURL = process.env.REACT_APP_BASE_URL;
   let allData;
   let currentData;
-
+  //TODO Write adminsettings to session data and send request in App.js once. 
   useEffect(() => {
     async function fetchData() {
       // FETCH all admin settings
@@ -24,9 +26,12 @@ function AdminSettings() {
       console.log('All Data:', allData);
       currentData = allData.filter((obj) => obj.activeInd === 'Y');
       console.log('Current Data:', currentData[0]);
+      setCheckButtonStatus1(currentData[0].notification1Status);
+      setCheckButtonStatus2(currentData[0].notification2Status);
       setAdminSettings(currentData[0]);
     }
     fetchData();
+    console.log("in use effect admin settings",adminSettings)
   }, []);
 
   const handleSubmit = async (event) => {
@@ -56,14 +61,43 @@ function AdminSettings() {
   // FIXME saveButton's state must be tied to checkButtonStatus
   // when the notification is checked, DB must be updated so next time its state can be populated correctly
   // must be shown on the registration page if checked
-  const handleCheckButton = () => {
-    setCheckButtonStatus(!checkButtonStatus);
+  // const handleCheckButton = (event) => {
+  //   const boxNumber = event.target.id.indexOf('1')=== -1 ? 1 : 0;
+  //   console.log("checkbox event",checkButtonStatus[boxNumber])
+  //   setAdminSettings((previous) => ({
+  //     ...previous,
+  //     [event.target.id]: !checkButtonStatus[boxNumber],
+  //   }));
+  //   setCheckButtonStatus(checkButtonStatus.map((item, index) => {
+  //     index === boxNumber ? !checkButtonStatus[boxNumber] : item
+  //   }));
+  //   setSaveButton(false);
+    
+  // };
+
+  const handleCheckButton1 = (event) => {
+    setAdminSettings((previous) => ({
+      ...previous,
+      [event.target.id]: !checkButtonStatus1,
+    }));
+    setCheckButtonStatus1(!checkButtonStatus1);
     setSaveButton(false);
+    
   };
+
+  const handleCheckButton2 = (event) => {
+    setAdminSettings((previous) => ({
+      ...previous,
+      [event.target.id]: !checkButtonStatus2,
+    }));
+    setCheckButtonStatus2(!checkButtonStatus2);
+    setSaveButton(false);
+    
+  };
+
+
   const handleSave = (event) => {
     event.preventDefault();
-    console.log(event);
-    console.log('===========');
     handleSubmit(event);
     setSaveButton(true);
   };
@@ -76,10 +110,10 @@ function AdminSettings() {
           onChange={handleInputChange}
           label="Bus Registration Year"
           options={schoolYears}
-          defaultVal={
+          value={
             adminSettings.adminYear
               ? schoolYears.filter(
-                  (obj) => obj.adminYear === adminSettings.adminYear
+                  obj => obj.adminYear === adminSettings.adminYear
                 )[0].label
               : ''
           }
@@ -90,7 +124,7 @@ function AdminSettings() {
           id="regStatus"
           onChange={handleDropdownChange}
           label="Registration Status"
-          defaultVal={adminSettings.regStatus}
+          value={adminSettings.regStatus}
           options={registration}
         />
       </Row>
@@ -115,16 +149,30 @@ function AdminSettings() {
         <br />
         <InputGroup.Prepend>
           <InputGroup.Checkbox
-            name="notification1"
+            id="notification1Status"
             aria-label="Checkbox for following text input"
-            checked={checkButtonStatus}
-            onClick={handleCheckButton}
+            checked={adminSettings.notification1Status}
+            onClick={handleCheckButton1}
           />
           <InputComponent
             buttonText="Notification 1"
             id="notification1"
             onChange={handleInputChange}
             value={adminSettings.notification1}
+          />
+        </InputGroup.Prepend>
+        <InputGroup.Prepend className="mt-3">
+          <InputGroup.Checkbox
+            id="notification2Status"
+            aria-label="Checkbox for following text input"
+            checked={adminSettings.notification2Status}
+            onClick={handleCheckButton2}
+          />
+          <InputComponent
+            buttonText="Notification 2"
+            id="notification2"
+            onChange={handleInputChange}
+            value={adminSettings.notification2}
           />
         </InputGroup.Prepend>
       </div>

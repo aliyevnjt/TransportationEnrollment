@@ -48,13 +48,13 @@ function RegistrationForm() {
   const showFreeSample = () => {
     const st = bigSample.filter((s) => s.enrollmentStatus === 'free');
     const index = parseInt(Math.random() * st.length);
-    console.log(st[index]);
+    // console.log(st[index]);
   };
   // logs paid sample data for easy entry
   const showPaidSample = () => {
     const st = bigSample.filter((s) => s.enrollmentStatus === 'paid');
     const index = parseInt(Math.random() * st.length);
-    console.log(st[index]);
+    // console.log(st[index]);
   };
 
   const redirectToPage = (data) => {
@@ -73,18 +73,18 @@ function RegistrationForm() {
       const form = event.currentTarget;
       if (form.checkValidity() && event.target.id === 'registrationForm') {
         try {
-          console.log('StudentData:', studentData);
+          // console.log('StudentData:', studentData);
           const res = await axios.post(
             `${baseURL}/pre-enrollment/`,
             studentData
           );
-          console.log('Request completed', res);
+          // console.log('Request completed', res);
           redirectToPage(res.data);
         } catch (err) {
           const message =
             'Please check all fields. If you still have problems, ' +
             'please contact school business office.';
-          console.log('pre-enrollment API error', err);
+          // console.log('pre-enrollment API error', err);
           setMsg(<MessageBox message={message} show={true} />);
         }
       }

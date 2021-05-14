@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 
 const Dropdown = (props) => {
-  const { id, options, onChange, value, required, defaultVal } = props;
+  const { id, options, onChange, value, required, defaultVal, disabled } = props;
   let { label } = props;
   // console.log('getRegistrationYear:', value);
   // console.log('DROPDOWN component is loaded', value);
@@ -11,12 +11,14 @@ const Dropdown = (props) => {
   return (
     <Form.Group lg="3" md="4" sm="6" xs="12">
       <Form.Label>{label}</Form.Label>
-      <Form.Control as="select" id={id} required={required} onChange={onChange}>
-        <option value="">{defaultVal}</option>
+      <Form.Control as="select" id={id} required={required} onChange={onChange} disabled={disabled}>
+      {defaultVal ? 
+        <option value="">{ defaultVal }</option>
+        : ''}
         {options.map((o) => (
           <option
             key={o.label}
-            defaultValue={value === o.label}
+            defaultValue={value===o.label}
             value={o.value}>
             {o.label}
           </option>
@@ -31,6 +33,7 @@ const Dropdown = (props) => {
 
 Dropdown.defaultProps = {
   required: true,
+  disabled: false
 };
 Dropdown.propTypes = {
   id: PropTypes.string.isRequired,
@@ -40,5 +43,6 @@ Dropdown.propTypes = {
   value: PropTypes.string,
   required: PropTypes.bool,
   defaultVal: PropTypes.string,
+  disabled: PropTypes.bool
 };
 export default Dropdown;

@@ -22,25 +22,25 @@ function AdminLogin() {
     auth.signin(googleProfile);
   };
   // FIXME this is run twice when page loads
-  console.log('LOGIN', login);
+  //console.log('LOGIN', login);
   const onSuccess = async (googleRes) => {
     // TODO  We want to use this information to log a user into our own back-end,
     //  so the next step is to send the ID token to our own API:
-    console.log(googleRes.tokenId);
+    // console.log(googleRes.tokenId);
     const serverRes = await axios.post(`${baseURL}/googleAuth`, {
       tokenId: googleRes.tokenId,
       clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
     });
 
-    console.log('serverRes:', serverRes);
+    //console.log('serverRes:', serverRes);
     if (serverRes.data) {
-      console.log('Login Success: googleRes:', googleRes);
+      //console.log('Login Success: googleRes:', googleRes);
       // alert(
-      //   `Logged in successfully welcome ${googleProfile.name} \nSee console for full profile object.`,
+      //   `Logged in successfully welcome ${googleProfile.name} \nSee //console for full profile object.`,
       // );
       const userData = serverRes.data;
       userData.imageUrl = googleRes.profileObj.imageUrl;
-      console.log('Login Success: currentUser:', userData);
+      //console.log('Login Success: currentUser:', userData);
       login(userData);
       refreshTokenSetup(googleRes);
     } else {
@@ -50,7 +50,7 @@ function AdminLogin() {
   };
 
   const onFailure = (res) => {
-    console.log('Login failed: res:', res);
+    //console.log('Login failed: res:', res);
     alert('Failed to login. Please check with admin.');
   };
   const { signIn } = useGoogleLogin({
