@@ -62,17 +62,15 @@ function AdminSearch() {
           setTable(constructTable(data));
           setAdminSearchData(res.data);
         } catch (err) {
-          // console.log(err);
+          console.log(err);
         }
       }
     }
   };
   const handleInputChange = (event) => {
-    if (event.target.id === 'enrollmentStatus' &&  event.target.value === "paid"){
-      setPaymentDisabled(false);
-    } else {
-      setPaymentDisabled(true)
-    };
+    if (event.target.id === 'enrollmentStatus'){
+      event.target.value === "paid" ? setPaymentDisabled(false) : setPaymentDisabled(true)
+    } 
     setInputs((previous) => ({ ...previous, [event.target.id]: event.target.value }));
   };
   const handleAddressInfoChange = (address) => {

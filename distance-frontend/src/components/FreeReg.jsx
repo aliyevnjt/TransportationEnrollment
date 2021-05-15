@@ -88,7 +88,7 @@ function FreeReg(props) {
   };
   return (
     <div>
-      <Header adminYear={adminYear} />
+      <Header adminYear={adminYear} notification={false}/>
       {pageBody}
     </div>
   );
