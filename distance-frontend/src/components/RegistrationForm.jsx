@@ -48,13 +48,13 @@ function RegistrationForm() {
   const showFreeSample = () => {
     const st = bigSample.filter((s) => s.enrollmentStatus === 'free');
     const index = parseInt(Math.random() * st.length);
-    // console.log(st[index]);
+    console.log(st[index]);
   };
   // logs paid sample data for easy entry
   const showPaidSample = () => {
     const st = bigSample.filter((s) => s.enrollmentStatus === 'paid');
     const index = parseInt(Math.random() * st.length);
-    // console.log(st[index]);
+    console.log(st[index]);
   };
 
   const redirectToPage = (data) => {

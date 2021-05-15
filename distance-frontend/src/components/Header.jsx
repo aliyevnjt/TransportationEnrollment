@@ -4,29 +4,23 @@ import { schoolYear as year } from '../data/Data';
 import './toolbox/littleton.css';
 import logo from '../data/Littleton/logo.png';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 
 function Header(props) {
-  const [adminSettings, setAdminSettings] = useState();
   const baseURL = process.env.REACT_APP_BASE_URL;
-  const { page } = props;
+  const { page, notification } = props;
   const [helpMessage, setHelpMessage] = useState();
-  const [regMessage, setRegMessage] = useState('');
-  
-  async function getAdminSettings() {
-    
-  }
+  let regStatus='';
+  let adminSettings;
 
   useEffect( async () => {
     try {
       const res = await axios.get(`${baseURL}/adminSettings`);
       const currentData = res.data.filter((obj) => obj.activeInd === 'Y');
       console.log("Current Data",currentData[0])
-      setAdminSettings(currentData[0]);
-      sessionStorage.setItem('adminSettings',JSON.stringify(currentData[0]))
-      currentData[0].regStatus==='Open'
-        ? sessionStorage.setItem('regStatusMessage',currentData[0].openMessage)
-        : sessionStorage.setItem('regStatusMessage',currentData[0].closedMessage)
+      adminSettings = currentData[0];
+      regStatus = adminSettings.regStatus.toLowerCase()+'Message'
     } catch (err) {
       console.log(err);
     }
@@ -35,14 +29,15 @@ function Header(props) {
       setHelpMessage(<div />);
     }
     else{
-      const sessionInfo = JSON.parse(sessionStorage.getItem('adminSettings'));
       setHelpMessage(
         <div>
           <Alert variant="info">
-            <h5>
-              {sessionStorage.getItem('regStatusMessage')}
-            </h5>
-            <br />
+          {adminSettings[regStatus] ?
+            <div>
+               {adminSettings[regStatus]} 
+               <br />
+            </div>
+            : ''}
             If you experience any issues registering your child/ren, please email us
             at{' '}
             <a href="mailto: busregistration@littletonps.org">
@@ -51,22 +46,23 @@ function Header(props) {
             . Thank you for using our new automated registration system.
             <br />
           </Alert>
-          {sessionInfo.notification1Status || sessionInfo.notification2Status ? 
-          <Alert variant="warning">
-            {sessionInfo.notification1Status ? 
-            <h5>
-              <b>Notice 1 - </b>
-              {sessionInfo.notification1}
-              <br />
-            </h5>  : ''}
-            {sessionInfo.notification2Status ? 
-            <h5>
-              <b>Notice 2 - </b>
-              {sessionInfo.notification2}
-            </h5> : ''}
-          </Alert>
-          : '' 
-          }
+
+            {notification && (adminSettings.notification1Status || adminSettings.notification2Status ) ? 
+            <Alert variant="warning">
+              {adminSettings.notification1Status ? 
+              <div>
+                <b>Notice 1 - </b>
+                {adminSettings.notification1}
+                <br />
+              </div>  : ''}
+              {adminSettings.notification2Status ? 
+              <div>
+                <b>Notice 2 - </b>
+                {adminSettings.notification2}
+              </div> : ''}
+            </Alert>
+            : '' 
+            } 
         </div>
       );
     }
@@ -89,6 +85,16 @@ function Header(props) {
       {helpMessage}
     </Container>
   );
+}
+
+Header.defaultProps = {
+  page: '',
+  notification: true
+};
+
+Header.propTypes = {
+  page: PropTypes.string,
+  notification: PropTypes.bool
 }
 
 export default Header;

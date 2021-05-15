@@ -29,16 +29,16 @@ public class AdminSettings {
     @Size(min=1, max=20)
     private String regStatus;
 
-    @Size(min=1, max=500)
+    @Size(max=500)
     private String openMessage;
 
-    @Size(min=1, max=500)
+    @Size(max=500)
     private String closedMessage;
 
-    @Size(min=1, max=500)
+    @Size(max=500)
     private String notification1;
 
-    @Size(min=1, max=500)
+    @Size(max=500)
     private String notification2;
 
     private Boolean notification1Status;
