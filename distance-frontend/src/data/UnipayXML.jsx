@@ -1,13 +1,14 @@
 const UnipayXmlTest = (paid, cartTotal) => {
 
   let sampleData = '';
+  const applicationUrlTest = 'https://test.flowlyst.io'
   // TODO all of these values must be in config
   // it is not secure to include this info in html. We can find a different company and ask the schools to use that instead.
   //  let uniqueID = paid[0].paymentId;
-  const returnURL = 'test.flowlyst.io';
-  const cancelButtonURL = 'test.flowlyst.io';
+  const returnURL = applicationUrlTest;
+  const cancelButtonURL = applicationUrlTest;
   const returnButtonText = 'Go Back to registration Page';
-  const forceTimeoutRedirectURL = 'test.flowlyst.io'; 
+  const forceTimeoutRedirectURL = applicationUrlTest; 
   let xmlData = `<?xml version='1.0' encoding='UTF-8' ?><!DOCTYPE cXML SYSTEM 'http://xml.cxml.org/schemas/cXML/1.2.014/cXML.dtd'><cXML xml:lang='en-us'><cart><transaction lineNum='1' txID='18397'><qty>1</qty><amount>${cartTotal}</amount><accessKey>df18ee0f-8d9a-45aa-a29e-d487c21de374</accessKey><customerID>1463</customerID><C130771>${
       paid[0].uniqueID
     }</C130771><C130772>${
@@ -44,15 +45,15 @@ const UnipayXmlTest = (paid, cartTotal) => {
   }
 
   const UnipayXmlProd = (paid, cartTotal) => {
-
+    const applicationUrl = process.env.REACT_APP_LITTLETON_URL;
     let sampleData = '';
     // TODO all of these values must be in config
     // it is not secure to include this info in html. We can find a different company and ask the schools to use that instead.
     //  let uniqueID = paid[0].paymentId;
-    const returnURL = 'test.flowlyst.io';
-    const cancelButtonURL = 'test.flowlyst.io';
+    const returnURL = applicationUrl;
+    const cancelButtonURL = applicationUrl;
     const returnButtonText = 'Go Back to registration Page';
-    const forceTimeoutRedirectURL = 'test.flowlyst.io'; 
+    const forceTimeoutRedirectURL = applicationUrl; 
     let xmlData = `<?xml version='1.0' encoding='UTF-8' ?><!DOCTYPE cXML SYSTEM 'http://xml.cxml.org/schemas/cXML/1.2.014/cXML.dtd'><cXML xml:lang='en-us'><cart><transaction lineNum='1' txID='29699'><qty>1</qty><amount>${cartTotal}</amount><accessKey>2e347c21-a2e0-43fd-9120-f5b43ca2e3ce</accessKey><customerID>2093</customerID><C221836>${
         paid[0].uniqueID
       }</C221836><C221837>${

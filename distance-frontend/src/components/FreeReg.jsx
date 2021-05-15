@@ -38,7 +38,7 @@ function FreeReg(props) {
 
         <Container>
           <Row className="justify-content-md-center">
-            <Col xs lg="9">
+            <Col className="text-center">
               <p>
                 The above listed student/s are eligible for free transportation.
                 Please click Register button below to complete the registration.

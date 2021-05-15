@@ -8,6 +8,8 @@ import { adminYear } from '../data/Data';
 import PropTypes from 'prop-types';
 import {UnipayXmlTest, UnipayXmlProd} from '../data/UnipayXML'
 import UnipayForm from './toolbox/payment/UnipayForm';
+import {getAdminSettings} from './api/api'
+
 
 // FIXME - When you refresh the page all student
 // data comes back including the free student data.
@@ -79,7 +81,11 @@ function PaidReg(props) {
     console.log('total', cartTotal);
   };
 
-  useEffect(() => {
+  let adminSettings;
+  useEffect( async () => {
+    await getAdminSettings().then(res=>{
+      adminSettings=res;
+    })
     calculateFee();
     if (freeData) {
       setFreePageBody(
@@ -89,7 +95,7 @@ function PaidReg(props) {
           </Container>
           <Container>
             <Row className="justify-content-md-center">
-              <Col xs lg="9">
+              <Col className="text-center">
                 <Alert variant="success">
                   <p>
                     The above listed student/s are eligible for free
@@ -118,7 +124,7 @@ function PaidReg(props) {
         <Container className="mt-5" fluid="sm">
           {constructTable(paidData)}
           <Row className="justify-content-md-center">
-            <Col xs lg="9">
+            <Col className="text-center">
               <p>
                 The above listed student/s are eligible for paid school
                 transportation. Please click Proceed to Payment Button below to
