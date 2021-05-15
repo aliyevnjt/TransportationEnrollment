@@ -17,7 +17,7 @@ import ParentBox from './toolbox/ParentBox';
 import AddressBox from './toolbox/AddressBox';
 import { bigSample } from '../data/BigSample';
 import PropTypes from 'prop-types';
-import MessageBox from './toolbox/MessageBox';
+import {getAdminSettings} from './api/api'
 
 function RegistrationForm() {
   // TODO find a way to add adminYear right here. It is undefined in the beginning ???
@@ -31,9 +31,12 @@ function RegistrationForm() {
   const [validated, setValidated] = useState(false);
   const history = useHistory();
   const baseURL = process.env.REACT_APP_BASE_URL;
-  const [msg, setMsg] = useState(<></>);
-
-  useEffect(() => {
+  console.log()
+  let adminSettings;
+  useEffect( async () => {
+    await getAdminSettings().then(res=>{
+      adminSettings=res;
+    })
     // studentData state is updated with address and parent info
     setStudentData((current) =>
       current.map((student) => ({
@@ -81,11 +84,11 @@ function RegistrationForm() {
           // console.log('Request completed', res);
           redirectToPage(res.data);
         } catch (err) {
+          console.log(err);
           const message =
-            'Please check all fields. If you still have problems, ' +
+            'Please check all fields. If you are still experiencing problems registering, ' +
             'please contact school business office.';
-          // console.log('pre-enrollment API error', err);
-          setMsg(<MessageBox message={message} show={true} />);
+          alert(message)
         }
       }
       setValidated(true);
@@ -135,7 +138,6 @@ function RegistrationForm() {
   return (
     <div>
       <Header adminYear={adminYear} />
-      {msg}
       <Container className="pt-3">
         <Jumbotron>
           <Form

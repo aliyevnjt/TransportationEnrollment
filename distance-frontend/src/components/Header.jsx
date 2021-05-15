@@ -18,11 +18,14 @@ function Header(props) {
     try {
       const res = await axios.get(`${baseURL}/adminSettings`);
       const currentData = res.data.filter((obj) => obj.activeInd === 'Y');
-      console.log("Current Data",currentData[0])
+      //console.log("Current Data",currentData[0])
       adminSettings = currentData[0];
-      regStatus = adminSettings.regStatus.toLowerCase()+'Message'
+      adminSettings.regStatus ? 
+      regStatus = adminSettings.regStatus.toLowerCase()+'Message' :
+      ''
     } catch (err) {
       console.log(err);
+      adminSettings='';
     }
 
     if (page === 'admin') {
