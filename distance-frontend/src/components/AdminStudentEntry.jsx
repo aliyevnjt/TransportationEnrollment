@@ -17,7 +17,6 @@ function AdminStudentEntry() {
     zip: locality.zipCode
   });
   const [validated, setValidated] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
   const baseURL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
@@ -38,9 +37,7 @@ function AdminStudentEntry() {
           try {
             // console.log(inputs);
             const res = await axios.post(`${baseURL}/submit`, inputs);
-            console.log("After Submit", res);
-            // res.status === 202 ? setSuccessMessage('Student was successfully recorded!'):'';
-            localStorage.setItem('successMessage', 'Student was successfully recorded!');
+            // console.log("After Submit", res);
           } catch (err) {
             console.log(err);
           }
@@ -64,13 +61,6 @@ function AdminStudentEntry() {
   // TODO add paymentType if paid add options ==> Check, Cash, Money Order
   return (
     <div>
-
-      {localStorage.getItem('successMessage') ?
-        <Alert variant="success">
-          {localStorage.getItem('successMessage')}
-        </Alert>
-        :''
-      }
 
       <Row>
         <Form noValidate validated={validated} id="adminStudentEntry" onSubmit={handleSubmit}>
