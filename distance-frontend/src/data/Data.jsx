@@ -64,11 +64,6 @@ const locality = {
   zipCode: '01460',
 };
 
-const keys = {
-  publishableKey:
-    'pk_test_51I5QOxJuvhMix0vIzNnxK95fD4KadqVex6UylU7RG0jUUYQW3hpWF2rOjUonbpceQwtM7RGZ4xSrDvL5BY07a1R300DBtO4EeD',
-};
-
 // FIXME too many conversions. this info must be in the schoolYear table
 // we'll enable other years later. super admin can create a new year with add button
 const schoolYears = [
@@ -150,7 +145,6 @@ export {
   adminYear,
   grades,
   schools,
-  keys,
   usa,
   schoolYear,
   cities,

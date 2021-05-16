@@ -12,7 +12,7 @@ function FreeReg(props) {
   const { location } = props;
   const history = useHistory();
   const [pageBody, setPageBody] = useState();
-  console.log(location.state);
+  // console.log(location.state);
   if (location.state === undefined) {
     history.push('/');
     return <div />;
@@ -81,7 +81,7 @@ function FreeReg(props) {
               </Row> */}
         </Container>
       );
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -97,7 +97,6 @@ FreeReg.defaultProps = {
   location: {}
 };
 FreeReg.propTypes = {
-  location: PropTypes.object,
-  adminYear: PropTypes.string.isRequired
+  location: PropTypes.object
 };
 export default FreeReg;

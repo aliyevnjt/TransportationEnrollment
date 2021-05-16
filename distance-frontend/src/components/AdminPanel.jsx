@@ -33,9 +33,9 @@ const AdminPanel = () => {
             <LinkContainer to="/admin/settings">
               <Nav.Link>Settings</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/admin/addressUpload">
+            {/* <LinkContainer to="/admin/addressUpload">
               <Nav.Link>Address Upload</Nav.Link>
-            </LinkContainer>
+            </LinkContainer> */}
             <LinkContainer to="/admin/studentEntry">
               <Nav.Link>Student Entry</Nav.Link>
             </LinkContainer>
@@ -62,10 +62,10 @@ const AdminPanel = () => {
               />
               <Route path="/admin/search" component={AdminSearch} />
               <Route path="/admin/settings" component={AdminSettings} />
-              <Route
+              {/* <Route
                 path="/admin/addressUpload"
                 component={AdminAddressUpload}
-              />
+              /> */}
               <Route path="/admin/studentEntry" component={AdminStudentEntry} />
             </Switch>
           </Container>
