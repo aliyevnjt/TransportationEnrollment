@@ -104,7 +104,7 @@ function AdminSearch() {
                 onChange={handleInputChange}
                 disabled={paymentDisabled}
                 label="Payment Type"
-                options={paymentType.filter(type=>type.label !== 'Unibank')}
+                options={paymentType}
                 defaultVal="Select Payment"
               />
               </Col>

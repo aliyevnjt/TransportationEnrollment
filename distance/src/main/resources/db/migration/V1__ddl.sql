@@ -56,10 +56,10 @@ CREATE TABLE transportation.users
 INSERT INTO transportation.grade(id, school_short_name, grade_level)
 VALUES (1, 'SLS', 'K'),
        (2, 'SLS', '1'),
-       (3, 'RSS', '2'),
+       (3, 'SLS', '2'),
        (4, 'RSS', '3'),
        (5, 'RSS', '4'),
-       (6, 'LMS', '5'),
+       (6, 'RSS', '5'),
        (7, 'LMS', '6'),
        (8, 'LMS', '7'),
        (9, 'LHS', '8'),

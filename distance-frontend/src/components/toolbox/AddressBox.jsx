@@ -26,15 +26,15 @@ const AddressBox = (props) => {
   }, []);
 
   const handleAddressChange = (event) => {
-    console.log('Handle Add Change', event);
+    // console.log('Handle Add Change', event);
     setSelections(event);
     if (event[0]) {
-      console.log(event);
+      // console.log(event);
       onChange(event[0].address);
     }
   };
   const validateAddress = (event) => {
-    console.log('BLUR', event);
+    // console.log('BLUR', event);
     if (!address.find((item) => item.address === event.target.value)) {
       ref.current.clear();
     }

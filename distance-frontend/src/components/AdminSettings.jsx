@@ -23,15 +23,14 @@ function AdminSettings() {
       // FETCH all admin settings
       const res = await axios.get(`${baseURL}/adminSettings`);
       allData = res.data;
-      console.log('All Data:', allData);
+      //console.log('All Data:', allData);
       currentData = allData.filter((obj) => obj.activeInd === 'Y');
-      console.log('Current Data:', currentData[0]);
+      // console.log('Current Data:', currentData[0]);
       setCheckButtonStatus1(currentData[0].notification1Status);
       setCheckButtonStatus2(currentData[0].notification2Status);
       setAdminSettings(currentData[0]);
     }
     fetchData();
-    console.log("in use effect admin settings",adminSettings)
   }, []);
 
   const handleSubmit = async (event) => {
@@ -40,14 +39,12 @@ function AdminSettings() {
       // TODO check the response and add a message as "successfully saved!"
       try {
         const res = await axios.put(`${baseURL}/updateSettings`, adminSettings);
-        console.log(res);
       } catch (err) {
         console.log(err);
       }
     }
   };
   const handleInputChange = (event) => {
-    //  console.log(event);
     setAdminSettings((previous) => ({
       ...previous,
       [event.target.id]: event.target.value,

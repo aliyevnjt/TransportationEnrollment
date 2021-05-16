@@ -70,15 +70,14 @@ function PaidReg(props) {
       } else if (element.enrollmentStatus === 'paid') {
         if (total < maxFee) {
           element.due = '$225';
-          total += 1;
+          total += 225;
           setCartTotal(total);
         } else {
           element.due = '$0';
         }
       }
-      console.log('after calc', this);
     });
-    console.log('total', cartTotal);
+    // console.log('total', cartTotal);
   };
 
   let adminSettings;
@@ -96,13 +95,11 @@ function PaidReg(props) {
           <Container>
             <Row className="justify-content-md-center">
               <Col className="text-center">
-                <Alert variant="success">
                   <p>
                     The above listed student/s are eligible for free
                     transportation. Please click Complete Registration button
                     below to complete the registration for free students only.
                   </p>
-                </Alert>
               </Col>
             </Row>
             <Row className="justify-content-md-center">
@@ -121,7 +118,7 @@ function PaidReg(props) {
     }
     if (paidData) {
       setPageBody(
-        <Container className="mt-5" fluid="sm">
+        <Container className="mt-2" fluid="sm">
           {constructTable(paidData)}
           <Row className="justify-content-md-center">
             <Col className="text-center">
@@ -159,7 +156,7 @@ function PaidReg(props) {
         </Container>
       );
       setPaymentButton(false);
-      console.log('free Registration:', res);
+      // console.log('free Registration:', res);
       setFree([]);
     } catch (err) {
       console.log(err);
@@ -180,8 +177,8 @@ function PaidReg(props) {
       <Header adminYear={adminYear}  notification={false}/>
       {freePageBody}
       {freeData && paidData ? (
-        <Row className="justify-content-md-center">
-          <Col xs lg="7">
+        <Row className="justify-content-md-center mt-5">
+          <Col lg="5" md="7" sm="8" xs="12">
             <Alert variant="warning">
               You have to complete the free registration before you can proceed
               with the payment.
@@ -201,7 +198,6 @@ function PaidReg(props) {
   );
 }
 PaidReg.propTypes = {
-  location: PropTypes.instanceOf({}).isRequired,
-  adminYear: PropTypes.string.isRequired
+  location: PropTypes.object.isRequired
 };
 export default PaidReg;
