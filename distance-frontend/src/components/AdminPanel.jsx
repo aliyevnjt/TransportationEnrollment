@@ -1,22 +1,31 @@
 import React from 'react';
-import {
-  Nav, Navbar, Container, Jumbotron,
-} from 'react-bootstrap';
+import { Nav, Navbar, Container, Jumbotron, Image } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import AdminSearch from './AdminSearch';
 import AdminSettings from './AdminSettings';
 import AdminAddressUpload from './AdminAddressUpload';
 import AdminStudentEntry from './AdminStudentEntry';
-import AdminLogin from './AdminLogin';
+import LogoutHooks from './LogoutHooks';
+import { useAuth } from './Authorization';
+import Header from './Header';
+import './toolbox/littleton.css';
+import flowlystLogo from '../data/flowlyst.png';
 
-function AdminPanel() {
+const AdminPanel = () => {
+  const auth = useAuth();
   return (
     <Router>
-      <Navbar bg="dark" variant="dark" sticky="top">
-        <Navbar.Brand>Transportation Admin</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+      <Route>
+        <Navbar
+          className="littleton-head-bg"
+          expand="md"
+          variant="dark"
+          sticky="top">
+          <Navbar.Brand className="img-container">
+            <Image src={flowlystLogo} rounded className="logo-small mr-2" />
+            Littleton Admin
+          </Navbar.Brand>
           <Nav className="mr-auto navbar-fixed-top">
             <LinkContainer to="/admin/search">
               <Nav.Link>Search</Nav.Link>
@@ -24,37 +33,45 @@ function AdminPanel() {
             <LinkContainer to="/admin/settings">
               <Nav.Link>Settings</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/admin/addressUpload">
+            {/* <LinkContainer to="/admin/addressUpload">
               <Nav.Link>Address Upload</Nav.Link>
-            </LinkContainer>
+            </LinkContainer> */}
             <LinkContainer to="/admin/studentEntry">
               <Nav.Link>Student Entry</Nav.Link>
             </LinkContainer>
           </Nav>
-        </Navbar.Collapse>
-        <Navbar.Brand>
-          <img
-            // src="../../public/?"
-            src="https://www.littletonps.org/files/Images/LPS%20Logo%20-%20large%20text.jpg"
-            width="300"
-            height="65"
-            className="d-inline-block right-aligned align-top"
-            alt="Littleton Public Schools"
-          />
-        </Navbar.Brand>
-      </Navbar>
-      <Jumbotron fluid>
-        <Container>
-          <Switch>
-            <Route path="/admin" exact component={AdminLogin} />
-            <Route path="/admin/search" component={AdminSearch} />
-            <Route path="/admin/settings" component={AdminSettings} />
-            <Route path="/admin/addressUpload" component={AdminAddressUpload} />
-            <Route path="/admin/studentEntry" component={AdminStudentEntry} />
-          </Switch>
-        </Container>
-      </Jumbotron>
+          <LogoutHooks />
+        </Navbar>
+        <Jumbotron fluid>
+          <Container>
+            <Switch>
+              <Route
+                path="/admin"
+                exact
+                render={() => (
+                  <div>
+                    <h3>Dashboard</h3>
+                    <h5>
+                      Please use the navigation bar to navigate to admin pages.
+                      {/* Name: {auth.user.firstName} {auth.user.lastName}
+                      <br />
+                      Email: {auth.user.email} */}
+                    </h5>
+                  </div>
+                )}
+              />
+              <Route path="/admin/search" component={AdminSearch} />
+              <Route path="/admin/settings" component={AdminSettings} />
+              {/* <Route
+                path="/admin/addressUpload"
+                component={AdminAddressUpload}
+              /> */}
+              <Route path="/admin/studentEntry" component={AdminStudentEntry} />
+            </Switch>
+          </Container>
+        </Jumbotron>
+      </Route>
     </Router>
   );
-}
+};
 export default AdminPanel;

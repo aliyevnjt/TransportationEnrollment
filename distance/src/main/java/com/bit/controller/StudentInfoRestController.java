@@ -13,10 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 @CrossOrigin(origins = "*")
+@RestController
 public class StudentInfoRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(StudentInfoRestController.class);
@@ -24,14 +25,13 @@ public class StudentInfoRestController {
     @Autowired
     private DistanceCalculatorService distanceCalculatorService;
 
-
     @Autowired
     private StudentInfoWriteAndReadService studentInfoWriteAndReadService;
 
     @Autowired
     private DistanceFromFileService distanceFromFileService;
 
-    @PostMapping("/api/student")
+    @GetMapping("/api/student")
     public ResponseEntity getDistance(@Valid @RequestBody StudentInfo studentInfo){
         return new ResponseEntity(distanceCalculatorService.createStudent(studentInfo, null), HttpStatus.CREATED);
     }
@@ -54,7 +54,7 @@ public class StudentInfoRestController {
     }
 
 
-    @PostMapping("/api/student/request")
+    @PostMapping("/api/studentSearch")
     public List<StudentInfo> getStudentInfo(@Valid @RequestBody StudentInfoRetrieve studentInfoRetrieve){
         return studentInfoWriteAndReadService.retrieveMatchingStudents(studentInfoRetrieve);
     }
@@ -71,26 +71,22 @@ public class StudentInfoRestController {
         return new ResponseEntity(distanceFromFileService.createStudents(studentInfo), HttpStatus.CREATED);
     }
 
-    @PostMapping("/api/payment")
-    public void getPayment(@RequestBody String object){
-        logger.info("some logs ...");
-        try{
-            logger.info(object.toString());
-        }catch (Exception e){
-            logger.info(e.getMessage());
-        }
-
+    @PostMapping("/api/pre-enrollment")
+    public ResponseEntity preEnrollment(@Valid @RequestBody List<StudentInfo> studentInfos){
+        studentInfos = distanceFromFileService.createStudents(studentInfos);
+        studentInfos = studentInfoWriteAndReadService.preEnrollment(studentInfos);
+        studentInfoWriteAndReadService.saveStudentS(studentInfos);
+        return new ResponseEntity(studentInfos, HttpStatus.CREATED);
     }
 
-
-
-
-
-
-
-
-
-
+    @PutMapping("/api/enrollment")
+    public ResponseEntity enrollment(@Valid @RequestBody List<StudentInfo> studentInfos){
+        studentInfos = studentInfos.stream().filter(s ->
+            s.getEnrollmentStatus().toLowerCase().equals("free")
+        ).collect(Collectors.toList());
+        studentInfos.forEach(s -> studentInfoWriteAndReadService.updateEnrollmentStatus(s.getId()));
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
 
 
 }

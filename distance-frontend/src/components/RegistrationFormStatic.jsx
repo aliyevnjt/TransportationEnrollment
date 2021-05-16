@@ -1,27 +1,26 @@
 import React, { useState } from 'react';
 import {
-  Container, Form, Button, Jumbotron, Col,
+  Container, Form, Button, Jumbotron, Col
 } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import {
-  locality, baseURL,
-} from '../data/Data';
+import { locality } from '../data/Data';
 import Header from './Header';
-import Student from './Student';
+import Student from './toolbox/Student';
 import AddressBoxStatic from './toolbox/AddressBoxStatic';
 import ParentBox from './toolbox/ParentBox';
 
 function RegistrationFormStatic() {
-  const schoolYear = { schoolYear: 'FY22' };
-  const [studentData, setStudentData] = useState([schoolYear]);
+  const adminYear = { adminYear: 'FY22' };
+  const [studentData, setStudentData] = useState([adminYear]);
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
-    zipCode: locality.zipCode,
+    zipCode: locality.zipCode
   });
   const [parentInfo, setParentInfo] = useState({});
   const history = useHistory();
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   const handleSubmit = async (event) => {
     if (event) {
@@ -29,26 +28,26 @@ function RegistrationFormStatic() {
       if (event.target.id === 'registrationForm') {
         setStudentData((current) => current.map(
           (student) => ({
-            ...student, ...addressInfo, ...parentInfo,
-          }),
+            ...student, ...addressInfo, ...parentInfo
+          })
         ));
         try {
           console.log(studentData);
-          const res = await axios.post(`${baseURL}/student/`, studentData);
+          const res = await axios.get(`${baseURL}/student/`, studentData);
           console.log(res);
           if (res.data.enrollmentStatus === 'free') {
             studentData({
               pathname: '/freeReg',
               search: '',
               state: { detail: res.data },
-              student: res.data,
+              student: res.data
             });
           } else {
             history({
               pathname: '/payment',
               search: '',
               state: { detail: res.data },
-              student: res.data,
+              student: res.data
             });
           }
         } catch (err) {
@@ -64,14 +63,14 @@ function RegistrationFormStatic() {
     const allStudents = [...studentData];
     const tempStudent = {
       ...studentData[eventCounter],
-      [event.target.id]: event.target.value,
+      [event.target.id]: event.target.value
     };
     allStudents[eventCounter] = tempStudent;
 
     setStudentData(() => allStudents);
   };
   const addSibling = () => {
-    setStudentData((previous) => [...previous, schoolYear]);
+    setStudentData((previous) => [...previous, adminYear]);
   };
   const handleAddressInfoChange = (event) => {
     setAddressInfo((previous) => ({ ...previous, [event.target.id]: event.target.value }));
@@ -109,7 +108,7 @@ function RegistrationFormStatic() {
                   onChange={handleInputChange}
                 />
               ))
-              }
+            }
             <Form.Row className="justify-content-md-center">
               <Col>
                 <Button disabled={studentData.length > 4} as="input" value="Add Sibling" onClick={addSibling} />

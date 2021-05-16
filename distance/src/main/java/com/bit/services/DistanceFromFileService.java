@@ -1,31 +1,26 @@
 package com.bit.services;
 
 import com.bit.model.StudentInfo;
-import com.bit.model.form_data.AddresExcel;
+import com.bit.model.form_data.Address;
 import com.bit.repo.ExcelAddressRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DistanceFromFileService {
     @Autowired
     private ExcelAddressRepo excelAddressRepo;
     @Autowired
-    private AddresExcel addresExcel;
+    private Address address;
 
     public List<StudentInfo> createStudents(List<StudentInfo> studentInfo){
         List<StudentInfo> responseStudentInfo = new ArrayList<>();
         double distance = 0;
         studentInfo.forEach(a -> {
             switch (a.getSchool().toLowerCase()) {
-                case "lhs":
-                a.setDistanceFromSchool(round(excelAddressRepo.findTopDistanceByAddress(a.getAddress()).get().getDistanceLHS(), 2));
-                a.setEnrollmentStatus(getEnrollmentStatus(a));
-                break;
                 case "lms":
                 a.setDistanceFromSchool(round(excelAddressRepo.findTopDistanceByAddress(a.getAddress()).get().getDistanceLMS(), 2));
                 a.setEnrollmentStatus(getEnrollmentStatus(a));
@@ -38,6 +33,14 @@ public class DistanceFromFileService {
                 a.setDistanceFromSchool(round(excelAddressRepo.findTopDistanceByAddress(a.getAddress()).get().getDistanceSLS(), 2));
                 a.setEnrollmentStatus(getEnrollmentStatus(a));
                 break;
+                case "lhs":
+                //FIXME getDistanceSLS() is used for LHS. should we calculate the actual distance instead or put a default value?
+                a.setDistanceFromSchool(round(excelAddressRepo.findTopDistanceByAddress(a.getAddress()).get().getDistanceSLS(), 2));
+                a.setEnrollmentStatus("paid");
+                break;
+                default:
+                    //TODO Handle Error...
+
             };
             responseStudentInfo.add(a);
         });

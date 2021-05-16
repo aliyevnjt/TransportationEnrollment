@@ -1,3 +1,4 @@
+// FIXME get it from DB
 const grades = [
   { label: 'K', value: 'K', level: 'SLS' },
   { label: '1', value: '1', level: 'SLS' },
@@ -14,14 +15,15 @@ const grades = [
   { label: '12', value: '12', level: 'LHS' },
 ];
 
+// FIXME get it from DB
 const headers = [
+  { label: 'Admin Year', key: 'adminYear' },
   { label: 'First Name', key: 'fname' },
   { label: 'Last Name', key: 'mName' },
   { label: 'Last Name', key: 'lname' },
   { label: 'Birth Date', key: 'birthDate' },
   { label: 'Grade', key: 'grade' },
   { label: 'School', key: 'school' },
-  { label: 'School Year', key: 'schoolYear' },
   { label: 'Distance From School', key: 'distanceFromSchool' },
   { label: 'Enrollment Status', key: 'enrollmentStatus' },
   { label: 'Address', key: 'address' },
@@ -31,22 +33,26 @@ const headers = [
   { label: 'Parent Name', key: 'parentName' },
   { label: 'Parent Email Address', key: 'parentEmailAddress' },
   { label: 'Parent Phone Number', key: 'parentPhoneNumber' },
+  { label: 'Create Date', key: 'createDate' },
+  { label: 'Unique ID', key: 'uniqueID' },
+  { label: 'Registration Status', key: 'registrationStatus' },
   // { label: 'Homeless', key: 'homeless' },
   // { label: 'Id', key: 'id' },
   // { label: 'Unit', key: 'unit' },
 ];
-
-//const baseURL = 'http://localhost:8080/api';
-const baseURL = '/api';
-
-//const importURL = 'http://localhost:8080';
-const importURL = '/api';
-
+// FIXME get it from DB
 const schools = [
   { label: 'LITTLETON HIGH SCHOOL', value: 'LHS' },
   { label: 'LITTLETON MIDDLE SCHOOL', value: 'LMS' },
   { label: 'RUSSELL STREET SCHOOL', value: 'RSS' },
   { label: 'SHAKER LANE SCHOOL', value: 'SLS' },
+];
+
+const paymentType = [
+  { label: 'Cash', value: 'CASH' },
+  { label: 'Check', value: 'CHECK' },
+  { label: 'Money Order', value: 'MONEY_ORDER' },
+  { label: 'Unibank', value: 'UNIBANK' },
 ];
 
 const cities = [{ label: 'Littleton', value: 'Littleton' }];
@@ -58,25 +64,23 @@ const locality = {
   zipCode: '01460',
 };
 
-const keys = {
-  publishableKey:
-    'pk_test_51I5QOxJuvhMix0vIzNnxK95fD4KadqVex6UylU7RG0jUUYQW3hpWF2rOjUonbpceQwtM7RGZ4xSrDvL5BY07a1R300DBtO4EeD',
-};
-
+// FIXME too many conversions. this info must be in the schoolYear table
+// we'll enable other years later. super admin can create a new year with add button
 const schoolYears = [
-  { label: 'School Year 2021-2022', value: 'FY22' },
-  { label: 'School Year 2022-2023', value: 'FY23' },
-  { label: 'School Year 2023-2024', value: 'FY24' },
-  { label: 'School Year 2024-2025', value: 'FY25' },
+  { label: 'School Year 2021-2022', value: 'FY22', adminYear: '2021' },
+  // { label: 'School Year 2022-2023', value: 'FY23', adminYear: '2022' },
+  // { label: 'School Year 2023-2024', value: 'FY24', adminYear: '2023' },
+  // { label: 'School Year 2024-2025', value: 'FY25', adminYear: '2024' }
 ];
+// FIXME get it from DB
 const registration = [
-  { label: 'Open', value: 'open' },
-  { label: 'Closed', value: 'closed' },
+  { label: 'Open', value: 'Open' },
+  { label: 'Closed', value: 'Closed' },
 ];
-
+// FIXME get it from DB
 const enrollmentStatus = [
-  { label: 'free', value: 'free' },
-  { label: 'paid', value: 'paid' },
+  { label: 'Free', value: 'free' },
+  { label: 'Paid', value: 'paid' },
 ];
 
 const usa = [
@@ -133,21 +137,22 @@ const usa = [
   { value: 'WY', label: 'Wyoming' },
 ];
 
+// TODO not needed. Should be populated from default admin settings value
 const schoolYear = '2021-2022';
+const adminYear = '2021';
 
 export {
+  adminYear,
   grades,
   schools,
-  keys,
   usa,
   schoolYear,
   cities,
   states,
   schoolYears,
-  baseURL,
-  importURL,
   headers,
   registration,
   locality,
   enrollmentStatus,
+  paymentType
 };

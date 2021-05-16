@@ -1,27 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Form, Button, Jumbotron, Col, Row } from 'react-bootstrap';
-import { baseURL, locality } from '../data/Data';
+import {
+  Container,
+  Form,
+  Button,
+  Jumbotron,
+  Col,
+  Row,
+  Card,
+} from 'react-bootstrap';
+import { locality, adminYear } from '../data/Data';
 import Header from './Header';
-import Student from './Student';
+import Student from './toolbox/Student';
 import ParentBox from './toolbox/ParentBox';
 import AddressBox from './toolbox/AddressBox';
 import { bigSample } from '../data/BigSample';
-// import { v4 as uuidv4 } from 'uuid';
+import PropTypes from 'prop-types';
+import {getAdminSettings} from './api/api'
 
 function RegistrationForm() {
-  const [studentData, setStudentData] = useState([{ schoolYear: 'FY22' }]);
+  // TODO find a way to add adminYear right here. It is undefined in the beginning ???
+  const [studentData, setStudentData] = useState([{}]);
   const [addressInfo, setAddressInfo] = useState({
     city: locality.city,
     state: locality.state,
     zip: locality.zipCode,
   });
   const [parentInfo, setParentInfo] = useState({});
+  const [validated, setValidated] = useState(false);
   const history = useHistory();
-
-  useEffect(() => {
-    // studentData state is updated with address info
+  const baseURL = process.env.REACT_APP_BASE_URL;
+  console.log()
+  let adminSettings;
+  useEffect( async () => {
+    await getAdminSettings().then(res=>{
+      adminSettings=res;
+    })
+    // studentData state is updated with address and parent info
     setStudentData((current) =>
       current.map((student) => ({
         ...student,
@@ -57,19 +73,25 @@ function RegistrationForm() {
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
-      if (event.target.id === 'registrationForm') {
+      const form = event.currentTarget;
+      if (form.checkValidity() && event.target.id === 'registrationForm') {
         try {
-          console.log('StudentData:', studentData);
+          // console.log('StudentData:', studentData);
           const res = await axios.post(
-            `${baseURL}/calculateFile/`,
-            studentData,
+            `${baseURL}/pre-enrollment/`,
+            studentData
           );
-          console.log('Request completed', res);
+          // console.log('Request completed', res);
           redirectToPage(res.data);
         } catch (err) {
           console.log(err);
+          const message =
+            'Please check all fields. If you are still experiencing problems registering, ' +
+            'please contact school business office.';
+          alert(message)
         }
       }
+      setValidated(true);
     }
   };
 
@@ -78,6 +100,10 @@ function RegistrationForm() {
       event.target.parentElement.parentElement.getAttribute('counter')
     );
     // console.log('eventCounter:', eventCounter);
+    // TODO remove if this value can be populated in the beginning
+    if (!studentData[0].adminYear) {
+      studentData[0].adminYear = adminYear;
+    }
     const allStudents = [...studentData];
     const tempStudent = {
       ...studentData[eventCounter],
@@ -90,7 +116,7 @@ function RegistrationForm() {
   const addSibling = () => {
     setStudentData((previous) => [
       ...previous,
-      { schoolYear: 'FY22', ...addressInfo, ...parentInfo },
+      { adminYear: adminYear, ...addressInfo, ...parentInfo },
     ]);
   };
   const handleAddressInfoChange = (address) => {
@@ -108,12 +134,17 @@ function RegistrationForm() {
   // console.log('addressInfo:', addressInfo);
   // console.log('parentInfo:', parentInfo);
   // FIXME must add a unique key for all iterated elements
+  // TODO save button should be disabled until all fields are entered
   return (
     <div>
-      <Header />
-      <Container className='pt-3'>
+      <Header adminYear={adminYear} />
+      <Container className="pt-3">
         <Jumbotron>
-          <Form id="registrationForm" onSubmit={handleSubmit}>
+          <Form
+            noValidate
+            validated={validated}
+            id="registrationForm"
+            onSubmit={handleSubmit}>
             <Student counter={0} onChange={handleInputChange} />
             <AddressBox
               addressInfo={addressInfo}
@@ -124,17 +155,22 @@ function RegistrationForm() {
               onChange={handleParentInfoChange}
             />
             {studentData.slice(1).map((student, index) => (
+              // <Card className="bg-light">
+              //   <Card.Header>Sibling {index + 1} </Card.Header>
+              //   <Card.Body>
               <Student
                 key={student}
                 counter={index + 1}
                 studentData={student}
                 onChange={handleInputChange}
               />
+              //   </Card.Body>
+              // </Card>
             ))}
             <Form.Row className="justify-content-md-center">
               <Col>
                 <Button
-                  disabled={studentData.length > 4}
+                  disabled={studentData.length > 5}
                   as="input"
                   value="Add Sibling"
                   type="button"
@@ -143,34 +179,39 @@ function RegistrationForm() {
               </Col>
               <Col>&nbsp;</Col>
               <Col>
-                <Button as='input' value='Continue' type='submit' />
+                <Button as="input" value="Continue" type="submit" />
               </Col>
             </Form.Row>
           </Form>
-          <Row className='mt-5'>
-            <Col>
-              <Button
-                as="input"
-                value="Show Free Sample"
-                type="button"
-                onClick={showFreeSample}
-              />
-            </Col>
-            <Col>
-              <Button
-                as="input"
-                value="Show Paid Sample"
-                type="button"
-                onClick={showPaidSample}
-              />
-            </Col>
-          </Row>
-          {/* <button onClick={this.freeSample}>Free Sample</button> */}
-          {/* <button onClick={this.paidSample}>Paid Sample</button> */}
+          {process.env.NODE_ENV === 'development' ? (
+            <Row className="mt-5 alert-danger">
+              <b>DEVELOPMENT MODE</b>
+              <Col>
+                <Button
+                  as="input"
+                  value="Show Free Sample"
+                  type="button"
+                  onClick={showFreeSample}
+                />
+              </Col>
+              <Col>
+                <Button
+                  as="input"
+                  value="Show Paid Sample"
+                  type="button"
+                  onClick={showPaidSample}
+                />
+              </Col>
+            </Row>
+          ) : (
+            ''
+          )}
         </Jumbotron>
       </Container>
     </div>
   );
 }
-
+RegistrationForm.propTypes = {
+  adminYear: PropTypes.string,
+};
 export default RegistrationForm;

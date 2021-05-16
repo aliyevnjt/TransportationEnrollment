@@ -24,7 +24,7 @@ const InputComponent = (props) => {
 };
 InputComponent.propTypes = {
   id: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   buttonText: PropTypes.string.isRequired,
 };

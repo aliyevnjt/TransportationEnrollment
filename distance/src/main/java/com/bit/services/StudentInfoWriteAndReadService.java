@@ -9,6 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import static com.bit.model.StudentInfo.RegistrationStatus.REGISTERED;
+import static com.bit.model.StudentInfo.RegistrationStatus.IN_PROGRESS;
 
 @Service
 public class StudentInfoWriteAndReadService {
@@ -63,5 +67,22 @@ public class StudentInfoWriteAndReadService {
     @Transactional
     public void saveStudentS(List<StudentInfo> studentInfos){
         studentRepository.saveAll(studentInfos);
+    }
+
+    public List<StudentInfo> preEnrollment(List<StudentInfo> studentInfos){
+        UUID id = UUID.randomUUID();
+        studentInfos.forEach(s -> {
+            s.setRegistrationStatus(IN_PROGRESS);
+            s.setUniqueID(id);
+        });
+
+        return studentInfos;
+    }
+
+    public void updateEnrollmentStatus(UUID id) {
+        //studentRepository.updateStatus(id, StudentInfo.RegistrationStatus.COMPLETED);
+        StudentInfo students = studentRepository.getOne(id);
+        students.setRegistrationStatus(REGISTERED);
+        studentRepository.save(students);
     }
 }

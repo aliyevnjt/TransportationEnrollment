@@ -1,20 +1,30 @@
 ﻿import React, { useState } from 'react';
-import { Button, Form, Col, Table } from 'react-bootstrap';
+import {
+  Button, Form, Col, Table
+} from 'react-bootstrap';
 import axios from 'axios';
-import { importURL } from '../data/Data';
 
 function AdminAddressUpload() {
   const [file, setFile] = useState({
-    name: 'Select file',
+    name: 'Select file'
   });
+  const baseURL = process.env.REACT_APP_BASE_URL;
+
+  // FIXME if you browse for a file but not select it and click somewhere else, app crashes
   const uploadFile = async () => {
     console.log(file);
+    // const formData = new FormData();
+    // formData.append('file', file);
     if (file.size > 0) {
-      const res = await axios.post(`${importURL}/uploadAddresses`, file, {
-        headers: {
-          'Content-Type': file.type,
-        },
-      });
+      // FIXME file upload does not work. Tried many ways but no solution.
+      // Will turn your form to `multipart/form-data`
+      // const data = new FormData();
+      // data.append('file', file);
+      const res = await axios.post(`${baseURL}/uploadAddresses`, file
+      //     , {
+      //   enctype: 'multipart/form-data'
+      // }
+      ).catch((e) => console.log('File upload failed! ', e));
       console.log(res);
     }
   };
@@ -47,24 +57,18 @@ function AdminAddressUpload() {
       <Table id="adminSearch" striped bordered hover>
         <thead>
           <tr>
-            <th key="number">Number</th>
             <th key="address">Address</th>
-            <th key="MS">Middle School</th>
-            <th key="HS">High School</th>
+            <th key="LMS">Littleton Middle School</th>
             <th key="SLH">Shaker Lane School</th>
             <th key="RSS">Russell Street School</th>
-            <th key="status">Status</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td key="6">3</td>
-            <td key="ABENAKI">ABENAKI TL</td>
+            <td key="0">3 ABENAKI TL</td>
             <td key="1">2.91</td>
             <td key="2">3.47</td>
             <td key="3">4.25</td>
-            <td key="4">3.12</td>
-            <td key="5">AUTOMATIC</td>
           </tr>
         </tbody>
       </Table>
