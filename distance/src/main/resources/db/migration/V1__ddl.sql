@@ -56,10 +56,10 @@ CREATE TABLE transportation.users
 INSERT INTO transportation.grade(id, school_short_name, grade_level)
 VALUES (1, 'SLS', 'K'),
        (2, 'SLS', '1'),
-       (3, 'RSS', '2'),
+       (3, 'SLS', '2'),
        (4, 'RSS', '3'),
        (5, 'RSS', '4'),
-       (6, 'LMS', '5'),
+       (6, 'RSS', '5'),
        (7, 'LMS', '6'),
        (8, 'LMS', '7'),
        (9, 'LHS', '8'),
@@ -89,11 +89,11 @@ INSERT INTO transportation.users(id, admin_year, active_ind, role_code, district
                                  first_name, last_name, email, school, create_date, update_date)
 VALUES (1, '2021', 'Y', 1, 'Flowlyst', 'Yavuz', 'Keskin',
         'keskinyavuz@gmail.com', 'Flowlyst', '2021-05-02', CURRENT_DATE),
-       (2, '2021', 'Y', 1, 'Flowlyst', 'Nicat', 'Aliyev',
-        'aliyevnicat@gmail.com@gmail.com', 'Flowlyst', '2021-05-02', CURRENT_DATE),
+       (2, '2021', 'Y', 1, 'Flowlyst', 'Nijat', 'Aliyev',
+        'aliyevnicat@gmail.com', 'Flowlyst', '2021-05-02', CURRENT_DATE),
        (3, '2021', 'Y', 1, 'Flowlyst', 'Aziz', 'Agayev',
-        'Aziz@agayevconsulting.com', 'Flowlyst', '2021-05-02', CURRENT_DATE),
-        (4, '2021', 'Y', 2, 'Littleton', 'Steve', 'Mark',
+        'aziz@agayevconsulting.com', 'Flowlyst', '2021-05-02', CURRENT_DATE),
+        (4, '2021', 'Y', 2, 'Littleton', 'Steven', 'Mark',
     'smark@littletonps.org', 'LHS', '2021-05-02', CURRENT_DATE),
        (5, '2021', 'Y', 2, 'Littleton', 'Robin', 'Healy',
         'rhealy@littletonps.org', 'LHS', '2021-05-02', CURRENT_DATE);

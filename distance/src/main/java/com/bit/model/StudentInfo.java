@@ -83,7 +83,7 @@ public class StudentInfo {
     private String adminYear;
 
     @NotNull(message = "Birth Date is mandatory")
-    @JsonFormat(pattern = "M/d/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     private String enrollmentStatus;
@@ -91,5 +91,14 @@ public class StudentInfo {
     private LocalDateTime createDate = LocalDateTime.now();
 
     private UUID uniqueID;
+
+    public enum PaymentType {
+        UNIBANK,
+        CHECK,
+        CASH,
+        MONEY_ORDER
+    }
+    @Enumerated(EnumType.STRING)
+    private PaymentType paymentType;
 
 }

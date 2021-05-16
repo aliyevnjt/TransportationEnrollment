@@ -3,16 +3,10 @@ import { Col, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 const FormGroup = (props) => {
-  const {
-    id, onChange, label, type, placeholder, disabled, required
-  } = props;
+  const { id, onChange, label, type, placeholder, disabled, required } = props;
   return (
-    <Form.Group
-      as={Col}
-    >
-      <Form.Label>
-        {label}
-      </Form.Label>
+    <Form.Group as={Col} lg="3" md="4" sm="6" xs="12">
+      <Form.Label>{label}</Form.Label>
       <Form.Control
         id={id}
         onChange={onChange}
@@ -21,7 +15,7 @@ const FormGroup = (props) => {
         disabled={disabled}
         required={required}
       />
-      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      <Form.Control.Feedback type="invalid">This field is mandatory.</Form.Control.Feedback>
     </Form.Group>
   );
 };

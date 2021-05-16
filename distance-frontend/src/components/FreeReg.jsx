@@ -4,14 +4,15 @@ import { Container, Button, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import ConstructTable from './toolbox/ConstructTable';
-import { baseURL, adminYear } from '../data/Data';
+import constructTable from './toolbox/ConstructTable';
+import { adminYear } from '../data/Data';
 
 function FreeReg(props) {
+  const baseURL = process.env.REACT_APP_BASE_URL;
   const { location } = props;
   const history = useHistory();
   const [pageBody, setPageBody] = useState();
-  console.log(location.state);
+  // console.log(location.state);
   if (location.state === undefined) {
     history.push('/');
     return <div />;
@@ -32,12 +33,12 @@ function FreeReg(props) {
     setPageBody(
       <div>
         <Container className="pt-3 " fluid="sm">
-          {ConstructTable(data)}
+          {constructTable(data)}
         </Container>
 
         <Container>
           <Row className="justify-content-md-center">
-            <Col xs lg="9">
+            <Col className="text-center">
               <p>
                 The above listed student/s are eligible for free transportation.
                 Please click Register button below to complete the registration.
@@ -80,14 +81,14 @@ function FreeReg(props) {
               </Row> */}
         </Container>
       );
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       console.log(err);
     }
   };
   return (
     <div>
-      <Header adminYear={adminYear} />
+      <Header adminYear={adminYear} notification={false}/>
       {pageBody}
     </div>
   );
@@ -96,7 +97,6 @@ FreeReg.defaultProps = {
   location: {}
 };
 FreeReg.propTypes = {
-  location: PropTypes.object,
-  adminYear: PropTypes.string.isRequired
+  location: PropTypes.object
 };
 export default FreeReg;
