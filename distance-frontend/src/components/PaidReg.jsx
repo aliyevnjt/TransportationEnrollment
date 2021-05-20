@@ -94,18 +94,19 @@ function PaidReg(props) {
           </Container>
           <Container>
             <Row className="justify-content-md-center">
-              <Col className="text-center">
-                  <p>
+              <Col className="text-center text-danger">
+                  <p><b>
                     The above listed student/s are eligible for free
-                    transportation. Please click Complete Registration button
+                    transportation. <br />
+                    Please click Complete Registration button
                     below to complete the registration for free students only.
-                  </p>
+                    </b> </p>
               </Col>
             </Row>
             <Row className="justify-content-md-center">
               <Button
                 as="input"
-                value="Complete Registration"
+                value="Click to Complete Registration"
                 type="button"
                 onClick={register}
               />
@@ -121,12 +122,12 @@ function PaidReg(props) {
         <Container className="mt-2" fluid="sm">
           {constructTable(paidData)}
           <Row className="justify-content-md-center">
-            <Col className="text-center">
+            <Col className="text-center text-danger">
               <p>
                 The above listed student/s are eligible for paid school
-                transportation. Please click Proceed to Payment Button below to
-                pay the registration fee. Students are not registered until you
-                complete payment.
+                transportation. <br /><b>Please click Proceed to Payment Button </b> below to
+                pay the registration fee. Students are <b><u>NOT </u></b>registered until you
+                complete the payment. Once you click the <b>"Proceed to Payment"</b> button, you will be redirected to Unibank to complete the payment and registration.
               </p>
             </Col>
           </Row>
@@ -136,6 +137,7 @@ function PaidReg(props) {
     } else {
       setPageBody(<div />);
     }
+    window.scrollTo(0, 0);
   }, []);
 
   const register = async () => {
