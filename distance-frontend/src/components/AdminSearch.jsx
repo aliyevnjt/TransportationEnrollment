@@ -32,7 +32,8 @@ function AdminSearch() {
       fname: 'First Name',
       lname: 'Last Name',
       grade: 'Grade',
-      enrollmentStatus: 'Status',
+      enrollmentStatus: 'Program Type',
+      registrationStatus: 'Registration Status',
       distanceFromSchool: 'Distance',
       address: 'Address',
       school: 'School'
@@ -54,12 +55,13 @@ function AdminSearch() {
   const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
+      // console.log(inputs)
       if (event.target.id === 'adminForm') {
         // console.log('inputs', inputs);
         try {
           const res = await axios.post(`${baseURL}/studentSearch`, inputs);
           data.options = res.data;
-          setTable(constructTable(data));
+          setTable(constructTable(data, 'adminSearch'));
           setAdminSearchData(res.data);
         } catch (err) {
           console.log(err);

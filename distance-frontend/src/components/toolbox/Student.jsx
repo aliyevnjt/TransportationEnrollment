@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Dropdown from './Dropdown';
 import { schools, grades, schoolYear } from '../../data/Data';
 import FormGroup from './FormGroup';
+import { browserName } from 'react-device-detect';
+
 
 const Student = (props) => {
   const { counter, onChange, hasDOB } = props;
@@ -52,7 +54,8 @@ const Student = (props) => {
                 id="birthDate"
                 type="date"
                 onChange={onChange}
-                label="Date of Birth"
+                label={browserName==="Safari" ? "Date of Birth (yyyy-mm-dd)" : "Date of Birth"}
+                placeholder={browserName==="Safari" ? "yyyy-mm-dd" : ""}
               />
             ) : (
               <></>
