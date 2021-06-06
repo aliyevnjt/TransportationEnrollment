@@ -36,6 +36,7 @@ function RegistrationForm() {
   useEffect( async () => {
     await getAdminSettings().then(res=>{
       adminSettings=res;
+      // console.log("admin settings",adminSettings)
     })
     // studentData state is updated with address and parent info
     setStudentData((current) =>

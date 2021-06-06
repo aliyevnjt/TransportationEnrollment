@@ -1,6 +1,7 @@
 // FIXME get it from DB
 const grades = [
   { label: 'K', value: 'K', level: 'SLS' },
+  { label: 'T', value: 'T', level: 'SLS' },
   { label: '1', value: '1', level: 'SLS' },
   { label: '2', value: '2', level: 'SLS' },
   { label: '3', value: '3', level: 'RSS' },
@@ -19,7 +20,7 @@ const grades = [
 const headers = [
   { label: 'Admin Year', key: 'adminYear' },
   { label: 'First Name', key: 'fname' },
-  { label: 'Last Name', key: 'mName' },
+  { label: 'Middle Name', key: 'mName' },
   { label: 'Last Name', key: 'lname' },
   { label: 'Birth Date', key: 'birthDate' },
   { label: 'Grade', key: 'grade' },
@@ -33,7 +34,7 @@ const headers = [
   { label: 'Parent Name', key: 'parentName' },
   { label: 'Parent Email Address', key: 'parentEmailAddress' },
   { label: 'Parent Phone Number', key: 'parentPhoneNumber' },
-  { label: 'Create Date', key: 'createDate' },
+  { label: 'Created Date', key: 'createDate' },
   { label: 'Unique ID', key: 'uniqueID' },
   { label: 'Registration Status', key: 'registrationStatus' },
   // { label: 'Homeless', key: 'homeless' },

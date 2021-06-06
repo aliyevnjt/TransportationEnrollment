@@ -38,17 +38,18 @@ function FreeReg(props) {
 
         <Container>
           <Row className="justify-content-md-center">
-            <Col className="text-center">
-              <p>
-                The above listed student/s are eligible for free transportation.
-                Please click Register button below to complete the registration.
+            <Col className="text-center text-danger">
+              <p><b>
+                  The above listed student/s are eligible for free transportation. <br />
+                  Please click the Register button below to complete the registration.
+                </b>
               </p>
             </Col>
           </Row>
           <Row className="justify-content-md-center">
             <Button
               as="input"
-              value="Complete Registration"
+              value="Click to Complete Registration"
               type="button"
               onClick={register}
             />
