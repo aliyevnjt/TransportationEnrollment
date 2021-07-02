@@ -17,7 +17,7 @@ import {getAdminSettings} from './api/api'
 function PaidReg(props) {
   const baseURL = process.env.REACT_APP_BASE_URL;
   const { location } = props;
-  const maxFee = 675;
+  const maxFee = 750;
   let total = 0;
   const [cartTotal, setCartTotal] = useState(0.0);
   const history = useHistory();
@@ -69,8 +69,8 @@ function PaidReg(props) {
         element.due = '$0';
       } else if (element.enrollmentStatus === 'paid') {
         if (total < maxFee) {
-          element.due = '$225';
-          total += 225;
+          element.due = '$250';
+          total += 250;
           setCartTotal(total);
         } else {
           element.due = '$0';
