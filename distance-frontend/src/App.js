@@ -19,20 +19,21 @@ function App() {
     <ProvideAuth>
       <Router>
         <Switch>
-          {url === 'true' ? <Route path="/" component={Closed} />
-            : <>
+          {url === 'true' ? <Route path="/" exact component={Closed}  />
+            : 
+              <>
               <Route path="/" exact component={RegistrationForm}/>
               <Route path="/freereg" component={FreeReg} />
               <Route path="/paidreg" component={PaidReg} />
-              <PrivateRoute path="/admin">
-                <AdminPanel />
-              </PrivateRoute>
-              <Route path="/login" component={AdminLogin} />
               <Route path="/regStatic" component={RegistrationFormStatic} />
               <Route path="/address" component={AddressBox} />
               <Route component={NotFound} />
             </>
           }
+          <PrivateRoute path="/admin">
+            <AdminPanel />
+          </PrivateRoute>
+          <Route path="/login" component={AdminLogin} />
         </Switch>
       </Router>
     </ProvideAuth>
